@@ -11,6 +11,7 @@ import { getEvents, getUserEvents, getMoreEvents } from '../../actions/event';
 import { mapIcon, mapText } from '../../functions/event';
 import { Event as EventType } from '../../interfaces/event';
 import useQuery from '../../hooks/useQuery';
+import useHistory, { History } from '../../hooks/useHistory';
 import {
     trending,
     your_events,
@@ -24,6 +25,7 @@ import {
 } from '../../constants/event';
 
 const Events: React.FC = () => {
+    let history: History = useHistory();
     const { tab } = useQuery();
     const navigate = useNavigate();
     const dispatch: any = useDispatch();

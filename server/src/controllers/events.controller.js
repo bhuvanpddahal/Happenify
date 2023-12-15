@@ -13,11 +13,14 @@ cloudinary.config({
 });
 
 export const createEvent = async (req, res) => {
+    const networkError = true;
+    
     try {
         const { userId } = req;
         const { name, dateAndTime, location, description, ticketPrice, type, image, facebook, twitter, contact } = req.body;
         const user = await User.findById(userId);
         const imageUrl = (await cloudinary.uploader.upload(image)).secure_url;
+        networkError = false;
         const newEvent = await Event.create({
             name,
             dateAndTime,
@@ -46,6 +49,7 @@ export const createEvent = async (req, res) => {
         res.status(200).json(newEvent);
 
     } catch (error) {
+        if(networkError) return res.status(400).json({ message: "Network error" });
         res.status(500).json({ message: "Something went wrong" });
     }
 };
