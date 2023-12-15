@@ -16,6 +16,7 @@ module.exports = {
         "160px": "160px",
         "200px": "200px",
         "250px": "250px",
+        "280px": "280px",
         "300px": "300px",
         "400px": "350px",
         "n50p": "-50%",
@@ -34,6 +35,7 @@ module.exports = {
       },
       fontSize: {
         "14px": "14px",
+        "15px": "15px",
         "16px": "16px",
         "17px": "17px",
         "18px": "18px",
@@ -47,6 +49,9 @@ module.exports = {
         "30px": "30px",
         "32px": "32px",
         "35px": "35px",
+      },
+      borderWidth: {
+        '3': '3px',
       },
       boxShadow: {
         'normal':'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',

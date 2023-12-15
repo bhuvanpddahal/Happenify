@@ -9,12 +9,11 @@ import { State } from '../../interfaces/store';
 import { getEventById } from '../../actions/event';
 import { REMOVE_SELECTED_EVENT } from '../../constants/event';
 import NotFound from '../Utils/NotFound';
-import useHistory from '../../hooks/useHistory';
+// import useHistory from '../../hooks/useHistory';
 
 const EventDetails: React.FC = () => {
     const { id } = useParams();
-    const history = useHistory();
-    console.log(history);
+    // const history = useHistory();
     
     const dispatch: any = useDispatch();
 

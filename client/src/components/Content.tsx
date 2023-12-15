@@ -6,14 +6,16 @@ import {
 } from 'react-router-dom';
 
 import Events from './Event/Events';
-import Places from './Places';
+import EventDetails from './Event/EventDetails';
+import EventForm from './Event/EventForm';
+import EntryForm from './Event/EntryForm';
+import Places from './Place/Places';
+import PlaceDetails from './Place/PlaceDetails';
+import PlaceForm from './Place/PlaceForm';
 import Promotions from './Promotions';
 import Calendar from './Calendar';
 import Expenses from './Expenses';
 import Analytics from './Analytics';
-import EventDetails from './Event/EventDetails';
-import EventForm from './Event/EventForm';
-import EntryForm from './Event/EntryForm';
 
 const Content: React.FC = () => {
     return (
@@ -26,7 +28,12 @@ const Content: React.FC = () => {
                     <Route path=':id/book-entry' element={<EntryForm />} />
                     <Route path='create' element={<EventForm />} />
                 </Route>
-                <Route path='/places' element={<Places />} />
+                <Route path='/places/*'>
+                    <Route index element={<Places />} />
+                    <Route path=':id' element={<PlaceDetails />} />
+                    <Route path=':id/book' element={<EntryForm />} />
+                    <Route path='create' element={<PlaceForm />} />
+                </Route>
                 <Route path='/promotions' element={<Promotions />} />
                 <Route path='/calendar' element={<Calendar />} />
                 <Route path='/expenses' element={<Expenses />} />

@@ -1,10 +1,3 @@
-export const icons = {
-    trending: 'ri-fire-fill',
-    yourEvents: 'ri-shield-star-fill',
-    newToYou: 'ri-eye-2-fill',
-    visited: 'ri-checkbox-fill'
-};
-
 export const eventOptions = [
     { value: 'art-exhibitions', type: 'Art Exhibitions' },
     { value: 'award-ceremonies', type: 'Award Ceremonies' },
