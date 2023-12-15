@@ -8,6 +8,7 @@ import { EventOption } from '../../interfaces/event';
 import { handleImgChange } from '../../functions/util';
 import { createEvent } from '../../actions/event';
 import { State } from '../../interfaces/store';
+import Suggestion from '../Utils/Suggestion';
 
 const EventForm: React.FC = () => {
     const dispatch: any = useDispatch();
@@ -47,12 +48,12 @@ const EventForm: React.FC = () => {
     return (
         <div className='p-3'>
             {showSuggestion && (
-                <div className='bg-primary text-lightgrey px-5 py-4 mb-4 rounded-lg text-right'>
-                    <p className='text-left'>Welcome to Event Magic! 🌟 Ready to create an unforgettable experience? Start by adding your event details below. Need inspiration? Check out our tips for crafting the perfect gathering. Let's turn your vision into a Happenify masterpiece! 🚀 #EventMagic #CreateMemories</p>
-                    <button onClick={() => setShowSuggestion(false)} className='px-5 py-2 bg-secondary text-dark rounded-sm mt-3 hover:bg-grey'>👍 Got it!</button>
-                </div>
+                <Suggestion
+                    setShowSuggestion={setShowSuggestion}
+                    text="Welcome to Event Magic! 🌟 Ready to create an unforgettable experience? Start by adding your event details below. Need inspiration? Check out our tips for crafting the perfect gathering. Let's turn your vision into a Happenify masterpiece! 🚀 #EventMagic #CreateMemories"
+                />
             )}
-            <form onSubmit={handleSubmit} className='mb-4 md:text-17px'>
+            <form onSubmit={handleSubmit} className='mb-4'>
                 <h1 className='font-semibold text-20px text-dark mb-2'>Enter The Necessary Event Details</h1>
                 <div className='flex gap-3 mb-3 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setName(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={name} type="text" placeholder='Name *' required />
@@ -93,7 +94,7 @@ const EventForm: React.FC = () => {
                         )}
                         <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isLoading} />
                     </button>
-                    <p>By clicking on the 'Create my event' button, you agree to our <Link to='/privacy-policy' className='text-secondarydark cursor-pointer hover:underline'>Privacy policy</Link>.</p>
+                    <p className='text-15px'>By clicking on the 'Create my event' button, you agree to our <Link to='/privacy-policy' className='text-secondarydark cursor-pointer hover:underline'>Privacy policy</Link>.</p>
                 </div>
             </form>
         </div>

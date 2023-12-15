@@ -3,15 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import Event from './Place';
-import Tabs from '../Utils/Tabs';
-import Loader from '../Utils/Loader';
-import NotFound from '../Utils/NotFound';
-import { State } from '../../interfaces/store';
-import { getEvents, getUserEvents, getMoreEvents } from '../../actions/event';
-import { mapIcon, mapText } from '../../functions/tab';
-import { Event as EventType } from '../../interfaces/event';
 import useQuery from '../../hooks/useQuery';
+import Tabs from '../Utils/Tabs';
 import {
     trending,
     your_places,
