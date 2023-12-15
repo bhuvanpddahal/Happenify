@@ -11,7 +11,8 @@ import {
     GET_EVENT_BY_ID,
     REMOVE_SELECTED_EVENT,
     RESET_PAGE,
-    GET_USER_EVENTS
+    GET_USER_EVENTS,
+    GET_MORE_USER_EVENTS
 } from '../constants/event';
 
 const initialState = {
@@ -34,6 +35,7 @@ const eventReducer = (state = initialState, action: Action) => {
         case CREATE_EVENT:
             return { ...state, events: [action?.data, ...state.events] };
         case GET_EVENTS:
+        case GET_USER_EVENTS:
             return {
                 ...state,
                 events: (action?.data as ManyData)?.events,
@@ -41,7 +43,7 @@ const eventReducer = (state = initialState, action: Action) => {
                 totalPages: (action?.data as ManyData)?.totalPages
             };
         case GET_MORE_EVENTS:
-        case GET_USER_EVENTS:
+        case GET_MORE_USER_EVENTS:
             return {
                 ...state,
                 events: [...state.events, ...(action?.data as ManyData)?.events],
@@ -53,7 +55,9 @@ const eventReducer = (state = initialState, action: Action) => {
         case REMOVE_SELECTED_EVENT:
             return { ...state, selectedEvent: null };
         case RESET_PAGE:
-            return { ...state, page: 1, totalPages: 1 };
+            console.log('inside reset page');
+            
+            return { ...state, events: [], page: 1, totalPages: 1 };
         default:
             return state;
     }

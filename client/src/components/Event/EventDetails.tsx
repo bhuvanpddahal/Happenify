@@ -18,6 +18,7 @@ const EventDetails: React.FC = () => {
         dispatch(getEventById(id || ''));
 
         return () => {
+
             dispatch({ type: REMOVE_SELECTED_EVENT });
         };
     }, []);

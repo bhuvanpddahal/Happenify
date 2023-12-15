@@ -68,15 +68,17 @@ export const getUserEvents = async (req, res) => {
     try {
         const { userId } = req;
         const { page, limit } = req.query;
+        console.log(`Inside getUserEvents: Page: ${page}, Limit: ${limit}`);
         const user = await User.findById(userId);
         const skip = (Number(page) - 1) * limit;
-        const totalEvents = await Event.countDocuments({ organizer: { id: user._id } }, { hint: "_id_" });
-        const allEvents = await Event.find({ organizer: { id: user._id } }).sort({ _id: -1 }).limit(limit).skip(skip);
+        const totalEvents = await Event.countDocuments({ 'organizer.id': user._id }, { hint: "_id_" });
+        console.log(`Total events: ${totalEvents}`);
+        const events = await Event.find({ 'organizer.id': user._id }).sort({ _id: -1 }).limit(limit).skip(skip);
+        console.log(`All events: ${events}`);
         const totalPages = Math.ceil(totalEvents / limit);
-        res.status(200).json({ events: allEvents, totalPages, page: Number(page) + 1 });
+        res.status(200).json({ events, totalPages, page: Number(page) + 1 });
 
     } catch (error) {
-        console.log(error.message);
         res.status(500).json({ message: "Something went wrong" });
     }
 };

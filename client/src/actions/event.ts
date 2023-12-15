@@ -14,6 +14,7 @@ import {
     GET_MORE_EVENTS,
     GET_EVENT_BY_ID,
     GET_USER_EVENTS,
+    GET_MORE_USER_EVENTS,
     creation_success
 } from '../constants/event';
 import { success } from '../constants/alert';
@@ -51,13 +52,10 @@ export const getEvents = (page: number, limit: number) => async (dispatch: Dispa
 
 export const getMoreEvents = (page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
     try {
-        dispatch({ type: START_LOADING, for: EVENT });
         const { data } = await api.getEvents(page, limit);
         dispatch({ type: GET_MORE_EVENTS, data });
-        dispatch({ type: END_LOADING, for: EVENT });
 
     } catch (error) {
-        dispatch({ type: END_LOADING, for: EVENT });
         handleError(error, dispatch);
     }
 };
@@ -71,6 +69,16 @@ export const getUserEvents = (page: number, limit: number) => async (dispatch: D
 
     } catch (error) {
         dispatch({ type: END_LOADING, for: EVENT });
+        handleError(error, dispatch);
+    }
+};
+
+export const getMoreUserEvents = (page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        const { data } = await api.getUserEvents(page, limit);
+        dispatch({ type: GET_MORE_USER_EVENTS, data });
+
+    } catch (error) {
         handleError(error, dispatch);
     }
 };

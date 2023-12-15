@@ -34,22 +34,25 @@ const Events: React.FC = () => {
     };
 
     useEffect(() => {
-        if(!events.length) dispatch(getEvents(page, limit));
-    }, []);
-
-    useEffect(() => {
         navigate(`/events?tab=${activeTab}`);
-        dispatch({ type: RESET_PAGE });
-
+        
         if(activeTab === trending) {
-            dispatch(getEvents(page, limit));
+            dispatch(getEvents(1, limit));
         } else if(activeTab === your_events) {
-            dispatch(getUserEvents(page, limit));
+            dispatch(getUserEvents(1, limit));
+        } else if(activeTab === new_to_you) {
+            dispatch(getEvents(1, limit));
+        } else if(activeTab === visited) {
+            dispatch(getUserEvents(1, limit));
         }
+
+        return () => {
+            dispatch({ type: RESET_PAGE });
+        };
     }, [activeTab]);
 
     const { events, isLoading, totalPages, page, limit } = useSelector((state: State) => state.event);
-
+    
     return (
         <div className='px-3 py-2'>
             <div className='flex justify-between gap-2 items-center mb-5'>
