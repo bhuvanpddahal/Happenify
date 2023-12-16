@@ -13,7 +13,7 @@ cloudinary.config({
 });
 
 export const createEvent = async (req, res) => {
-    const networkError = true;
+    let networkError = true;
     
     try {
         const { userId } = req;
@@ -72,13 +72,10 @@ export const getUserEvents = async (req, res) => {
     try {
         const { userId } = req;
         const { page, limit } = req.query;
-        console.log(`Inside getUserEvents: Page: ${page}, Limit: ${limit}`);
         const user = await User.findById(userId);
         const skip = (Number(page) - 1) * limit;
         const totalEvents = await Event.countDocuments({ 'organizer.id': user._id }, { hint: "_id_" });
-        console.log(`Total events: ${totalEvents}`);
         const events = await Event.find({ 'organizer.id': user._id }).sort({ _id: -1 }).limit(limit).skip(skip);
-        console.log(`All events: ${events}`);
         const totalPages = Math.ceil(totalEvents / limit);
         res.status(200).json({ events, totalPages, page: Number(page) + 1 });
 

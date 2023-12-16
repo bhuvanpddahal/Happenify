@@ -16,7 +16,9 @@ module.exports = {
         "160px": "160px",
         "200px": "200px",
         "250px": "250px",
+        "270px": "265px",
         "280px": "280px",
+        "290px": "290px",
         "300px": "300px",
         "400px": "350px",
         "n50p": "-50%",
@@ -54,7 +56,9 @@ module.exports = {
         '3': '3px',
       },
       boxShadow: {
-        'normal':'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',
+        'normal':"rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
+        'image': "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
+        
       },
       transitionProperty: {
         "transform": "transform",

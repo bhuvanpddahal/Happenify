@@ -24,7 +24,7 @@ const Tabs: React.FC<TabsProp> = ({
             <div className='flex justify-between gap-2 items-center mb-5'>
                 <div>
                     <h1 className='text-20px text-dark font-semibold'>{title}</h1>
-                    <p className='text-14px sm:text-16px'>{para}</p>
+                    <p className='text-14px sm:text-15px'>{para}</p>
                 </div>
                 <Link to={createLink} className='bg-primary px-3 py-1 sm:text-17px rounded-md flex items-center gap-2 text-lightgrey cursor-pointer hover:bg-primarydark'>
                     <i className="ri-add-circle-line text-20px md:text-22px"></i> Create

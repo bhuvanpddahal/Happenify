@@ -83,6 +83,7 @@ const Events: React.FC = () => {
                         hasMore={page <= totalPages}
                         loader={<Loader />}
                         scrollThreshold={'100px'}
+                        style={{ overflow: 'visible' }}
                     >
                         {events.map((event: EventType) => (
                             <Event
