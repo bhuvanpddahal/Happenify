@@ -21,7 +21,7 @@ const Tabs: React.FC<TabsProp> = ({
 }: TabsProp) => {
     return (
         <>
-            <div className='flex justify-between gap-2 items-center mb-5'>
+            <div className='flex justify-between gap-2 items-center flex-wrap mb-5'>
                 <div>
                     <h1 className='text-20px text-dark font-semibold'>{title}</h1>
                     <p className='text-14px sm:text-15px'>{para}</p>

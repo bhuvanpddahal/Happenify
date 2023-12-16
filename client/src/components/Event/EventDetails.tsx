@@ -34,12 +34,12 @@ const EventDetails: React.FC = () => {
         <div className='p-3 pb-6 lg:pb-3'>
             <div className='flex flex-col lg:flex-row gap-5'>
                 <div className='w-full'>
-                    <img className='w-full h-300px object-cover rounded-md' src={selectedEvent?.image} alt="event" />
+                    <img className='w-full h-300px object-contain rounded-md shadow-image' src={selectedEvent?.image} alt="event" />
                     <div className='mt-2 flex items-center justify-between'>
                         <div className='text-dark font-medium'>{moment(selectedEvent?.dateAndTime).format('lll')}</div>
                         <div>Share</div>
                     </div>
-                    <h1 className='text-22px md:text-24px lg:text-26px font-bold text-normal line-clamp-1'>{selectedEvent?.name}</h1>
+                    <h1 className='text-20px md:text-22px font-bold text-normal line-clamp-1'>{selectedEvent?.name}</h1>
                     <button className='underline text-secondarydark hover:text-darkgrey'>See more</button>
                     <div className='my-1 flex items-center gap-2'>
                         <div>
@@ -60,7 +60,7 @@ const EventDetails: React.FC = () => {
                             </Link>
                         </div>
                     </div>
-                    <p className='text-17px line-clamp-5'>{selectedEvent?.description}</p>
+                    <p className='line-clamp-5'>{selectedEvent?.description}</p>
                     <button className='underline text-secondarydark hover:text-darkgrey'>Read more</button>
                     <div className='my-4'>
                         <h2 className='text-17px font-medium text-dark'>Event Schedules</h2>
@@ -90,7 +90,7 @@ const EventDetails: React.FC = () => {
                 </div>
                 <div className='w-full'>
                     <div className='pb-3 border-b border-solid border-grey'>
-                        <Link to={`/events/12345/book-entry`} className='inline-block py-2 px-5 bg-primary text-white md:text-17px rounded-sm hover:bg-primarydark'>
+                        <Link to={`/events/12345/book-entry`} className='inline-block py-2 px-5 bg-primary text-white rounded-sm hover:bg-primarydark'>
                             <i className="ri-book-2-line"></i> Book your entry pass
                         </Link>
                     </div>

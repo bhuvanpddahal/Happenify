@@ -18,7 +18,7 @@ import Analytics from './Analytics';
 
 const Content: React.FC = () => {
     return (
-        <div className='flex-1 pb-10 md:pb-55px lg:pb-0'>
+        <div className='flex-1 h-full overflow-hidden pb-10 md:pb-55px lg:pb-0'>
             <Routes>
                 <Route path='/' element={<Navigate to='/events' replace />} />
                 <Route path='/events/*'>

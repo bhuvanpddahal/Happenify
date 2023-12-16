@@ -5,3 +5,7 @@
 * {
   font-family: 'Rethink Sans', sans-serif;
 }
+
+*::-webkit-scrollbar {
+  width: 0;
+}
