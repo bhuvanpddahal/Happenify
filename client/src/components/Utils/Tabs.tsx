@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { TabsProp } from '../../interfaces/tab';
 import { mapIcon, mapText } from '../../functions/tab';
+import Searchbar from './Searchbar';
 
 const Tabs: React.FC<TabsProp> = ({
     title,
