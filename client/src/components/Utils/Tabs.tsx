@@ -48,7 +48,7 @@ const Tabs: React.FC<TabsProp> = ({
             </div>
 
             {/* For mobile devices */}
-            <div className='sm:hidden flex items-center justify-between'>
+            <div className='sm:hidden flex items-center justify-between flex-wrap gap-2'>
                 <div className={`w-150px py-1 border-b-3 border-solid flex items-center justify-center gap-1 border-secondary text-primarydark font-medium`}>
                     <i className={`${mapIcon(activeTab)} text-22px`}></i> {mapText(activeTab)}
                 </div>

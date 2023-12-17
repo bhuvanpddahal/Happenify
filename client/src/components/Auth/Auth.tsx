@@ -48,9 +48,9 @@ const Auth: React.FC = () => {
     return (
         <div className='p-3 min-h-screen flex items-center justify-center'>
             <form onSubmit={handleSubmit} className='mb-4 md:text-17px'>
-                <div className='text-center mb-2'>
+                <div className='text-center mb-3'>
+                    <h1 className='font-semibold text-20px text-dark mb-n10px'>{isLogin ? 'Log In' : 'Sign Up'}</h1>
                     <img className='h-40px lg:h-50px inline-block' src={Logo} alt="Happenify" />
-                    <h1 className='font-semibold text-20px text-dark mb-2'>{isLogin ? 'Log In' : 'Sign Up'}</h1>
                 </div>
                 <div className='flex gap-3 mb-3 flex-wrap sm:flex-nowrap'>
                     {!isLogin && <input onChange={(e) => setFullName(e.target.value)} value={fullName} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' type="text" placeholder='Full Name *' required />}

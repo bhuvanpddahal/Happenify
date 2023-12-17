@@ -16,7 +16,7 @@ import {
 } from '../constants/event';
 
 const initialState = {
-    isLoading: true,
+    isLoading: false,
     page: 1,
     limit: 5,
     totalPages: 1,

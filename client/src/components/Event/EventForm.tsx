@@ -67,7 +67,7 @@ const EventForm: React.FC = () => {
                     <input onChange={(e) => setTicketPrice(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={ticketPrice} type="number" placeholder='Ticket price *' required />
                     <select onChange={(e) => setType(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={type}>
                         {eventOptions.map((option: EventOption) => (
-                            <option value={option.value}>{option.type}</option>
+                            <option key={option.value} value={option.value}>{option.type}</option>
                         ))}
                     </select>
                 </div>

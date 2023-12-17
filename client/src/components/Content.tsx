@@ -11,7 +11,7 @@ import EventForm from './Event/EventForm';
 import EntryForm from './Event/EntryForm';
 import Places from './Place/Places';
 import PlaceForm from './Place/PlaceForm';
-import Promotions from './Promotions';
+import Promotions from './Promotion/Promotions';
 import Calendar from './Calendar';
 import Expenses from './Expenses';
 import Analytics from './Analytics';
