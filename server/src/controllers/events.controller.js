@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import cloudinary from 'cloudinary';
+import mongoose from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 import User from '../models/User.js';
@@ -14,6 +15,7 @@ cloudinary.config({
 
 export const createEvent = async (req, res) => {
     let networkError = true;
+    const session = await mongoose.startSession();
     
     try {
         const { userId } = req;
@@ -46,9 +48,13 @@ export const createEvent = async (req, res) => {
             name
         });
         await user.save();
+        session.commitTransaction();
+        session.endSession();
         res.status(200).json(newEvent);
 
     } catch (error) {
+        session.abortTransaction();
+        session.endSession();
         if(networkError) return res.status(400).json({ message: "Network error" });
         res.status(500).json({ message: "Something went wrong" });
     }
