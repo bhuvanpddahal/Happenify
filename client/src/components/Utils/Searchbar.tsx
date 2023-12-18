@@ -33,7 +33,7 @@ const Searchbar: React.FC<SearchbarProp> = ({
 
     return (
         <div className='mb-2 h-40px flex items-center justify-end text-15px sm:text-16px'>
-            <div className={`border border-solid border-grey rounded-50px transition-all duration-300 ${showSearchbar ? '' : 'opacity-0 pointer-events-none'}`}>
+            <div className={`border border-solid border-grey rounded-50px transition-all duration-300 ${showSearchbar ? '' : 'sm:opacity-0 sm:pointer-events-none'}`}>
                 <input onKeyDown={handleKeyDown} onChange={(e) => setSearchValue(e.target.value)} value={searchValue} className='outline-none w-120px sm:w-160px border-r border-solid border-grey px-3 py-2 bg-transparent' type="text" placeholder='Search event' />
                 <select onChange={(e) => setSearchType(e.target.value)} className=' outline-none px-1 py-2 bg-transparent' value={searchType}>
                     <option value="name">Name</option>
