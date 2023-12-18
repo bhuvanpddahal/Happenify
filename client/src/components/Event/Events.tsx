@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -8,7 +8,14 @@ import Tabs from '../Utils/Tabs';
 import Loader from '../Utils/Loader';
 import NotFound from '../Utils/NotFound';
 import { State } from '../../interfaces/store';
-import { getEvents, getUserEvents, getMoreEvents } from '../../actions/event';
+import {
+    getEvents,
+    getUserEvents,
+    getMoreEvents,
+    getMoreUserEvents,
+    searchEvents,
+    getMoreSearchedEvents
+} from '../../actions/event';
 import { Event as EventType } from '../../interfaces/event';
 import useQuery from '../../hooks/useQuery';
 // import useHistory, { History } from '../../hooks/useHistory';
@@ -22,22 +29,49 @@ import {
     New_to_you,
     Visited
 } from '../../constants/tab';
-import { RESET_PAGE } from '../../constants/event';
+import {
+    EVENT,
+    RESET_PAGE
+} from '../../constants/event';
 
 const Events: React.FC = () => {
     // let history: History = useHistory();
-    const { tab } = useQuery();
+    const { tab, name, location: searchedLocation } = useQuery();
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch: any = useDispatch();
+    const type = (searchedLocation && 'location') || 'name';
+    const value = name || searchedLocation || '';
     const [activeTab, setActiveTab] = useState(tab || trending);
+    const [searchType, setSearchType] = useState(type);
+    const [searchValue, setSearchValue] = useState(value);
 
-    const getMorePosts = () => {
-        dispatch(getMoreEvents(page, limit));
+    const isSearching = () => {
+        if(location.search.includes('name') || location.search.includes('location')) return true;
+        return false;
     };
 
-    useEffect(() => {
-        navigate(`/events?tab=${activeTab}`);
-        
+    const getMoreSearchedPosts = () => {
+        dispatch(getMoreSearchedEvents(activeTab, searchType, searchValue, page, limit));
+    };
+    
+    const getMorePosts = () => {
+        if(activeTab === trending) {
+            dispatch(getMoreEvents(page, limit));
+        } else if(activeTab === your_events) {
+            dispatch(getMoreUserEvents(page, limit));
+        } else if(activeTab === new_to_you) {
+            dispatch(getMoreEvents(page, limit));
+        } else if(activeTab === visited) {
+            dispatch(getMoreUserEvents(page, limit));
+        }
+    };
+
+    const searchPosts = () => {
+        dispatch(searchEvents(activeTab, searchType, searchValue, 1, limit));
+    };
+
+    const getPosts = () => {
         if(activeTab === trending) {
             dispatch(getEvents(1, limit));
         } else if(activeTab === your_events) {
@@ -47,22 +81,38 @@ const Events: React.FC = () => {
         } else if(activeTab === visited) {
             dispatch(getUserEvents(1, limit));
         }
+    };
+
+    const changeActiveTab = (tab: string) => {
+        if(activeTab === tab && !isSearching()) return;
+        setActiveTab(tab);
+        navigate(`/events?tab=${activeTab}`);
+    };
+
+    useEffect(() => {
+        if(isSearching()) searchPosts();
+        else getPosts();
 
         return () => {
             dispatch({ type: RESET_PAGE });
         };
-    }, [activeTab]);
+    }, [location]);
 
     const { events, isLoading, totalPages, page, limit } = useSelector((state: State) => state.event);
     
     return (
         <div className='px-3 py-2'>
             <Tabs
+                page={EVENT}
                 title='Events'
                 para='Find and create events to share with others.'
                 createLink='/events/create'
+                searchType={searchType}
+                setSearchType={setSearchType}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
                 activeTab={activeTab}
-                setActiveTab={setActiveTab}
+                changeActiveTab={changeActiveTab}
                 value1={trending}
                 value2={your_events}
                 value3={new_to_you}
@@ -79,7 +129,7 @@ const Events: React.FC = () => {
                 <ul className='mt-5'>
                     <InfiniteScroll
                         dataLength={events.length}
-                        next={getMorePosts}
+                        next={isSearching() ? getMoreSearchedPosts : getMorePosts}
                         hasMore={page <= totalPages}
                         loader={<Loader />}
                         scrollThreshold={'100px'}

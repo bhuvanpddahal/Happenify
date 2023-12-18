@@ -71,7 +71,7 @@ const Auth: React.FC = () => {
                     </div>
                 )}
                 <div className='flex items-center flex-wrap-reverse justify-between gap-3'>
-                    <button className={`relative w-150px py-2 rounded-sm ${isLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isLoading}>
+                    <button className={`relative w-130px py-2 rounded-sm ${isLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isLoading}>
                         {isLoading
                             ? isLogin ? 'Logging in' : 'Signing up'
                             : (

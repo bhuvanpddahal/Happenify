@@ -21,3 +21,4 @@ export const createEvent = (formData: EventFormData) => API.post('/events', form
 export const getEvents = (page: number, limit: number) => API.get(`/events?page=${page}&limit=${limit}`);
 export const getUserEvents = (page: number, limit: number) => API.get(`/events/user?page=${page}&limit=${limit}`);
 export const getEventById = (id: string) => API.get(`/events/${id}`);
+export const searchEvents = (tab: string, searchType: string, value: string, page: number, limit: number) => API.get(`/events/search?tab=${tab}&${searchType}=${value}&page=${page}&limit=${limit}`);

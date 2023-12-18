@@ -5,11 +5,13 @@ import {
     createEvent,
     getEventById,
     getUserEvents,
-    getEvents
+    getEvents,
+    searchEvents
 } from '../controllers/events.controller.js';
 
 const router = express.Router();
 
+router.get('/search', auth, searchEvents);
 router.post('/', auth, createEvent);
 router.get('/', auth, getEvents);
 router.get('/user', auth, getUserEvents);

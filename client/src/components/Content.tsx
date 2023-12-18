@@ -23,6 +23,7 @@ const Content: React.FC = () => {
                 <Route path='/' element={<Navigate to='/events' replace />} />
                 <Route path='/events/*'>
                     <Route index element={<Events />} />
+                    <Route path='search' element={<Events />} />
                     <Route path=':id' element={<EventDetails />} />
                     <Route path=':id/book-entry' element={<EntryForm />} />
                     <Route path='create' element={<EventForm />} />

@@ -12,7 +12,8 @@ module.exports = {
         "55px": "55px",
         "70px": "70px",
         "100px": "100px",
-        "150px": "130px",
+        "120px": "120px",
+        "130px": "130px",
         "160px": "160px",
         "180px": "180px",
         "200px": "200px",
@@ -60,13 +61,19 @@ module.exports = {
       borderWidth: {
         '3': '3px',
       },
+      borderRadius: {
+        "50px": "50px",
+      },
       boxShadow: {
-        'normal':"rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
-        'image': "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
+        "normal":"rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
+        "image": "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
         
       },
       transitionProperty: {
         "transform": "transform",
+      },
+      screens: {
+        "xs": "300px",
       }
     },
   },

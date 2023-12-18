@@ -12,7 +12,9 @@ import {
     REMOVE_SELECTED_EVENT,
     RESET_PAGE,
     GET_USER_EVENTS,
-    GET_MORE_USER_EVENTS
+    GET_MORE_USER_EVENTS,
+    SEARCH_EVENTS,
+    GET_MORE_SEARCHED_EVENTS
 } from '../constants/event';
 
 const initialState = {
@@ -36,6 +38,7 @@ const eventReducer = (state = initialState, action: Action) => {
             return { ...state, events: [action?.data, ...state.events] };
         case GET_EVENTS:
         case GET_USER_EVENTS:
+        case SEARCH_EVENTS:
             return {
                 ...state,
                 events: (action?.data as ManyData)?.events,
@@ -44,6 +47,7 @@ const eventReducer = (state = initialState, action: Action) => {
             };
         case GET_MORE_EVENTS:
         case GET_MORE_USER_EVENTS:
+        case GET_MORE_SEARCHED_EVENTS:
             return {
                 ...state,
                 events: [...state.events, ...(action?.data as ManyData)?.events],
@@ -55,8 +59,6 @@ const eventReducer = (state = initialState, action: Action) => {
         case REMOVE_SELECTED_EVENT:
             return { ...state, selectedEvent: null };
         case RESET_PAGE:
-            console.log('inside reset page');
-            
             return { ...state, events: [], page: 1, totalPages: 1 };
         default:
             return state;

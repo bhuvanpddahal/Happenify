@@ -5,7 +5,13 @@ const useQuery = () => {
     const search = location.search;
     const params = new URLSearchParams(search);
     const tab = params.get("tab");
-    const query = { tab };
+    const name = params.get("name");
+    const searchedLocation = params.get("location");
+    const query = {
+        tab,
+        name,
+        location: searchedLocation
+    };
     return query;
 };
 

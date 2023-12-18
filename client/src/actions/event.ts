@@ -15,7 +15,9 @@ import {
     GET_EVENT_BY_ID,
     GET_USER_EVENTS,
     GET_MORE_USER_EVENTS,
-    creation_success
+    SEARCH_EVENTS,
+    GET_MORE_SEARCHED_EVENTS,
+    creation_success,
 } from '../constants/event';
 import { success } from '../constants/alert';
 import { FormDataProp } from '../interfaces/event';
@@ -92,6 +94,29 @@ export const getEventById = (id: string) => async (dispatch: Dispatch<EventActio
 
     } catch (error) {
         dispatch({ type: END_LOADING, for: EVENT });
+        handleError(error, dispatch);
+    }
+};
+
+export const searchEvents = (tab: string, searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: EVENT });
+        const { data } = await api.searchEvents(tab, searchType, value, page, limit);
+        dispatch({ type: SEARCH_EVENTS, data });
+        dispatch({ type: END_LOADING, for: EVENT });
+
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: EVENT });
+        handleError(error, dispatch);
+    }
+};
+
+export const getMoreSearchedEvents = (tab: string, searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        const { data } = await api.searchEvents(tab, searchType, value, page, limit);
+        dispatch({ type: GET_MORE_SEARCHED_EVENTS, data });
+
+    } catch (error) {
         handleError(error, dispatch);
     }
 };

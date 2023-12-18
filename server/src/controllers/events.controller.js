@@ -102,3 +102,44 @@ export const getEventById = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+export const searchEvents = async (req, res) => {
+    try {
+        let events;
+        let value;
+        let totalEvents;
+        const { userId } = req;
+        const { tab, name, location, page, limit } = req.query;
+        const skip = (Number(page) - 1) * limit;
+        console.log(tab, name, location, page, limit);
+        const user = await User.findById(userId);
+
+        if(name) value = new RegExp(name, 'i');
+        else if(location) value = new RegExp(location, 'i');
+
+        if(tab === "trending") {
+            if(name) {
+                totalEvents = await Event.countDocuments({ name: value }, { hint: "_id_" });
+                events = await Event.find({ name: value }).sort({ _id: -1 }).limit(limit).skip(skip);
+            } else if(location) {
+                totalEvents = await Event.countDocuments({ location: value }, { hint: "_id_" });
+                events = await Event.find({ location: value }).sort({ _id: -1 }).limit(limit).skip(skip);
+            }
+        } else if(tab === "your-events") {
+            if(name) {
+                totalEvents = await Event.countDocuments({ 'organizer.id': user._id, name: value }, { hint: "_id_" });
+                events = await Event.find({ 'organizer.id': user._id, name: value }).sort({ _id: -1 }).limit(limit).skip(skip);
+            } else if(location) {
+                totalEvents = await Event.countDocuments({ 'organizer.id': user._id, location: value }, { hint: "_id_" });
+                events = await Event.find({ 'organizer.id': user._id, location: value }).sort({ _id: -1 }).limit(limit).skip(skip);
+            }
+        }
+
+        const totalPages = Math.ceil(totalEvents / limit);
+        res.status(200).json({ events, totalPages, page: Number(page) + 1 });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};

@@ -10,4 +10,7 @@ export const RESET_PAGE = "RESET_PAGE";
 export const GET_USER_EVENTS = "GET_USER_EVENTS";
 export const GET_MORE_USER_EVENTS = "GET_MORE_USER_EVENTS";
 
+export const SEARCH_EVENTS = "SEARCH_EVENTS";
+export const GET_MORE_SEARCHED_EVENTS = "GET_MORE_SEARCHED_EVENTS";
+
 export const creation_success = "Event created successfully";

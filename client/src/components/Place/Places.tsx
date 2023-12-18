@@ -18,6 +18,9 @@ import {
     Booked
 } from '../../constants/tab';
 import Place from './Place';
+import {
+    PLACE
+} from '../../constants/place';
 
 const Places: React.FC = () => {
     const { tab } = useQuery();
@@ -36,7 +39,8 @@ const Places: React.FC = () => {
 
     return (
         <div className='px-3 py-2'>
-            <Tabs
+            {/* <Tabs
+                page={PLACE}
                 title='Places'
                 para='Find and create places to share with others.'
                 createLink='/places/create'
@@ -50,7 +54,7 @@ const Places: React.FC = () => {
                 option2={Your_Places}
                 option3={New_to_you}
                 option4={Booked}
-            />
+            /> */}
 
             {isLoading && <Loader />}
 
