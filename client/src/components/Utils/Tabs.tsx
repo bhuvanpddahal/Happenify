@@ -40,7 +40,6 @@ const Tabs: React.FC<TabsProp> = ({
             </div>
 
             <Searchbar
-                page={page}
                 tab={activeTab}
                 searchType={searchType}
                 setSearchType={setSearchType}

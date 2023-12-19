@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -23,13 +23,29 @@ import {
 } from '../../constants/place';
 
 const Places: React.FC = () => {
-    const { tab } = useQuery();
+    const { tab, name, location: searchedLocation } = useQuery();
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch: any = useDispatch();
+    const type = (searchedLocation && 'location') || 'name';
+    const value = name || searchedLocation || '';
     const [activeTab, setActiveTab] = useState(tab || trending);
+    const [searchType, setSearchType] = useState(type);
+    const [searchValue, setSearchValue] = useState(value);
+
+    const isSearching = () => {
+        if(location.search.includes('name') || location.search.includes('location')) return true;
+        return false;
+    };
 
     const getMorePosts = () => {
         // dispatch(getMorePlaces(page, limit));
+    };
+
+    const changeActiveTab = (tab: string) => {
+        if(activeTab === tab && !isSearching()) return;
+        setActiveTab(tab);
+        navigate(`/events?tab=${activeTab}`);
     };
 
     const places: any = [1, 2, 3];
@@ -39,13 +55,17 @@ const Places: React.FC = () => {
 
     return (
         <div className='px-3 py-2'>
-            {/* <Tabs
+            <Tabs
                 page={PLACE}
                 title='Places'
                 para='Find and create places to share with others.'
                 createLink='/places/create'
+                searchType={searchType}
+                setSearchType={setSearchType}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
                 activeTab={activeTab}
-                setActiveTab={setActiveTab}
+                changeActiveTab={changeActiveTab}
                 value1={trending}
                 value2={your_places}
                 value3={new_to_you}
@@ -54,7 +74,7 @@ const Places: React.FC = () => {
                 option2={Your_Places}
                 option3={New_to_you}
                 option4={Booked}
-            /> */}
+            />
 
             {isLoading && <Loader />}
 

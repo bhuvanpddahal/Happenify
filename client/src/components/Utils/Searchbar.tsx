@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface SearchbarProp {
-    page: string;
     tab: string;
     searchType: string;
     setSearchType: React.Dispatch<React.SetStateAction<string>>;
@@ -11,7 +10,6 @@ interface SearchbarProp {
 }
 
 const Searchbar: React.FC<SearchbarProp> = ({
-    page,
     tab,
     searchType,
     setSearchType,

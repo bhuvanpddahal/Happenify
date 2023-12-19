@@ -12,7 +12,7 @@ const Policies: React.FC = () => {
             </div>
             <div className='border-b border-solid border-grey py-3'>
                 <h3 className='md:text-17px font-medium text-dark'>Last Updated: Jan 10, 2024</h3>
-                <p>Welcome to Happenify! We respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your data when you use our event management services.</p>
+                <p className='ml-5'>Welcome to Happenify! We respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your data when you use our event management services.</p>
             </div>
             <div className='border-b border-solid border-grey py-3'>
                 <h3 className='md:text-17px font-medium text-primary mb-3'>1. Information We Collect</h3>

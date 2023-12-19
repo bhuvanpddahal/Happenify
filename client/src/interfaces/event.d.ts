@@ -22,11 +22,6 @@ export interface Event {
     createdAt: string;
 }
 
-export interface EventOption {
-    type: string;
-    value: string;
-}
-
 export interface FormDataProp {
     name: string;
     dateAndTime: string;

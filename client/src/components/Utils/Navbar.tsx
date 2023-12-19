@@ -13,8 +13,8 @@ const Navbar: React.FC = () => {
     return (
         <nav className='flex items-center justify-between border-b border-solid border-grey bg-white px-3 py-2 sticky top-0 z-10'>
             <Link to='/'>
-                <img className='h-40px lg:h-50px hidden sm:inline-block' src={MainLogo} alt="Happenify" />
-                <img className='h-40px sm:hidden' src={FavLogo} alt="Happenify" />
+                <img className='h-40px lg:h-50px hidden xs:inline-block' src={MainLogo} alt="Happenify" />
+                <img className='h-40px xs:hidden' src={FavLogo} alt="Happenify" />
             </Link>
             <div className='hidden md:inline-block'>Turning Dreams into Events, Seamlessly with Happenify!</div>
             <Link to='/auth' className='flex items-center rounded-full cursor-pointer shadow-normal hover:bg-lightgrey'>

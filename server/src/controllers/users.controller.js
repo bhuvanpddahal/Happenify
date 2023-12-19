@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import cloudinary from 'cloudinary';
 
 import User from '../models/User.js';
-import Event from '../models/Event.js';
 
 dotenv.config();
 cloudinary.config({

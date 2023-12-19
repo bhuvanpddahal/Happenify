@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import LoadingImg from '../../images/loading.gif';
 import { eventOptions } from '../../data/event';
-import { EventOption } from '../../interfaces/event';
+import { Option } from '../../interfaces/util';
 import { handleImgChange } from '../../functions/util';
 import { createEvent } from '../../actions/event';
 import { State } from '../../interfaces/store';
@@ -66,7 +66,7 @@ const EventForm: React.FC = () => {
                 <div className='flex gap-3 mb-4 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setTicketPrice(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={ticketPrice} type="number" placeholder='Ticket price *' required />
                     <select onChange={(e) => setType(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={type}>
-                        {eventOptions.map((option: EventOption) => (
+                        {eventOptions.map((option: Option) => (
                             <option key={option.value} value={option.value}>{option.type}</option>
                         ))}
                     </select>

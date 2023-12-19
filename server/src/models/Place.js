@@ -37,7 +37,8 @@ const PlaceSchema = new mongoose.Schema({
         type: [{
             star: { type: Number, required: true, min: 1, max: 5 },
             review: { type: String, required: true, minlength: 20 }
-        }]
+        }],
+        default: []
     },
     accessibility: {
         type: [String],
@@ -46,7 +47,10 @@ const PlaceSchema = new mongoose.Schema({
     booking: {
         process: { type: [String], required: true },
         pricePerHour: { type: Number, required: true },
-        termsAndConditions: { type: [String], required: true }
+    },
+    termsAndConditions: {
+        type: [String],
+        required: true
     },
     socialMedia: {
         facebook: { type: String, required: true },
