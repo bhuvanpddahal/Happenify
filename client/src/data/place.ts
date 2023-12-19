@@ -12,3 +12,13 @@ export const placeOptions = [
     { value: 'unique-venue', type: 'Unique/Specialty Venue' },
     { value: 'other', type: 'Other' },
 ];
+
+export const allFacilities = [
+    { id: 'parking', name: 'Parking' },
+    { id: 'network', name: 'Network connectivity' },
+    { id: 'restrooms', name: 'Restrooms' },
+    { id: 'auvisual', name: 'Audio-visual equipment (projectors, screens, sound systems)' },
+    { id: 'catering', name: 'Catering' },
+    { id: 'seating', name: 'Seating and Furnishings' },
+    { id: 'security', name: 'Security and Safety' },
+];

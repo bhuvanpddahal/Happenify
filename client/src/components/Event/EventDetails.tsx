@@ -32,7 +32,7 @@ const EventDetails: React.FC = () => {
 
     return (
         <div className='p-3 pb-6 lg:pb-3'>
-            <div className='flex flex-col lg:flex-row gap-5'>
+            <div className='flex flex-col md:flex-row gap-5'>
                 <div className='w-full'>
                     <img className='w-full h-300px object-contain rounded-md shadow-image' src={selectedEvent?.image} alt="event" />
                     <div className='mt-2 flex items-center justify-between'>

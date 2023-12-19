@@ -17,7 +17,7 @@ const Searchbar: React.FC<SearchbarProp> = ({
     setSearchValue
 }: SearchbarProp) => {
     const navigate = useNavigate();
-    const [showSearchbar, setShowSearchbar] = useState(true);
+    const [showSearchbar, setShowSearchbar] = useState(false);
 
     const toggleShowSearchbar = () => {
         setShowSearchbar((prevShowSearchbar) => !prevShowSearchbar);

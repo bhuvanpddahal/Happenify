@@ -40,13 +40,9 @@ const PlaceSchema = new mongoose.Schema({
         }],
         default: []
     },
-    accessibility: {
-        type: [String],
+    pricePerHour: {
+        type: Number,
         required: true
-    },
-    booking: {
-        process: { type: [String], required: true },
-        pricePerHour: { type: Number, required: true },
     },
     termsAndConditions: {
         type: [String],

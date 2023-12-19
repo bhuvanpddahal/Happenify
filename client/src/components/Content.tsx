@@ -10,7 +10,7 @@ import EventDetails from './Event/EventDetails';
 import EventForm from './Event/EventForm';
 import EntryForm from './Event/EntryForm';
 import Places from './Place/Places';
-import PlaceForm from './Place/PlaceForm';
+import PlaceForm from './Place/PlaceForm/PlaceForm';
 import Promotions from './Promotion/Promotions';
 import Calendar from './Calendar';
 import Expenses from './Expenses';
