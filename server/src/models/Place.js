@@ -11,7 +11,7 @@ const PlaceSchema = new mongoose.Schema({
     },
     capacity: {
         type: Number,
-        required: true,
+        required: true
     },
     description: {
         type: String,
@@ -40,6 +40,13 @@ const PlaceSchema = new mongoose.Schema({
         }],
         default: []
     },
+    owner: {
+        type: {
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Place' },
+            picture: { type: String, default: '' },
+            fullName: { type: String, required: true }
+        }
+    },
     pricePerHour: {
         type: Number,
         required: true
@@ -51,6 +58,10 @@ const PlaceSchema = new mongoose.Schema({
     socialMedia: {
         facebook: { type: String, required: true },
         twitter: { type: String, required: true }
+    },
+    createdAt: {
+        type: Date,
+        default: new Date()
     }
 });
 

@@ -3,6 +3,7 @@ import cloudinary from 'cloudinary';
 import mongoose from 'mongoose';
 import { ObjectId } from 'mongodb';
 
+import User from '../models/User.js';
 import Place from '../models/Place.js';
 
 dotenv.config();
@@ -15,41 +16,48 @@ cloudinary.config({
 export const createPlace = async (req, res) => {
     let networkError = true;
     const session = await mongoose.startSession();
+    session.startTransaction();
     
     try {
         const { userId } = req;
-        const { name, dateAndTime, location, description, ticketPrice, type, image, facebook, twitter, contact } = req.body;
+        const { name, location, capacity, description, type, contact, images, facilities, pricePerHour, termsAndConditions, facebook, twitter } = req.body;
         const user = await User.findById(userId);
-        const imageUrl = (await cloudinary.uploader.upload(image)).secure_url;
+        const imageUrls = [
+            (await cloudinary.uploader.upload(images[0])).secure_url,
+            (await cloudinary.uploader.upload(images[1])).secure_url,
+            (await cloudinary.uploader.upload(images[2])).secure_url
+        ];
         networkError = false;
-        const newEvent = await Event.create({
+        const newPlace = await Place.create({
             name,
-            dateAndTime,
             location,
+            capacity,
             description,
-            ticketPrice,
-            organizer: {
+            type,
+            contact,
+            images: imageUrls,
+            facilities,
+            owner: {
                 id: user._id,
                 picture: user.picture,
                 fullName: user.fullName
             },
-            type,
-            image: imageUrl,
+            pricePerHour,
+            termsAndConditions,
             socialMedia: {
                 facebook,
                 twitter
-            },
-            contact
+            }
         });
-        user.events.push({
-            id: newEvent._id,
-            image: imageUrl,
+        user.places.push({
+            id: newPlace._id,
+            images: imageUrls,
             name
         });
         await user.save();
         session.commitTransaction();
         session.endSession();
-        res.status(200).json(newEvent);
+        res.status(200).json(newPlace);
 
     } catch (error) {
         session.abortTransaction();

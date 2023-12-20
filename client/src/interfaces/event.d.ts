@@ -26,8 +26,13 @@ export interface FormDataProp {
     name: string;
     dateAndTime: string;
     location: string;
+    description: string;
     ticketPrice: string;
     type: string;
+    image: string;
+    facebook: string;
+    twitter: string;
+    contact: string;
 }
 
 interface ManyData {

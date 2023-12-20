@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 
 import Condition from './Condition';
@@ -9,6 +9,8 @@ import Suggestion from '../../Utils/Suggestion';
 import { placeOptions, allFacilities } from '../../../data/place';
 import { Option } from '../../../interfaces/util';
 import { Facility } from '../../../interfaces/place';
+import { createPlace } from '../../../actions/place';
+import { State } from '../../../interfaces/store';
 
 const PlaceForm: React.FC = () => {
     const dispatch: any = useDispatch();
@@ -36,7 +38,6 @@ const PlaceForm: React.FC = () => {
     const refs = [fileInputRef1, fileInputRef2, fileInputRef3];
     const images = [image1, image2, image3];
     const setImages = [setImage1, setImage2, setImage3];
-    const isLoading = false;
 
     const toggleFacility = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         let newFacilities;
@@ -66,7 +67,7 @@ const PlaceForm: React.FC = () => {
         };
         console.log(formData);
         
-        // dispatch(createPlace(formData, navigate));
+        dispatch(createPlace(formData, navigate));
     };
 
     const addCondition = () => {
@@ -76,6 +77,8 @@ const PlaceForm: React.FC = () => {
         conditionInput.current.value = '';
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
+
+    const { isLoading } = useSelector((state: State) => state.place);
 
     return (
         <div className='p-3'>
@@ -144,7 +147,7 @@ const PlaceForm: React.FC = () => {
                                 />
                             ))
                         ) : (
-                            <div>Add conditions to view here!</div>
+                            <div className='py-1'>Add conditions to view here!</div>
                         )}
                         <div ref={bottomRef}></div>
                     </ul>

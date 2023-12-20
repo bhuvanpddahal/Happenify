@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -7,6 +7,7 @@ import Loader from '../Utils/Loader';
 import NotFound from '../Utils/NotFound';
 import useQuery from '../../hooks/useQuery';
 import Tabs from '../Utils/Tabs';
+import { State } from '../../interfaces/store';
 import {
     trending,
     your_places,
@@ -21,6 +22,7 @@ import Place from './Place';
 import {
     PLACE
 } from '../../constants/place';
+import { Place as PlaceType } from '../../interfaces/place';
 
 const Places: React.FC = () => {
     const { tab, name, location: searchedLocation } = useQuery();
@@ -45,13 +47,14 @@ const Places: React.FC = () => {
     const changeActiveTab = (tab: string) => {
         if(activeTab === tab && !isSearching()) return;
         setActiveTab(tab);
-        navigate(`/events?tab=${activeTab}`);
+        navigate(`/places?tab=${activeTab}`);
     };
 
-    const places: any = [1, 2, 3];
-    const isLoading = false;
-    const page = 3;
-    const totalPages = 2;
+    useEffect(() => {
+        
+    }, [location]);
+
+    const { places, isLoading, totalPages, page, limit } = useSelector((state: State) => state.place);
 
     return (
         <div className='px-3 py-2'>
@@ -88,9 +91,24 @@ const Places: React.FC = () => {
                         scrollThreshold={'100px'}
                         style={{ overflow: 'visible' }}
                     >
-                        {places.map((place: any) => (
+                        {places.map((place: PlaceType) => (
                             <Place
-                                
+                                key={place._id}
+                                _id={place._id}
+                                name={place.name}
+                                location={place.location}
+                                capacity={place.capacity}
+                                description={place.description}
+                                type={place.type}
+                                contact={place.contact}
+                                images={place.images}
+                                facilities={place.facilities}
+                                ratings={place.ratings}
+                                owner={place.owner}
+                                pricePerHour={place.pricePerHour}
+                                termsAndConditions={place.termsAndConditions}
+                                socialMedia={place.socialMedia}
+                                createdAt={place.createdAt}
                             />
                         ))}
                     </InfiniteScroll>

@@ -77,6 +77,8 @@ const Events: React.FC = () => {
         } else if(activeTab === your_events) {
             dispatch(getUserEvents(1, limit));
         } else if(activeTab === new_to_you) {
+            console.log('inside new to you');
+            
             dispatch(getEvents(1, limit));
         } else if(activeTab === visited) {
             dispatch(getUserEvents(1, limit));
@@ -85,8 +87,8 @@ const Events: React.FC = () => {
 
     const changeActiveTab = (tab: string) => {
         if(activeTab === tab && !isSearching()) return;
+        navigate(`/events?tab=${tab}`);
         setActiveTab(tab);
-        navigate(`/events?tab=${activeTab}`);
     };
 
     useEffect(() => {

@@ -16,6 +16,7 @@ cloudinary.config({
 export const createEvent = async (req, res) => {
     let networkError = true;
     const session = await mongoose.startSession();
+    session.startTransaction();
     
     try {
         const { userId } = req;
@@ -111,13 +112,11 @@ export const searchEvents = async (req, res) => {
         const { userId } = req;
         const { tab, name, location, page, limit } = req.query;
         const skip = (Number(page) - 1) * limit;
-        console.log(tab, name, location, page, limit);
         const user = await User.findById(userId);
-
         if(name) value = new RegExp(name, 'i');
         else if(location) value = new RegExp(location, 'i');
 
-        if(tab === "trending") {
+        if(tab === "trending" || tab === "new-to-you") {
             if(name) {
                 totalEvents = await Event.countDocuments({ name: value }, { hint: "_id_" });
                 events = await Event.find({ name: value }).sort({ _id: -1 }).limit(limit).skip(skip);
@@ -125,7 +124,7 @@ export const searchEvents = async (req, res) => {
                 totalEvents = await Event.countDocuments({ location: value }, { hint: "_id_" });
                 events = await Event.find({ location: value }).sort({ _id: -1 }).limit(limit).skip(skip);
             }
-        } else if(tab === "your-events") {
+        } else if(tab === "your-events" || tab === "visited") {
             if(name) {
                 totalEvents = await Event.countDocuments({ 'organizer.id': user._id, name: value }, { hint: "_id_" });
                 events = await Event.find({ 'organizer.id': user._id, name: value }).sort({ _id: -1 }).limit(limit).skip(skip);

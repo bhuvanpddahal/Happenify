@@ -6,6 +6,7 @@ export const placeOptions = [
     { value: 'event-hall', type: 'Event Hall' },
     { value: 'hotel', type: 'Hotel' },
     { value: 'outdoor-venue', type: 'Outdoor Venue' },
+    { value: 'park', type: 'Park' },
     { value: 'restaurant', type: 'Restaurant' },
     { value: 'sports-arena', type: 'Sports Arena' },
     { value: 'warehouse', type: 'Warehouse' },

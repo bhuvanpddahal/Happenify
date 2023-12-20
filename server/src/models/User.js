@@ -25,6 +25,14 @@ const UserSchema = new mongoose.Schema({
         }],
         default: []
     },
+    places: {
+        type: [{
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Place' },
+            images: { type: [String], required: true },
+            name: { type: String, required: true }
+        }],
+        default: []
+    },
     joinedAt: {
         type: Date,
         default: new Date()

@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import './src/mongodb/connection.js';
 import userRouter from './src/routes/user.routes.js';
 import eventRouter from './src/routes/event.routes.js';
+import placeRouter from './src/routes/place.routes.js';
 
 // CONFIGURATIONS
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(cors());
 // ROUTES
 app.use('/api/users', userRouter);
 app.use('/api/events', eventRouter);
+app.use('/api/places', placeRouter);
 
 // SERVER
 app.listen(port, () => {
