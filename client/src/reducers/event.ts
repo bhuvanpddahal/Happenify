@@ -1,7 +1,8 @@
 import { Action, ManyData } from '../interfaces/event';
 import {
     START_LOADING,
-    END_LOADING
+    END_LOADING,
+    RESET_PAGE
 } from '../constants/action';
 import {
     EVENT,
@@ -10,7 +11,6 @@ import {
     GET_MORE_EVENTS,
     GET_EVENT_BY_ID,
     REMOVE_SELECTED_EVENT,
-    RESET_PAGE,
     GET_USER_EVENTS,
     GET_MORE_USER_EVENTS,
     SEARCH_EVENTS,
@@ -59,6 +59,7 @@ const eventReducer = (state = initialState, action: Action) => {
         case REMOVE_SELECTED_EVENT:
             return { ...state, selectedEvent: null };
         case RESET_PAGE:
+            if(action.for !== EVENT) return state;
             return { ...state, events: [], page: 1, totalPages: 1 };
         default:
             return state;

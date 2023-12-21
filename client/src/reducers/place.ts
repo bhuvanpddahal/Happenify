@@ -1,11 +1,13 @@
 import { Action, ManyData } from '../interfaces/place';
 import {
     START_LOADING,
-    END_LOADING
+    END_LOADING,
+    RESET_PAGE
 } from '../constants/action';
 import {
     PLACE,
-    CREATE_PLACE
+    CREATE_PLACE,
+    GET_PLACES
 } from '../constants/place';
 
 const initialState = {
@@ -27,6 +29,16 @@ const placeReducer = (state = initialState, action: Action) => {
             return { ...state, isLoading: false };
         case CREATE_PLACE:
             return { ...state, places: [action?.data, ...state.places] };
+        case GET_PLACES:
+            return {
+                ...state,
+                places: (action?.data as ManyData)?.places,
+                page: (action?.data as ManyData)?.page,
+                totalPages: (action?.data as ManyData)?.totalPages
+            };
+        case RESET_PAGE:
+            if(action.for !== PLACE) return state;
+            return { ...state, places: [], page: 1, totalPages: 1 };
         default:
             return state;
     }

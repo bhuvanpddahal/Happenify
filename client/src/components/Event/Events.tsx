@@ -30,9 +30,9 @@ import {
     Visited
 } from '../../constants/tab';
 import {
-    EVENT,
-    RESET_PAGE
+    EVENT
 } from '../../constants/event';
+import { RESET_PAGE } from '../../constants/action';
 
 const Events: React.FC = () => {
     // let history: History = useHistory();
@@ -77,8 +77,6 @@ const Events: React.FC = () => {
         } else if(activeTab === your_events) {
             dispatch(getUserEvents(1, limit));
         } else if(activeTab === new_to_you) {
-            console.log('inside new to you');
-            
             dispatch(getEvents(1, limit));
         } else if(activeTab === visited) {
             dispatch(getUserEvents(1, limit));
@@ -93,10 +91,11 @@ const Events: React.FC = () => {
 
     useEffect(() => {
         if(isSearching()) searchPosts();
+        else if(!location.search.includes('tab')) navigate('/events?tab=trending');
         else getPosts();
 
         return () => {
-            dispatch({ type: RESET_PAGE });
+            dispatch({ type: RESET_PAGE, for: EVENT });
         };
     }, [location]);
 

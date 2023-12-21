@@ -25,3 +25,4 @@ export const getEventById = (id: string) => API.get(`/events/${id}`);
 export const searchEvents = (tab: string, searchType: string, value: string, page: number, limit: number) => API.get(`/events/search?tab=${tab}&${searchType}=${value}&page=${page}&limit=${limit}`);
 
 export const createPlace = (formData: PlaceFormData) => API.post('/places', formData);
+export const getPlaces = (page: number, limit: number) => API.get(`/places?page=${page}&limit=${limit}`);

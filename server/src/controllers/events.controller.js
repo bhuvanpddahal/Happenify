@@ -66,9 +66,9 @@ export const getEvents = async (req, res) => {
         const { page, limit } = req.query;
         const skip = (Number(page) - 1) * limit;
         const totalEvents = await Event.countDocuments({}, { hint: "_id_" });
-        const allEvents = await Event.find().sort({ _id: -1 }).limit(limit).skip(skip);
+        const events = await Event.find().sort({ _id: -1 }).limit(limit).skip(skip);
         const totalPages = Math.ceil(totalEvents / limit);
-        res.status(200).json({ events: allEvents, totalPages, page: Number(page) + 1 });
+        res.status(200).json({ events, totalPages, page: Number(page) + 1 });
 
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });

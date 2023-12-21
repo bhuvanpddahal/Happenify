@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import * as api from '../api';
-import { Action as EventAction } from '../interfaces/event';
+import { Action as PlaceAction } from '../interfaces/place';
 import { Action as AlertAction } from '../interfaces/alert';
 import {
     START_LOADING,
@@ -10,6 +10,7 @@ import {
 import {
     PLACE,
     CREATE_PLACE,
+    GET_PLACES,
     creation_success
 } from '../constants/place';
 import { success } from '../constants/alert';
@@ -17,7 +18,7 @@ import { FormDataProp } from '../interfaces/place';
 import { showAlert } from './alert';
 import handleError from '../functions/error';
 
-export const createPlace = (formData: FormDataProp, navigate: any) => async (dispatch: any) => {
+export const createPlace = (formData: FormDataProp, navigate: any) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
     try {
         dispatch({ type: START_LOADING, for: PLACE });
         const { data } = await api.createPlace(formData);
@@ -26,6 +27,32 @@ export const createPlace = (formData: FormDataProp, navigate: any) => async (dis
         showAlert(creation_success, success, dispatch);
         navigate('/places');
         
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: PLACE });
+        handleError(error, dispatch);
+    }
+};
+
+export const getPlaces = (page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: PLACE });
+        const { data } = await api.getPlaces(page, limit);
+        dispatch({ type: GET_PLACES, data });
+        dispatch({ type: END_LOADING, for: PLACE });
+
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: PLACE });
+        handleError(error, dispatch);
+    }
+};
+
+export const getUserPlaces = (page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: PLACE });
+        const { data } = await api.getPlaces(page, limit);
+        dispatch({ type: GET_PLACES, data });
+        dispatch({ type: END_LOADING, for: PLACE });
+
     } catch (error) {
         dispatch({ type: END_LOADING, for: PLACE });
         handleError(error, dispatch);

@@ -9,6 +9,10 @@ import useQuery from '../../hooks/useQuery';
 import Tabs from '../Utils/Tabs';
 import { State } from '../../interfaces/store';
 import {
+    getPlaces,
+    getUserPlaces
+} from '../../actions/place';
+import {
     trending,
     your_places,
     new_to_you,
@@ -22,6 +26,7 @@ import Place from './Place';
 import {
     PLACE
 } from '../../constants/place';
+import { RESET_PAGE } from '../../constants/action';
 import { Place as PlaceType } from '../../interfaces/place';
 
 const Places: React.FC = () => {
@@ -44,14 +49,36 @@ const Places: React.FC = () => {
         // dispatch(getMorePlaces(page, limit));
     };
 
+    const searchPosts = () => {
+        // dispatch(searchEvents(activeTab, searchType, searchValue, 1, limit));
+    };
+
+    const getPosts = () => {
+        if(activeTab === trending) {
+            dispatch(getPlaces(1, limit));
+        } else if(activeTab === your_places) {
+            dispatch(getUserPlaces(1, limit));
+        } else if(activeTab === new_to_you) {
+            dispatch(getPlaces(1, limit));
+        } else if(activeTab === booked) {
+            dispatch(getUserPlaces(1, limit));
+        }
+    };
+
     const changeActiveTab = (tab: string) => {
         if(activeTab === tab && !isSearching()) return;
+        navigate(`/places?tab=${tab}`);
         setActiveTab(tab);
-        navigate(`/places?tab=${activeTab}`);
     };
 
     useEffect(() => {
-        
+        if(isSearching()) searchPosts();
+        else if(!location.search.includes('tab')) navigate('/places?tab=trending');
+        else getPosts();
+
+        return () => {
+            dispatch({ type: RESET_PAGE, for: PLACE });
+        };
     }, [location]);
 
     const { places, isLoading, totalPages, page, limit } = useSelector((state: State) => state.place);

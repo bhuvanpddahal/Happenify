@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-const PlaceDetails = () => {
-  return (
-    <div>PlaceDetails</div>
-  )
-}
+const PlaceDetails: React.FC = () => {
+    return (
+        <div>PlaceDetails</div>
+    )
+};
 
 export default PlaceDetails;

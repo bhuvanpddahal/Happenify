@@ -66,3 +66,18 @@ export const createPlace = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+export const getPlaces = async (req, res) => {
+    try {
+        const { page, limit } = req.query;
+        const skip = (Number(page) - 1) * limit;
+        const totalPlaces = await Place.countDocuments({}, { hint: "_id_" });
+        const places = await Place.find().sort({ _id: -1 }).limit(limit).skip(skip);
+        const totalPages = Math.ceil(totalPlaces / limit);
+        res.status(200).json({ places, totalPages, page: Number(page) + 1 });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};

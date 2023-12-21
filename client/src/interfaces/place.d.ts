@@ -65,7 +65,7 @@ export interface FormDataProp {
 }
 
 interface ManyData {
-    events: Event[];
+    places: Place[];
     page: number;
     totalPages: number;
 }
