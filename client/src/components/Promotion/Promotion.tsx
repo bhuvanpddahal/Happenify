@@ -33,7 +33,7 @@ const Promotion: React.FC<PromotionProp> = ({
                     />
                 ))}
             </ul>
-            <div className='text-right mb-2'>
+            <div className='text-right my-2'>
                 <Link to={promoteLink} className='bg-primary text-15px px-3 py-1 rounded-md inline-flex items-center gap-1 text-lightgrey cursor-pointer hover:bg-primarydark'>
                     <i className="ri-rocket-line text-18px"></i> Promote
                 </Link>
