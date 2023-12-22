@@ -17,3 +17,5 @@ export const creation_success = "Event created successfully";
 export const title = "Events";
 export const para = "Find and create events to share with others.";
 export const createLink = "/events/create";
+
+export const text = "Welcome to Event Magic! 🌟 Ready to create an unforgettable experience? Start by adding your event details below. Need inspiration? Check out our tips for crafting the perfect gathering. Let's turn your vision into a Happenify masterpiece! 🚀 #EventMagic #CreateMemories";

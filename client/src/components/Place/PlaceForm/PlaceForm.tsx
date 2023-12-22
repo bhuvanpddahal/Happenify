@@ -11,6 +11,7 @@ import { Option } from '../../../interfaces/util';
 import { Facility } from '../../../interfaces/place';
 import { createPlace } from '../../../actions/place';
 import { State } from '../../../interfaces/store';
+import { text } from '../../../constants/place';
 
 const PlaceForm: React.FC = () => {
     const dispatch: any = useDispatch();
@@ -85,7 +86,8 @@ const PlaceForm: React.FC = () => {
             {showSuggestion && (
                 <Suggestion
                     setShowSuggestion={setShowSuggestion}
-                    text="Welcome to Place Magic! 🌟 Ready to create an unforgettable experience? Start by adding your place details below. Need inspiration? Check out our tips for crafting the perfect gathering. Let's turn your vision into a Happenify masterpiece! 🚀 #PlaceMagic #CreateMemories"
+                    text={text}
+                    guidelines={[]}
                 />
             )}
             <form onSubmit={handleSubmit} className='px-4 py-3 bg-white shadow-image rounded-lg'>

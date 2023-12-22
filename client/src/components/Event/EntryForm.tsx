@@ -12,6 +12,7 @@ const EntryForm: React.FC = () => {
                 <Suggestion
                     setShowSuggestion={setShowSuggestion}
                     text="Please verify that your provided name, email, and phone number are accurate. This helps us keep you informed about any event updates. Also, for any questions or assistance, our friendly team is ready to help. Reach out to us at happenify@gmail.com or 987654321. Thank you for joining us! We look forward to creating lasting memories with you. 🎉"
+                    guidelines={[]}
                 />
             )}
             <form className='mb-4'>

@@ -8,6 +8,7 @@ import { Option } from '../../interfaces/util';
 import { handleImgChange } from '../../functions/util';
 import { createEvent } from '../../actions/event';
 import { State } from '../../interfaces/store';
+import { text } from '../../constants/event';
 import Suggestion from '../Utils/Suggestion';
 
 const EventForm: React.FC = () => {
@@ -50,7 +51,8 @@ const EventForm: React.FC = () => {
             {showSuggestion && (
                 <Suggestion
                     setShowSuggestion={setShowSuggestion}
-                    text="Welcome to Event Magic! 🌟 Ready to create an unforgettable experience? Start by adding your event details below. Need inspiration? Check out our tips for crafting the perfect gathering. Let's turn your vision into a Happenify masterpiece! 🚀 #EventMagic #CreateMemories"
+                    text={text}
+                    guidelines={[]}
                 />
             )}
             <form onSubmit={handleSubmit} className='px-4 py-3 bg-white shadow-image rounded-lg'>

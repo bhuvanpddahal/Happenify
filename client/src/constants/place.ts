@@ -11,3 +11,5 @@ export const creation_success = "Place created successfully";
 export const title = "Places";
 export const para = "Find and create places to share with others.";
 export const createLink = "/places/create";
+
+export const text = "Welcome to Place Magic! 🌟 Ready to create an unforgettable experience? Start by adding your place details below. Need inspiration? Check out our tips for crafting the perfect gathering. Let's turn your vision into a Happenify masterpiece! 🚀 #PlaceMagic #CreateMemories";
