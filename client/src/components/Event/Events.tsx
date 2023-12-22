@@ -5,9 +5,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Event from './Event';
 import Tabs from '../Utils/Tabs';
-import Loader from '../Utils/Loader';
+import Header from '../Utils/Header';
 import NotFound from '../Utils/NotFound';
+import Searchbar from '../Utils/Searchbar';
+import useQuery from '../../hooks/useQuery';
+import Loader from '../Utils/Loaders/Loader';
 import { State } from '../../interfaces/store';
+import SkeletonLoader from '../Utils/Loaders/SkeletonLoader';
+import { title, para, createLink } from '../../constants/event';
 import {
     getEvents,
     getUserEvents,
@@ -17,7 +22,6 @@ import {
     getMoreSearchedEvents
 } from '../../actions/event';
 import { Event as EventType } from '../../interfaces/event';
-import useQuery from '../../hooks/useQuery';
 // import useHistory, { History } from '../../hooks/useHistory';
 import {
     trending,
@@ -102,64 +106,71 @@ const Events: React.FC = () => {
     const { events, isLoading, totalPages, page, limit } = useSelector((state: State) => state.event);
     
     return (
-        <div className='px-3 py-2'>
-            <Tabs
-                page={EVENT}
-                title='Events'
-                para='Find and create events to share with others.'
-                createLink='/events/create'
+        <div className='px-3 py-2 h-full bg-dim'>
+            <Header
+                title={title}
+                para={para}
+                createLink={createLink}
+            />
+
+            <Searchbar
+                tab={activeTab}
                 searchType={searchType}
                 setSearchType={setSearchType}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
-                activeTab={activeTab}
-                changeActiveTab={changeActiveTab}
-                value1={trending}
-                value2={your_events}
-                value3={new_to_you}
-                value4={visited}
-                option1={Trending}
-                option2={Your_Events}
-                option3={New_to_you}
-                option4={Visited}
             />
 
-            {isLoading && <Loader />}
+            <div className='px-4 py-3 mt-4 bg-white shadow-image rounded-lg'>
+                <Tabs
+                    activeTab={activeTab}
+                    changeActiveTab={changeActiveTab}
+                    value1={trending}
+                    value2={your_events}
+                    value3={new_to_you}
+                    value4={visited}
+                    option1={Trending}
+                    option2={Your_Events}
+                    option3={New_to_you}
+                    option4={Visited}
+                />
 
-            {events?.length ? (
-                <ul className='mt-5'>
-                    <InfiniteScroll
-                        dataLength={events.length}
-                        next={isSearching() ? getMoreSearchedPosts : getMorePosts}
-                        hasMore={page <= totalPages}
-                        loader={<Loader />}
-                        scrollThreshold={'100px'}
-                        style={{ overflow: 'visible' }}
-                    >
-                        {events.map((event: EventType) => (
-                            <Event
-                                key={event._id}
-                                _id={event._id}
-                                name={event.name}
-                                dateAndTime={event.dateAndTime}
-                                location={event.location}
-                                description={event.description}
-                                ticketPrice={event.ticketPrice}
-                                organizer={event.organizer}
-                                type={event.type}
-                                image={event.image}
-                                socialMedia={event.socialMedia}
-                                contact={event.contact}
-                                createdAt={event.createdAt}
-                            />
-                        ))}
-                    </InfiniteScroll>
-                </ul>
-            ) : (
-                <>
-                    {!isLoading && <NotFound message='No events' />}
-                </>
-            )}
+                {isLoading && <SkeletonLoader />}
+
+                {events?.length ? (
+                    <ul className='mt-5'>
+                        <InfiniteScroll
+                            dataLength={events.length}
+                            next={isSearching() ? getMoreSearchedPosts : getMorePosts}
+                            hasMore={page <= totalPages}
+                            loader={<Loader />}
+                            scrollThreshold={'100px'}
+                        >
+                            {events.map((event: EventType) => (
+                                <Event
+                                    key={event._id}
+                                    _id={event._id}
+                                    name={event.name}
+                                    dateAndTime={event.dateAndTime}
+                                    location={event.location}
+                                    description={event.description}
+                                    ticketPrice={event.ticketPrice}
+                                    organizer={event.organizer}
+                                    type={event.type}
+                                    image={event.image}
+                                    socialMedia={event.socialMedia}
+                                    contact={event.contact}
+                                    createdAt={event.createdAt}
+                                />
+                            ))}
+                        </InfiniteScroll>
+                    </ul>
+                ) : (
+                    <>
+                        {!isLoading && <NotFound message='No events' />}
+                    </>
+                )}
+            </div>
         </div>
     )
 };

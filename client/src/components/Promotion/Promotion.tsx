@@ -1,22 +1,44 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+import Card from './Card';
 
 interface PromotionProp {
     title: string;
-    image: string;
-    description: string;
+    promoteLink: string;
 }
 
 const Promotion: React.FC<PromotionProp> = ({
     title,
-    image,
-    description
+    promoteLink
 }: PromotionProp) => {
+    const promotions = [1, 2, 3, 2, 3, 2, 3, 2, 3];
+
     return (
-        <li className='min-w-200px'>
-            <h1 className='font-medium text-dark line-clamp-1'>{title}</h1>
-            <img className='h-180px w-full rounded-md border border-solid border-grey' src={image} alt="image" />
-            <p className='text-15px line-clamp-3'>{description}</p>
-        </li>
+        <div className='px-4 pt-3 pb-2 bg-white rounded-lg shadow-image mb-4'>
+            <h2 className='text-18px text-dark font-semibold'>{title}</h2>
+                
+            {/* <div className='flex items-center justify-between'>
+                <h2 className='text-18px text-dark font-semibold'>{title}</h2>
+                <Link to={promoteLink} className='bg-primary px-3 py-1 rounded-md flex items-center gap-2 text-lightgrey cursor-pointer hover:bg-primarydark'>
+                    <i className="ri-rocket-line text-20px"></i> Promote
+                </Link>
+            </div> */}
+            <ul className='mt-3 flex gap-3 overflow-x-auto overflow-visible'>
+                {promotions.map((promotion: any) => (
+                    <Card
+                        title='Culinary Delights at FoodFiesta'
+                        image=''
+                        description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt est ipsa excepturi voluptas ab eveniet velit dolores exercitationem illum quos. Officiis, voluptatem deleniti.'
+                    />
+                ))}
+            </ul>
+            <div className='text-right mb-2'>
+                <Link to={promoteLink} className='bg-primary text-15px px-3 py-1 rounded-md inline-flex items-center gap-1 text-lightgrey cursor-pointer hover:bg-primarydark'>
+                    <i className="ri-rocket-line text-18px"></i> Promote
+                </Link>
+            </div>
+        </div>
     )
 };
 

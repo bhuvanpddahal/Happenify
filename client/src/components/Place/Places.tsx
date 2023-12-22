@@ -3,11 +3,16 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import Loader from '../Utils/Loader';
-import NotFound from '../Utils/NotFound';
-import useQuery from '../../hooks/useQuery';
+import Place from './Place';
 import Tabs from '../Utils/Tabs';
+import Header from '../Utils/Header';
+import NotFound from '../Utils/NotFound';
+import Searchbar from '../Utils/Searchbar';
+import useQuery from '../../hooks/useQuery';
+import Loader from '../Utils/Loaders/Loader';
 import { State } from '../../interfaces/store';
+import SkeletonLoader from '../Utils/Loaders/SkeletonLoader';
+import { title, para, createLink } from '../../constants/place';
 import {
     getPlaces,
     getUserPlaces
@@ -22,7 +27,6 @@ import {
     New_to_you,
     Booked
 } from '../../constants/tab';
-import Place from './Place';
 import {
     PLACE
 } from '../../constants/place';
@@ -84,67 +88,74 @@ const Places: React.FC = () => {
     const { places, isLoading, totalPages, page, limit } = useSelector((state: State) => state.place);
 
     return (
-        <div className='px-3 py-2'>
-            <Tabs
-                page={PLACE}
-                title='Places'
-                para='Find and create places to share with others.'
-                createLink='/places/create'
+        <div className='px-3 py-2 h-full bg-dim'>
+            <Header
+                title={title}
+                para={para}
+                createLink={createLink}
+            />
+
+            <Searchbar
+                tab={activeTab}
                 searchType={searchType}
                 setSearchType={setSearchType}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
-                activeTab={activeTab}
-                changeActiveTab={changeActiveTab}
-                value1={trending}
-                value2={your_places}
-                value3={new_to_you}
-                value4={booked}
-                option1={Trending}
-                option2={Your_Places}
-                option3={New_to_you}
-                option4={Booked}
             />
 
-            {isLoading && <Loader />}
+            <div className='px-4 py-3 mt-4 bg-white shadow-image rounded-lg'>
+                <Tabs
+                    activeTab={activeTab}
+                    changeActiveTab={changeActiveTab}
+                    value1={trending}
+                    value2={your_places}
+                    value3={new_to_you}
+                    value4={booked}
+                    option1={Trending}
+                    option2={Your_Places}
+                    option3={New_to_you}
+                    option4={Booked}
+                />
 
-            {places?.length ? (
-                <ul className='mt-5'>
-                    <InfiniteScroll
-                        dataLength={places.length}
-                        next={getMorePosts}
-                        hasMore={page <= totalPages}
-                        loader={<Loader />}
-                        scrollThreshold={'100px'}
-                        style={{ overflow: 'visible' }}
-                    >
-                        {places.map((place: PlaceType) => (
-                            <Place
-                                key={place._id}
-                                _id={place._id}
-                                name={place.name}
-                                location={place.location}
-                                capacity={place.capacity}
-                                description={place.description}
-                                type={place.type}
-                                contact={place.contact}
-                                images={place.images}
-                                facilities={place.facilities}
-                                ratings={place.ratings}
-                                owner={place.owner}
-                                pricePerHour={place.pricePerHour}
-                                termsAndConditions={place.termsAndConditions}
-                                socialMedia={place.socialMedia}
-                                createdAt={place.createdAt}
-                            />
-                        ))}
-                    </InfiniteScroll>
-                </ul>
-            ) : (
-                <>
-                    {!isLoading && <NotFound message='No places' />}
-                </>
-            )}
+                {isLoading && <SkeletonLoader />}
+
+                {places?.length ? (
+                    <ul className='mt-5'>
+                        <InfiniteScroll
+                            dataLength={places.length}
+                            next={getMorePosts}
+                            hasMore={page <= totalPages}
+                            loader={<Loader />}
+                            scrollThreshold={'100px'}
+                        >
+                            {places.map((place: PlaceType) => (
+                                <Place
+                                    key={place._id}
+                                    _id={place._id}
+                                    name={place.name}
+                                    location={place.location}
+                                    capacity={place.capacity}
+                                    description={place.description}
+                                    type={place.type}
+                                    contact={place.contact}
+                                    images={place.images}
+                                    facilities={place.facilities}
+                                    ratings={place.ratings}
+                                    owner={place.owner}
+                                    pricePerHour={place.pricePerHour}
+                                    termsAndConditions={place.termsAndConditions}
+                                    socialMedia={place.socialMedia}
+                                    createdAt={place.createdAt}
+                                />
+                            ))}
+                        </InfiniteScroll>
+                    </ul>
+                ) : (
+                    <>
+                        {!isLoading && <NotFound message='No places' />}
+                    </>
+                )}
+            </div>
         </div>
     )
 };

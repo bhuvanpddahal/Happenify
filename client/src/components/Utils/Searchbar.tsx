@@ -31,14 +31,14 @@ const Searchbar: React.FC<SearchbarProp> = ({
 
     return (
         <div className='mb-2 h-40px flex items-center justify-end text-15px sm:text-16px'>
-            <div className={`border border-solid border-grey rounded-50px transition-all duration-300 ${showSearchbar ? '' : 'sm:opacity-0 sm:pointer-events-none'}`}>
+            <div className={`border border-solid border-grey rounded-50px transition-all duration-300 overflow-hidden bg-white shadow-image ${showSearchbar ? '' : 'sm:opacity-0 sm:pointer-events-none'}`}>
                 <input onKeyDown={handleKeyDown} onChange={(e) => setSearchValue(e.target.value)} value={searchValue} className='outline-none w-120px sm:w-160px border-r border-solid border-grey px-3 py-2 bg-transparent' type="text" placeholder='Search event' />
-                <select onChange={(e) => setSearchType(e.target.value)} className=' outline-none px-1 py-2 bg-transparent' value={searchType}>
+                <select onChange={(e) => setSearchType(e.target.value)} className=' outline-none px-1 py-2' value={searchType}>
                     <option value="name">Name</option>
                     <option value="location">Location</option>
                 </select>
             </div>
-            <div onClick={toggleShowSearchbar} className='hidden sm:flex relative h-40px w-40px items-center justify-center rounded-full border border-solid border-grey cursor-pointer hover:bg-lightgrey'>
+            <div onClick={toggleShowSearchbar} className='hidden sm:flex relative h-40px w-40px items-center justify-center bg-white rounded-full shadow-image cursor-pointer hover:bg-lightgrey'>
                 <i className={`ri-search-line absolute text-20px transition-all duration-300 ${showSearchbar ? 'opacity-0 pointer-events-none' : ''}`}></i>
                 <i className={`ri-close-line absolute text-22px transition-all duration-300 ${showSearchbar ? '' : 'opacity-0 pointer-events-none'}`}></i>
             </div>

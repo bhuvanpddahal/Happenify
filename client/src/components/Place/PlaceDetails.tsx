@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
-import Loader from '../Utils/Loader';
+import Loader from '../Utils/Loaders/Loader';
 import ProfileImg from '../../images/profile.png';
 import { State } from '../../interfaces/store';
 import { getPlaceById } from '../../actions/place';

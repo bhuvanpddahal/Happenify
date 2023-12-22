@@ -13,3 +13,7 @@ export const SEARCH_EVENTS = "SEARCH_EVENTS";
 export const GET_MORE_SEARCHED_EVENTS = "GET_MORE_SEARCHED_EVENTS";
 
 export const creation_success = "Event created successfully";
+
+export const title = "Events";
+export const para = "Find and create events to share with others.";
+export const createLink = "/events/create";

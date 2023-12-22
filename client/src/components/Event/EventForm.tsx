@@ -46,14 +46,14 @@ const EventForm: React.FC = () => {
     const { isLoading } = useSelector((state: State) => state.event);
 
     return (
-        <div className='p-3'>
+        <div className='p-3 bg-dim'>
             {showSuggestion && (
                 <Suggestion
                     setShowSuggestion={setShowSuggestion}
                     text="Welcome to Event Magic! 🌟 Ready to create an unforgettable experience? Start by adding your event details below. Need inspiration? Check out our tips for crafting the perfect gathering. Let's turn your vision into a Happenify masterpiece! 🚀 #EventMagic #CreateMemories"
                 />
             )}
-            <form onSubmit={handleSubmit} className='mb-4'>
+            <form onSubmit={handleSubmit} className='px-4 py-3 bg-white shadow-image rounded-lg'>
                 <h1 className='font-semibold text-20px text-dark mb-2'>Enter The Necessary Event Details</h1>
                 <div className='flex gap-3 mb-3 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setName(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={name} type="text" placeholder='Name *' required />
@@ -87,7 +87,7 @@ const EventForm: React.FC = () => {
                     <input onChange={(e) => setTwitter(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={twitter} type="text" placeholder='Twitter account *' required />
                     <input onChange={(e) => setContact(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={contact} type="email" placeholder='Conatct email *' required />
                 </div>
-                <div className='flex items-center flex-wrap-reverse justify-between gap-3'>
+                <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
                     <button className={`relative w-200px py-2 rounded-sm ${isLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isLoading}>
                         {isLoading ? 'Creating...' : (
                             <><i className="ri-add-circle-line"></i> Create my event</>

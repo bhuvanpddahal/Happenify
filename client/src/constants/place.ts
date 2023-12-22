@@ -7,3 +7,7 @@ export const GET_PLACE_BY_ID = "GET_PLACE_BY_ID";
 export const REMOVE_SELECTED_PLACE = "REMOVE_SELECTED_PLACE";
 
 export const creation_success = "Place created successfully";
+
+export const title = "Places";
+export const para = "Find and create places to share with others.";
+export const createLink = "/places/create";

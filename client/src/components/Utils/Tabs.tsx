@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 import { TabsProp } from '../../interfaces/tab';
 import { mapIcon, mapText } from '../../functions/tab';
-import Searchbar from './Searchbar';
 
 const Tabs: React.FC<TabsProp> = ({
-    page,
-    title,
-    para,
-    createLink,
-    searchType,
-    setSearchType,
-    searchValue,
-    setSearchValue,
     activeTab,
     changeActiveTab,
     value1,
@@ -25,28 +15,8 @@ const Tabs: React.FC<TabsProp> = ({
     option3,
     option4
 }: TabsProp) => {
-    const [showSearchbar, setShowSearchbar] = useState(false);
-
     return (
         <>
-            <div className='flex justify-between gap-2 items-center flex-wrap mb-2'>
-                <div>
-                    <h1 className='text-20px text-dark font-semibold'>{title}</h1>
-                    <p className='text-14px sm:text-15px'>{para}</p>
-                </div>
-                <Link to={createLink} className='bg-primary px-3 py-1 sm:text-17px rounded-md flex items-center gap-2 text-lightgrey cursor-pointer hover:bg-primarydark'>
-                    <i className="ri-add-circle-line text-20px md:text-22px"></i> Create
-                </Link>
-            </div>
-
-            <Searchbar
-                tab={activeTab}
-                searchType={searchType}
-                setSearchType={setSearchType}
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-            />
-
             {/* For larger devices */}
             <div className='hidden sm:flex gap-5 md:gap-10 lg:text-17px'>
                 <div onClick={() => changeActiveTab(value1)} className={`w-130px py-1 border-b-3 border-solid flex items-center justify-center gap-1 cursor-pointer ${activeTab === value1 ? 'border-secondary text-primarydark font-medium' : ''}`}>
@@ -62,7 +32,6 @@ const Tabs: React.FC<TabsProp> = ({
                     <i className={`${activeTab === value4 ? 'ri-checkbox-fill' : 'ri-checkbox-line'} text-22px`}></i> {option4}
                 </div>
             </div>
-
 
             {/* For mobile devices */}
             <div className='sm:hidden flex items-center justify-between flex-wrap gap-2'>

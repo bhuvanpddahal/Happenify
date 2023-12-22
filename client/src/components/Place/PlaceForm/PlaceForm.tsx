@@ -81,14 +81,14 @@ const PlaceForm: React.FC = () => {
     const { isLoading } = useSelector((state: State) => state.place);
 
     return (
-        <div className='p-3'>
+        <div className='p-3 bg-dim'>
             {showSuggestion && (
                 <Suggestion
                     setShowSuggestion={setShowSuggestion}
                     text="Welcome to Place Magic! 🌟 Ready to create an unforgettable experience? Start by adding your place details below. Need inspiration? Check out our tips for crafting the perfect gathering. Let's turn your vision into a Happenify masterpiece! 🚀 #PlaceMagic #CreateMemories"
                 />
             )}
-            <form onSubmit={handleSubmit} className='mb-4'>
+            <form onSubmit={handleSubmit} className='px-4 py-3 bg-white shadow-image rounded-lg'>
                 <h1 className='font-semibold text-20px text-dark mb-2'>Enter The Necessary Place Details</h1>
                 <div className='flex gap-3 mb-3 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setName(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={name} type="text" placeholder='Name *' required />
@@ -127,7 +127,7 @@ const PlaceForm: React.FC = () => {
                     <ul className='ml-5 flex gap-x-4 gap-y-3 flex-wrap'>
                         {allFacilities.map((facility: Facility, index: number) => (
                             <li key={index} className='flex items-center gap-1'>
-                                <input onChange={(e) => toggleFacility(e, index)} id={facility.id} type="checkbox" />
+                                <input onChange={(e) => toggleFacility(e, index)} id={facility.id} className='accent-primary' type="checkbox" />
                                 <label htmlFor={facility.id}>{facility.name}</label>
                             </li>
                         ))}
@@ -152,11 +152,11 @@ const PlaceForm: React.FC = () => {
                         <div ref={bottomRef}></div>
                     </ul>
                     <div className='relative ml-5'>
-                        <input ref={conditionInput} className='py-2 pl-3 pr-50px border border-solid border-grey outline-none w-full rounded-sm' type="text" />
+                        <input ref={conditionInput} className='py-2 pl-3 pr-50px border border-solid border-grey outline-none w-full rounded-sm' type="text" placeholder='Enter a condition' />
                         <i onClick={addCondition} className="ri-add-line absolute text-22px top-0 right-0 h-full w-40px bg-primary text-lightgrey rounded-r-sm cursor-pointer flex items-center justify-center"></i>
                     </div>
                 </div>
-                <div className='flex items-center flex-wrap-reverse justify-between gap-3'>
+                <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
                     <button className={`relative w-200px py-2 rounded-sm ${isLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isLoading}>
                         {isLoading ? 'Creating...' : (
                             <><i className="ri-add-circle-line"></i> Create my place</>
