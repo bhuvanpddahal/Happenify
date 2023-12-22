@@ -26,3 +26,5 @@ export const searchEvents = (tab: string, searchType: string, value: string, pag
 
 export const createPlace = (formData: PlaceFormData) => API.post('/places', formData);
 export const getPlaces = (page: number, limit: number) => API.get(`/places?page=${page}&limit=${limit}`);
+export const getUserPlaces = (page: number, limit: number) => API.get(`/places/user?page=${page}&limit=${limit}`);
+export const getPlaceById = (id: string) => API.get(`/places/${id}`);

@@ -7,7 +7,10 @@ import {
 import {
     PLACE,
     CREATE_PLACE,
-    GET_PLACES
+    GET_PLACES,
+    GET_USER_PLACES,
+    GET_PLACE_BY_ID,
+    REMOVE_SELECTED_PLACE
 } from '../constants/place';
 
 const initialState = {
@@ -30,12 +33,17 @@ const placeReducer = (state = initialState, action: Action) => {
         case CREATE_PLACE:
             return { ...state, places: [action?.data, ...state.places] };
         case GET_PLACES:
+        case GET_USER_PLACES:
             return {
                 ...state,
                 places: (action?.data as ManyData)?.places,
                 page: (action?.data as ManyData)?.page,
                 totalPages: (action?.data as ManyData)?.totalPages
             };
+        case GET_PLACE_BY_ID:
+            return { ...state, selectedPlace: action?.data };
+        case REMOVE_SELECTED_PLACE:
+            return { ...state, selectedPlace: null };
         case RESET_PAGE:
             if(action.for !== PLACE) return state;
             return { ...state, places: [], page: 1, totalPages: 1 };

@@ -31,6 +31,7 @@ module.exports = {
         "200px": "200px",
       },
       colors: {
+        "dim": "#f5f7fa",
         "dark": "#151515",
         "normal": "#565656",
         "darkgrey": "#999",

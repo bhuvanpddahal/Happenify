@@ -11,6 +11,7 @@ import EventForm from './Event/EventForm';
 import EntryForm from './Event/EntryForm';
 import Places from './Place/Places';
 import PlaceForm from './Place/PlaceForm/PlaceForm';
+import PlaceDetails from './Place/PlaceDetails';
 import Promotions from './Promotion/Promotions';
 import Calendar from './Calendar';
 import Expenses from './Expenses';
@@ -30,6 +31,7 @@ const Content: React.FC = () => {
                 </Route>
                 <Route path='/places/*'>
                     <Route index element={<Places />} />
+                    <Route path=':id' element={<PlaceDetails />} />
                     <Route path=':id/book' element={<EntryForm />} />
                     <Route path='create' element={<PlaceForm />} />
                 </Route>

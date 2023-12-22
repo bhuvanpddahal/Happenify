@@ -81,3 +81,33 @@ export const getPlaces = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+export const getUserPlaces = async (req, res) => {
+    try {
+        const { userId } = req;
+        const { page, limit } = req.query;
+        const user = await User.findById(userId);
+        const skip = (Number(page) - 1) * limit;
+        const totalPlaces = await Place.countDocuments({ 'owner.id': user._id }, { hint: "_id_" });
+        const places = await Place.find({ 'owner.id': user._id }).sort({ _id: -1 }).limit(limit).skip(skip);
+        const totalPages = Math.ceil(totalPlaces / limit);
+        res.status(200).json({ places, totalPages, page: Number(page) + 1 });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+export const getPlaceById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if(!ObjectId.isValid(id)) return res.status(404).json({ message: "Place not found" });
+        const place = await Place.findById(id);
+        if(!place) return res.status(404).json({ message: "Place not found" });
+        res.status(200).json(place);
+
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};

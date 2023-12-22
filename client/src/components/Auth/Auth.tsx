@@ -46,8 +46,8 @@ const Auth: React.FC = () => {
     const { isLoading } = useSelector((state: State) => state.auth);
 
     return (
-        <div className='p-3 min-h-screen flex items-center justify-center'>
-            <form onSubmit={handleSubmit} className='mb-4 md:text-17px'>
+        <div className='p-3 min-h-screen flex items-center justify-center bg-dim'>
+            <form onSubmit={handleSubmit} className='mb-4 md:text-17px rounded-lg px-4 py-3 bg-white shadow-image'>
                 <div className='text-center mb-3'>
                     <h1 className='font-semibold text-20px text-dark mb-n10px'>{isLogin ? 'Log In' : 'Sign Up'}</h1>
                     <img className='h-40px lg:h-50px inline-block' src={Logo} alt="Happenify" />
@@ -70,7 +70,7 @@ const Auth: React.FC = () => {
                         <input ref={fileInputRef} onChange={(e) => handleImgChange(e, setPicture)} className='absolute opacity-0 pointer-events-none' type="file" />
                     </div>
                 )}
-                <div className='flex items-center flex-wrap-reverse justify-between gap-3'>
+                <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
                     <button className={`relative w-130px py-2 rounded-sm ${isLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isLoading}>
                         {isLoading
                             ? isLogin ? 'Logging in' : 'Signing up'

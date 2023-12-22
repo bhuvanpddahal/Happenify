@@ -11,6 +11,8 @@ import {
     PLACE,
     CREATE_PLACE,
     GET_PLACES,
+    GET_USER_PLACES,
+    GET_PLACE_BY_ID,
     creation_success
 } from '../constants/place';
 import { success } from '../constants/alert';
@@ -49,8 +51,21 @@ export const getPlaces = (page: number, limit: number) => async (dispatch: Dispa
 export const getUserPlaces = (page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
     try {
         dispatch({ type: START_LOADING, for: PLACE });
-        const { data } = await api.getPlaces(page, limit);
-        dispatch({ type: GET_PLACES, data });
+        const { data } = await api.getUserPlaces(page, limit);
+        dispatch({ type: GET_USER_PLACES, data });
+        dispatch({ type: END_LOADING, for: PLACE });
+
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: PLACE });
+        handleError(error, dispatch);
+    }
+};
+
+export const getPlaceById = (id: string) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: PLACE });
+        const { data } = await api.getPlaceById(id);
+        dispatch({ type: GET_PLACE_BY_ID, data });
         dispatch({ type: END_LOADING, for: PLACE });
 
     } catch (error) {
