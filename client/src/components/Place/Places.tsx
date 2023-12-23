@@ -103,7 +103,7 @@ const Places: React.FC = () => {
                 setSearchValue={setSearchValue}
             />
 
-            <div className='px-4 py-3 mt-4 bg-white shadow-image rounded-lg'>
+            <div className='p-4 mt-4 bg-white shadow-image rounded-lg'>
                 <Tabs
                     activeTab={activeTab}
                     changeActiveTab={changeActiveTab}
@@ -128,9 +128,10 @@ const Places: React.FC = () => {
                             loader={<Loader />}
                             scrollThreshold={'100px'}
                         >
-                            {places.map((place: PlaceType) => (
+                            {places.map((place: PlaceType, index: number) => (
                                 <Place
                                     key={place._id}
+                                    isLast={index === places.length - 1}
                                     _id={place._id}
                                     name={place.name}
                                     location={place.location}

@@ -121,7 +121,7 @@ const Events: React.FC = () => {
                 setSearchValue={setSearchValue}
             />
 
-            <div className='px-4 py-3 mt-4 bg-white shadow-image rounded-lg'>
+            <div className='p-4 mt-4 bg-white shadow-image rounded-lg'>
                 <Tabs
                     activeTab={activeTab}
                     changeActiveTab={changeActiveTab}
@@ -146,9 +146,10 @@ const Events: React.FC = () => {
                             loader={<Loader />}
                             scrollThreshold={'100px'}
                         >
-                            {events.map((event: EventType) => (
+                            {events.map((event: EventType, index: number) => (
                                 <Event
                                     key={event._id}
+                                    isLast={index === events.length - 1}
                                     _id={event._id}
                                     name={event.name}
                                     dateAndTime={event.dateAndTime}

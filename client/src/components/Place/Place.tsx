@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Place as PlaceProp } from '../../interfaces/place';
 
 const Place: React.FC<PlaceProp> = ({
+    isLast,
     _id,
     name,
     location,
@@ -22,7 +23,7 @@ const Place: React.FC<PlaceProp> = ({
     createdAt
 }: PlaceProp) => {
     return (
-        <li className='md:h-260px flex flex-col md:flex-row gap-3 py-3 border-b border-solid border-grey'>
+        <li className={`md:h-260px flex flex-col md:flex-row gap-3 ${!isLast ? 'py-3 border-b border-solid border-grey' : 'pt-3'}`}>
             <Link to={`/places/${_id?.toString()}`} className='md:w-1/2 h-full rounded-lg overflow-hidden border border-solid border-grey'>
                 <img className='h-200px sm:h-240px md:h-full w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-110' src={images[0]} alt="place" />
             </Link>

@@ -24,7 +24,7 @@ const Promotion: React.FC<PromotionProp> = ({
                     <i className="ri-rocket-line text-20px"></i> Promote
                 </Link>
             </div> */}
-            <ul className='mt-3 flex gap-3 overflow-x-auto overflow-visible'>
+            <ul className='mt-3 flex gap-3 overflow-visible overflow-x-hidden pb-13px hover:overflow-x-auto hover:pb-2'>
                 {promotions.map((promotion: any) => (
                     <Card
                         title='Culinary Delights at FoodFiesta'

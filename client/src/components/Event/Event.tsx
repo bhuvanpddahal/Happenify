@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Event as EventProp } from '../../interfaces/event';
 
 const Event: React.FC<EventProp> = ({
+    isLast,
     _id,
     name,
     dateAndTime,
@@ -19,7 +20,7 @@ const Event: React.FC<EventProp> = ({
     createdAt
 }: EventProp) => {
     return (
-        <li className='md:h-260px flex flex-col md:flex-row gap-3 py-3 border-b border-solid border-grey'>
+        <li className={`md:h-260px flex flex-col md:flex-row gap-3 ${!isLast ? 'py-3 border-b border-solid border-grey' : 'pt-3'}`}>
             <Link to={`/events/${_id?.toString()}`} className='md:w-1/2 h-full rounded-lg overflow-hidden border border-solid border-grey'>
                 <img className='h-200px sm:h-240px md:h-full w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-110' src={image} alt="event" />
             </Link>

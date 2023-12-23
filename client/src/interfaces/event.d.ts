@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 
 export interface Event {
+    isLast: boolean;
     _id: ObjectId;
     name: string;
     dateAndTime: string;

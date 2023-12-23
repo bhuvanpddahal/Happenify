@@ -6,6 +6,7 @@ interface Rating {
 }
 
 export interface Place {
+    isLast: boolean;
     _id: ObjectId;
     name: string;
     location: string;
