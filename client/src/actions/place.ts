@@ -13,6 +13,7 @@ import {
     GET_PLACES,
     GET_USER_PLACES,
     GET_PLACE_BY_ID,
+    SEARCH_PLACES,
     creation_success
 } from '../constants/place';
 import { success } from '../constants/alert';
@@ -73,3 +74,16 @@ export const getPlaceById = (id: string) => async (dispatch: Dispatch<PlaceActio
         handleError(error, dispatch);
     }
 };
+
+// export const searchPlaces = (tab: string, searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+//     try {
+//         dispatch({ type: START_LOADING, for: PLACE });
+//         const { data } = await api.searchEvents(tab, searchType, value, page, limit);
+//         dispatch({ type: SEARCH_PLACES, data });
+//         dispatch({ type: END_LOADING, for: PLACE });
+
+//     } catch (error) {
+//         dispatch({ type: END_LOADING, for: PLACE });
+//         handleError(error, dispatch);
+//     }
+// };

@@ -29,8 +29,8 @@ const EventSchema = new mongoose.Schema({
         }
     },
     type: {
-        type: String,
-        required: true
+        value: { type: String, required: true },
+        name: { type: String, required: true }
     },
     image: {
         type: String,

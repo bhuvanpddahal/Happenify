@@ -1,5 +1,10 @@
 import { ObjectId } from 'mongodb';
 
+interface Type {
+    value: string;
+    name: string;
+}
+
 interface Rating {
     star: number;
     review: string;
@@ -12,7 +17,7 @@ export interface Place {
     location: string;
     capacity: number;
     description: string;
-    type: string;
+    type: Type;
     contact: string;
     images: string[];
     facilities: string[];
@@ -55,7 +60,7 @@ export interface FormDataProp {
     location: string;
     capacity: string;
     description: string;
-    type: string;
+    type: Type;
     contact: string;
     images: string[];
     facilities: string[];

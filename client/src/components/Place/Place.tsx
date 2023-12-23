@@ -33,7 +33,7 @@ const Place: React.FC<PlaceProp> = ({
                     <i className="ri-map-pin-line text-22px text-secondarydark"></i> {location}
                 </p>
                 <p className='flex items-center gap-2 text-18px md:text-19px font-medium text-normal'>
-                    <i className="ri-star-smile-line text-22px text-secondarydark"></i> {type}
+                    <i className="ri-star-smile-line text-22px text-secondarydark"></i> {type?.name}
                 </p>
                 <p className='line-clamp-3'>{description}</p>
                 <Link to={`/events/12345/book-entry`} className='flex items-center justify-center gap-1 py-2 w-full bg-primary text-lightgrey mt-3 rounded-sm hover:bg-primarydark'>

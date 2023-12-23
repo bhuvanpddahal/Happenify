@@ -29,13 +29,16 @@ const EventForm: React.FC = () => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
+        const selectedType = eventOptions.find((option) => option.value === type);
+        const value = selectedType?.value || '';
+        const typeName = selectedType?.type || '';
         const formData = {
             name,
             dateAndTime,
             location,
             description,
             ticketPrice,
-            type,
+            type: { value, name: typeName },
             image,
             facebook,
             twitter,

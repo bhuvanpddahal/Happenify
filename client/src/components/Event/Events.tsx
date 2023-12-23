@@ -12,16 +12,7 @@ import useQuery from '../../hooks/useQuery';
 import { State } from '../../interfaces/store';
 import SkeletonLoaders from '../Utils/Loaders/SkeletonLoader/SkeletonLoaders';
 import { title, para, createLink } from '../../constants/event';
-import {
-    getEvents,
-    getUserEvents,
-    getMoreEvents,
-    getMoreUserEvents,
-    searchEvents,
-    getMoreSearchedEvents
-} from '../../actions/event';
 import { Event as EventType } from '../../interfaces/event';
-// import useHistory, { History } from '../../hooks/useHistory';
 import {
     trending,
     your_events,
@@ -36,9 +27,15 @@ import {
     EVENT
 } from '../../constants/event';
 import { RESET_PAGE } from '../../constants/action';
+import { isSearching } from '../../functions/util';
+import {
+    getPosts,
+    getMorePosts,
+    searchPosts,
+    getMoreSearchedPosts
+} from '../../functions/event';
 
 const Events: React.FC = () => {
-    // let history: History = useHistory();
     const { tab, name, location: searchedLocation } = useQuery();
     const navigate = useNavigate();
     const location = useLocation();
@@ -49,53 +46,24 @@ const Events: React.FC = () => {
     const [searchType, setSearchType] = useState(type);
     const [searchValue, setSearchValue] = useState(value);
 
-    const isSearching = () => {
-        if(location.search.includes('name') || location.search.includes('location')) return true;
-        return false;
-    };
-
-    const getMoreSearchedPosts = () => {
-        dispatch(getMoreSearchedEvents(activeTab, searchType, searchValue, page, limit));
-    };
-    
-    const getMorePosts = () => {
-        if(activeTab === trending) {
-            dispatch(getMoreEvents(page, limit));
-        } else if(activeTab === your_events) {
-            dispatch(getMoreUserEvents(page, limit));
-        } else if(activeTab === new_to_you) {
-            dispatch(getMoreEvents(page, limit));
-        } else if(activeTab === visited) {
-            dispatch(getMoreUserEvents(page, limit));
-        }
-    };
-
-    const searchPosts = () => {
-        dispatch(searchEvents(activeTab, searchType, searchValue, 1, limit));
-    };
-
-    const getPosts = () => {
-        if(activeTab === trending) {
-            dispatch(getEvents(1, limit));
-        } else if(activeTab === your_events) {
-            dispatch(getUserEvents(1, limit));
-        } else if(activeTab === new_to_you) {
-            dispatch(getEvents(1, limit));
-        } else if(activeTab === visited) {
-            dispatch(getUserEvents(1, limit));
+    const morePosts = () => {
+        if(isSearching(location)) {
+            getMoreSearchedPosts(dispatch, activeTab, searchType, searchValue, page, limit);
+        } else {
+            getMorePosts(dispatch, activeTab, page, limit);
         }
     };
 
     const changeActiveTab = (tab: string) => {
-        if(activeTab === tab && !isSearching()) return;
+        if(activeTab === tab && !isSearching(location)) return;
         navigate(`/events?tab=${tab}`);
         setActiveTab(tab);
     };
 
     useEffect(() => {
-        if(isSearching()) searchPosts();
+        if(isSearching(location)) searchPosts(dispatch, activeTab, searchType, searchValue, limit);
         else if(!location.search.includes('tab')) navigate('/events?tab=trending');
-        else getPosts();
+        else getPosts(dispatch, activeTab, limit);
 
         return () => {
             dispatch({ type: RESET_PAGE, for: EVENT });
@@ -140,7 +108,7 @@ const Events: React.FC = () => {
                     <ul className='mt-5'>
                         <InfiniteScroll
                             dataLength={events.length}
-                            next={isSearching() ? getMoreSearchedPosts : getMorePosts}
+                            next={morePosts}
                             hasMore={page <= totalPages}
                             loader={<SkeletonLoaders />}
                             scrollThreshold={'100px'}

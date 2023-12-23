@@ -13,3 +13,8 @@ export const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>, setChang
         reader(file).then((result) => setChange(result));
     }
 };
+
+export const isSearching = (location: any) => {
+    if(location.search.includes('name') || location.search.includes('location')) return true;
+    return false;
+};

@@ -1,5 +1,10 @@
 import { ObjectId } from 'mongodb';
 
+interface Type {
+    value: string;
+    name: string;
+}
+
 export interface Event {
     isLast: boolean;
     _id: ObjectId;
@@ -13,7 +18,7 @@ export interface Event {
         picture: string;
         fullName: string;
     };
-    type: string;
+    type: Type;
     image: string;
     socialMedia: {
         facebook: string;
@@ -29,7 +34,7 @@ export interface FormDataProp {
     location: string;
     description: string;
     ticketPrice: string;
-    type: string;
+    type: Type;
     image: string;
     facebook: string;
     twitter: string;

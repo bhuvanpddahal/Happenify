@@ -52,12 +52,15 @@ const PlaceForm: React.FC = () => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
+        const selectedType = placeOptions.find((option) => option.value === type);
+        const value = selectedType?.value || '';
+        const typeName = selectedType?.type || '';
         const formData = {
             name,
             location,
             capacity,
             description,
-            type,
+            type: { value, name: typeName },
             contact,
             images: [image1, image2, image3],
             facilities,
@@ -66,8 +69,6 @@ const PlaceForm: React.FC = () => {
             facebook,
             twitter
         };
-        console.log(formData);
-        
         dispatch(createPlace(formData, navigate));
     };
 

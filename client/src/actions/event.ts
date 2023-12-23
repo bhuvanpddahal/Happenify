@@ -98,10 +98,10 @@ export const getEventById = (id: string) => async (dispatch: Dispatch<EventActio
     }
 };
 
-export const searchEvents = (tab: string, searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+export const searchTrendingEvents = (searchType: string, value: string, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
     try {
         dispatch({ type: START_LOADING, for: EVENT });
-        const { data } = await api.searchEvents(tab, searchType, value, page, limit);
+        const { data } = await api.searchTrendingEvents(searchType, value, 1, limit);
         dispatch({ type: SEARCH_EVENTS, data });
         dispatch({ type: END_LOADING, for: EVENT });
 
@@ -111,9 +111,32 @@ export const searchEvents = (tab: string, searchType: string, value: string, pag
     }
 };
 
-export const getMoreSearchedEvents = (tab: string, searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+export const searchUserEvents = (searchType: string, value: string, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
     try {
-        const { data } = await api.searchEvents(tab, searchType, value, page, limit);
+        dispatch({ type: START_LOADING, for: EVENT });
+        const { data } = await api.searchUserEvents(searchType, value, 1, limit);
+        dispatch({ type: SEARCH_EVENTS, data });
+        dispatch({ type: END_LOADING, for: EVENT });
+
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: EVENT });
+        handleError(error, dispatch);
+    }
+};
+
+export const searchMoreTrendingEvents = (searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        const { data } = await api.searchTrendingEvents(searchType, value, page, limit);
+        dispatch({ type: GET_MORE_SEARCHED_EVENTS, data });
+
+    } catch (error) {
+        handleError(error, dispatch);
+    }
+};
+
+export const searchMoreUserEvents = (searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        const { data } = await api.searchUserEvents(searchType, value, page, limit);
         dispatch({ type: GET_MORE_SEARCHED_EVENTS, data });
 
     } catch (error) {

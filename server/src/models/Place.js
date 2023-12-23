@@ -18,8 +18,8 @@ const PlaceSchema = new mongoose.Schema({
         required: true
     },
     type: {
-        type: String,
-        required: true
+        value: { type: String, required: true },
+        name: { type: String, required: true }
     },
     contact: {
         type: String,

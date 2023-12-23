@@ -43,7 +43,7 @@ const PlaceDetails: React.FC = () => {
                         </Link>
                     </div>
                     <div className='mt-2 flex items-center justify-between'>
-                        <div className='text-dark font-medium'>{selectedPlace?.type}</div>
+                        <div className='text-dark font-medium'>{selectedPlace?.type?.name}</div>
                         <div>Share</div>
                     </div>
                     <h1 className='text-20px md:text-22px font-bold text-normal line-clamp-1'>{selectedPlace?.name}</h1>

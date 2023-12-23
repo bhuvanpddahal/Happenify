@@ -6,6 +6,8 @@ export const GET_USER_PLACES = "GET_USER_PLACES";
 export const GET_PLACE_BY_ID = "GET_PLACE_BY_ID";
 export const REMOVE_SELECTED_PLACE = "REMOVE_SELECTED_PLACE";
 
+export const SEARCH_PLACES = "SEARCH_PLACES";
+
 export const creation_success = "Place created successfully";
 
 export const title = "Places";
