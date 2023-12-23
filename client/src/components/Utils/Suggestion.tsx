@@ -33,7 +33,7 @@ const Suggestion: React.FC<SuggestionProp> = ({
     return (
         <div className='bg-primary text-lightgrey px-5 py-4 mb-4 rounded-lg text-right shadow-image'>
             <p className='text-left'>{text}</p>
-            {guidelines.length && (
+            {guidelines.length > 0 && (
                 <ul className='text-left my-2'>
                     {guidelines.map((guideline, index) => (
                         <Guideline

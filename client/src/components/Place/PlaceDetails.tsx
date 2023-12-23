@@ -28,13 +28,19 @@ const PlaceDetails: React.FC = () => {
     if (!selectedPlace) return <NotFound message={'Place not found!'} />
 
     return (
-        <div className='p-3 pb-6 lg:pb-3'>
-            <div className='flex flex-col md:flex-row gap-5'>
+        <div className='p-3 pb-6 lg:pb-3 bg-dim'>
+            <div className='flex flex-col gap-5 bg-white p-4 rounded-lg shadow-image'>
                 <div className='w-full'>
-                    <div className='flex gap-3'>
-                        <img className='w-full h-200px object-contain rounded-md shadow-image' src={selectedPlace?.images[0]} alt="event" />
-                        <img className='w-full h-200px object-contain rounded-md shadow-image' src={selectedPlace?.images[1]} alt="event" />
-                        <img className='w-full h-200px object-contain rounded-md shadow-image' src={selectedPlace?.images[2]} alt="event" />
+                    <div className='flex gap-3 flex-col xs:flex-row'>
+                        <Link to={selectedPlace?.images[0]} className='w-full h-130px sm:h-160px lg:h-200px' target='_blank'>
+                            <img className='w-full h-full object-contain rounded-md border border-solid border-grey' src={selectedPlace?.images[0]} alt="event" />
+                        </Link>
+                        <Link to={selectedPlace?.images[1]} className='w-full h-130px sm:h-160px lg:h-200px' target='_blank'>
+                            <img className='w-full h-full object-contain rounded-md border border-solid border-grey' src={selectedPlace?.images[1]} alt="event" />
+                        </Link>
+                        <Link to={selectedPlace?.images[2]} className='w-full h-130px sm:h-160px lg:h-200px' target='_blank'>
+                            <img className='w-full h-full object-contain rounded-md border border-solid border-grey' src={selectedPlace?.images[2]} alt="event" />
+                        </Link>
                     </div>
                     <div className='mt-2 flex items-center justify-between'>
                         <div className='text-dark font-medium'>{selectedPlace?.type}</div>

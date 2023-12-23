@@ -8,3 +8,5 @@ export const guidelines = [
     { header: "Approval Process", para: "Note that each promotion request goes through a review process. Approval is not guaranteed, and Happenify reserves the right to reject any request." },
 ];
 export const additionalText = "";
+
+export const numOfLoaders = 3;

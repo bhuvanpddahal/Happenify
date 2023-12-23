@@ -31,10 +31,12 @@ const EventDetails: React.FC = () => {
     if (!selectedEvent) return <NotFound message={'Event not found!'} />
 
     return (
-        <div className='p-3 pb-6 lg:pb-3'>
-            <div className='flex flex-col md:flex-row gap-5'>
+        <div className='p-3 pb-6 lg:pb-3 bg-dim'>
+            <div className='flex flex-col md:flex-row gap-5 p-4 bg-white rounded-lg shadow-image'>
                 <div className='w-full'>
-                    <img className='w-full h-300px object-contain rounded-md shadow-image' src={selectedEvent?.image} alt="event" />
+                    <Link to={selectedEvent?.image} className='w-full' target='_blank'>
+                        <img className='w-full h-300px object-contain rounded-md border border-solid border-grey' src={selectedEvent?.image} alt="event" />
+                    </Link>
                     <div className='mt-2 flex items-center justify-between'>
                         <div className='text-dark font-medium'>{moment(selectedEvent?.dateAndTime).format('lll')}</div>
                         <div>Share</div>

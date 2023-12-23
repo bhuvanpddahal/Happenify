@@ -11,7 +11,7 @@ import Searchbar from '../Utils/Searchbar';
 import useQuery from '../../hooks/useQuery';
 import Loader from '../Utils/Loaders/Loader';
 import { State } from '../../interfaces/store';
-import SkeletonLoader from '../Utils/Loaders/SkeletonLoader';
+import SkeletonLoaders from '../Utils/Loaders/SkeletonLoader/SkeletonLoaders';
 import { title, para, createLink } from '../../constants/place';
 import {
     getPlaces,
@@ -117,7 +117,7 @@ const Places: React.FC = () => {
                     option4={Booked}
                 />
 
-                {isLoading && <SkeletonLoader />}
+                {isLoading && <SkeletonLoaders />}
 
                 {places?.length ? (
                     <ul className='mt-5'>
@@ -125,7 +125,7 @@ const Places: React.FC = () => {
                             dataLength={places.length}
                             next={getMorePosts}
                             hasMore={page <= totalPages}
-                            loader={<Loader />}
+                            loader={<SkeletonLoaders />}
                             scrollThreshold={'100px'}
                         >
                             {places.map((place: PlaceType, index: number) => (

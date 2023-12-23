@@ -1,8 +1,14 @@
 import React from 'react';
 
-const SkeletonLoader: React.FC = () => {
+import { numOfLoaders } from '../../../../constants/promotion';
+
+interface SkeletonLoaderProp {
+    count: number;
+}
+
+const SkeletonLoader: React.FC<SkeletonLoaderProp> = ({ count }: SkeletonLoaderProp) => {
     return (
-        <div className='md:h-260px flex flex-col md:flex-row gap-3 py-3 mt-5 animate-pulse'>
+        <div className={`md:h-260px flex flex-col md:flex-row gap-3 animate-pulse ${count !== numOfLoaders ? 'border-b border-solid border-grey py-3' : 'pt-3'}`}>
             <div className='md:w-1/2 h-full'>
                 <div className='h-200px sm:h-240px md:h-full w-full rounded-lg bg-lightgrey'></div>
             </div>
