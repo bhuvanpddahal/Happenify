@@ -9,14 +9,9 @@ import Header from '../Utils/Header';
 import NotFound from '../Utils/NotFound';
 import Searchbar from '../Utils/Searchbar';
 import useQuery from '../../hooks/useQuery';
-import Loader from '../Utils/Loaders/Loader';
 import { State } from '../../interfaces/store';
 import SkeletonLoaders from '../Utils/Loaders/SkeletonLoader/SkeletonLoaders';
 import { title, para, createLink } from '../../constants/place';
-import {
-    getPlaces,
-    getUserPlaces
-} from '../../actions/place';
 import {
     trending,
     your_places,
@@ -28,10 +23,18 @@ import {
     Booked
 } from '../../constants/tab';
 import {
+    to,
     PLACE
 } from '../../constants/place';
 import { RESET_PAGE } from '../../constants/action';
 import { Place as PlaceType } from '../../interfaces/place';
+import { isSearching } from '../../functions/util';
+import {
+    getPosts,
+    getMorePosts,
+    searchPosts,
+    getMoreSearchedPosts
+} from '../../functions/place';
 
 const Places: React.FC = () => {
     const { tab, name, location: searchedLocation } = useQuery();
@@ -42,43 +45,26 @@ const Places: React.FC = () => {
     const value = name || searchedLocation || '';
     const [activeTab, setActiveTab] = useState(tab || trending);
     const [searchType, setSearchType] = useState(type);
-    const [searchValue, setSearchValue] = useState(value);
+    const [searchValue, setSearchValue] = useState(value);;
 
-    const isSearching = () => {
-        if(location.search.includes('name') || location.search.includes('location')) return true;
-        return false;
-    };
-
-    const getMorePosts = () => {
-        // dispatch(getMorePlaces(page, limit));
-    };
-
-    const searchPosts = () => {
-        // dispatch(searchEvents(activeTab, searchType, searchValue, 1, limit));
-    };
-
-    const getPosts = () => {
-        if(activeTab === trending) {
-            dispatch(getPlaces(1, limit));
-        } else if(activeTab === your_places) {
-            dispatch(getUserPlaces(1, limit));
-        } else if(activeTab === new_to_you) {
-            dispatch(getPlaces(1, limit));
-        } else if(activeTab === booked) {
-            dispatch(getUserPlaces(1, limit));
+    const morePosts = () => {
+        if(isSearching(location)) {
+            getMoreSearchedPosts(dispatch, activeTab, searchType, searchValue, page, limit);
+        } else {
+            getMorePosts(dispatch, activeTab, page, limit);
         }
     };
 
     const changeActiveTab = (tab: string) => {
-        if(activeTab === tab && !isSearching()) return;
+        if(activeTab === tab && !isSearching(location)) return;
         navigate(`/places?tab=${tab}`);
         setActiveTab(tab);
     };
 
     useEffect(() => {
-        if(isSearching()) searchPosts();
+        if(isSearching(location)) searchPosts(dispatch, activeTab, searchType, searchValue, limit);
         else if(!location.search.includes('tab')) navigate('/places?tab=trending');
-        else getPosts();
+        else getPosts(dispatch, activeTab, limit);
 
         return () => {
             dispatch({ type: RESET_PAGE, for: PLACE });
@@ -97,6 +83,7 @@ const Places: React.FC = () => {
 
             <Searchbar
                 tab={activeTab}
+                to={to}
                 searchType={searchType}
                 setSearchType={setSearchType}
                 searchValue={searchValue}
@@ -123,7 +110,7 @@ const Places: React.FC = () => {
                     <ul className='mt-5'>
                         <InfiniteScroll
                             dataLength={places.length}
-                            next={getMorePosts}
+                            next={morePosts}
                             hasMore={page <= totalPages}
                             loader={<SkeletonLoaders />}
                             scrollThreshold={'100px'}

@@ -1,3 +1,4 @@
+export const to = "places";
 export const PLACE = "PLACE";
 
 export const CREATE_PLACE = "CREATE_PLACE";
@@ -7,6 +8,7 @@ export const GET_PLACE_BY_ID = "GET_PLACE_BY_ID";
 export const REMOVE_SELECTED_PLACE = "REMOVE_SELECTED_PLACE";
 
 export const SEARCH_PLACES = "SEARCH_PLACES";
+export const GET_MORE_SEARCHED_PLACES = "GET_MORE_SEARCHED_PLACES";
 
 export const creation_success = "Place created successfully";
 

@@ -22,11 +22,9 @@ const EventSchema = new mongoose.Schema({
         required: true
     },
     organizer: {
-        type: {
-            id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-            picture: { type: String, default: '' },
-            fullName: { type: String, required: true }
-        }
+        id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        picture: { type: String, default: '' },
+        fullName: { type: String, required: true }
     },
     type: {
         value: { type: String, required: true },

@@ -19,13 +19,15 @@ export const login = (formData: AuthFormData) => API.post('/users/login', formDa
 export const loginWithToken = () => API.post('/users/login-with-token');
 
 export const createEvent = (formData: EventFormData) => API.post('/events', formData);
-export const getEvents = (page: number, limit: number) => API.get(`/events?page=${page}&limit=${limit}`);
+export const getTrendingEvents = (page: number, limit: number) => API.get(`/events?page=${page}&limit=${limit}`);
 export const getUserEvents = (page: number, limit: number) => API.get(`/events/user?page=${page}&limit=${limit}`);
 export const getEventById = (id: string) => API.get(`/events/${id}`);
 export const searchTrendingEvents = (searchType: string, value: string, page: number, limit: number) => API.get(`/events/search/trending?${searchType}=${value}&page=${page}&limit=${limit}`);
 export const searchUserEvents = (searchType: string, value: string, page: number, limit: number) => API.get(`/events/search/user?${searchType}=${value}&page=${page}&limit=${limit}`);
 
 export const createPlace = (formData: PlaceFormData) => API.post('/places', formData);
-export const getPlaces = (page: number, limit: number) => API.get(`/places?page=${page}&limit=${limit}`);
+export const getTrendingPlaces = (page: number, limit: number) => API.get(`/places?page=${page}&limit=${limit}`);
 export const getUserPlaces = (page: number, limit: number) => API.get(`/places/user?page=${page}&limit=${limit}`);
 export const getPlaceById = (id: string) => API.get(`/places/${id}`);
+export const searchTrendingPlaces = (searchType: string, value: string, page: number, limit: number) => API.get(`/places/search/trending?${searchType}=${value}&page=${page}&limit=${limit}`);
+export const searchUserPlaces = (searchType: string, value: string, page: number, limit: number) => API.get(`/places/search/user?${searchType}=${value}&page=${page}&limit=${limit}`);

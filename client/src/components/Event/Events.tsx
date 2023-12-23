@@ -24,6 +24,7 @@ import {
     Visited
 } from '../../constants/tab';
 import {
+    to,
     EVENT
 } from '../../constants/event';
 import { RESET_PAGE } from '../../constants/action';
@@ -82,6 +83,7 @@ const Events: React.FC = () => {
 
             <Searchbar
                 tab={activeTab}
+                to={to}
                 searchType={searchType}
                 setSearchType={setSearchType}
                 searchValue={searchValue}

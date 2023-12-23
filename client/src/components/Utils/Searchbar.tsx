@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface SearchbarProp {
     tab: string;
+    to: string;
     searchType: string;
     setSearchType: React.Dispatch<React.SetStateAction<string>>;
     searchValue: string;
@@ -11,6 +12,7 @@ interface SearchbarProp {
 
 const Searchbar: React.FC<SearchbarProp> = ({
     tab,
+    to,
     searchType,
     setSearchType,
     searchValue,
@@ -25,7 +27,7 @@ const Searchbar: React.FC<SearchbarProp> = ({
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if(e.key === 'Enter' && searchValue) {
-            navigate(`/events?tab=${tab}&${searchType}=${searchValue}`);
+            navigate(`/${to}?tab=${tab}&${searchType}=${searchValue}`);
         }
     };
 

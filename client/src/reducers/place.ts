@@ -10,8 +10,11 @@ import {
     GET_PLACES,
     GET_USER_PLACES,
     GET_PLACE_BY_ID,
-    REMOVE_SELECTED_PLACE
+    REMOVE_SELECTED_PLACE,
+    GET_MORE_SEARCHED_PLACES,
+    SEARCH_PLACES
 } from '../constants/place';
+import { SEARCH_EVENTS } from '../constants/event';
 
 const initialState = {
     isLoading: false,
@@ -34,9 +37,17 @@ const placeReducer = (state = initialState, action: Action) => {
             return { ...state, places: [action?.data, ...state.places] };
         case GET_PLACES:
         case GET_USER_PLACES:
+        case SEARCH_PLACES:
             return {
                 ...state,
                 places: (action?.data as ManyData)?.places,
+                page: (action?.data as ManyData)?.page,
+                totalPages: (action?.data as ManyData)?.totalPages
+            };
+        case GET_MORE_SEARCHED_PLACES:
+            return {
+                ...state,
+                places: [...state.places, ...(action?.data as ManyData)?.places],
                 page: (action?.data as ManyData)?.page,
                 totalPages: (action?.data as ManyData)?.totalPages
             };

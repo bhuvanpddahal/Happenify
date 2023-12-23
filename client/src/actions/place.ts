@@ -14,6 +14,7 @@ import {
     GET_USER_PLACES,
     GET_PLACE_BY_ID,
     SEARCH_PLACES,
+    GET_MORE_SEARCHED_PLACES,
     creation_success
 } from '../constants/place';
 import { success } from '../constants/alert';
@@ -36,10 +37,10 @@ export const createPlace = (formData: FormDataProp, navigate: any) => async (dis
     }
 };
 
-export const getPlaces = (page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+export const getTrendingPlaces = (page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
     try {
         dispatch({ type: START_LOADING, for: PLACE });
-        const { data } = await api.getPlaces(page, limit);
+        const { data } = await api.getTrendingPlaces(page, limit);
         dispatch({ type: GET_PLACES, data });
         dispatch({ type: END_LOADING, for: PLACE });
 
@@ -62,6 +63,26 @@ export const getUserPlaces = (page: number, limit: number) => async (dispatch: D
     }
 };
 
+export const getMoreTrendingPlaces = (page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        const { data } = await api.getTrendingPlaces(page, limit);
+        dispatch({ type: GET_PLACES, data });
+
+    } catch (error) {
+        handleError(error, dispatch);
+    }
+};
+
+export const getMoreUserPlaces = (page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        const { data } = await api.getUserPlaces(page, limit);
+        dispatch({ type: GET_USER_PLACES, data });
+
+    } catch (error) {
+        handleError(error, dispatch);
+    }
+};
+
 export const getPlaceById = (id: string) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
     try {
         dispatch({ type: START_LOADING, for: PLACE });
@@ -75,15 +96,48 @@ export const getPlaceById = (id: string) => async (dispatch: Dispatch<PlaceActio
     }
 };
 
-// export const searchPlaces = (tab: string, searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
-//     try {
-//         dispatch({ type: START_LOADING, for: PLACE });
-//         const { data } = await api.searchEvents(tab, searchType, value, page, limit);
-//         dispatch({ type: SEARCH_PLACES, data });
-//         dispatch({ type: END_LOADING, for: PLACE });
+export const searchTrendingPlaces = (searchType: string, value: string, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: PLACE });
+        const { data } = await api.searchTrendingPlaces(searchType, value, 1, limit);
+        dispatch({ type: SEARCH_PLACES, data });
+        dispatch({ type: END_LOADING, for: PLACE });
 
-//     } catch (error) {
-//         dispatch({ type: END_LOADING, for: PLACE });
-//         handleError(error, dispatch);
-//     }
-// };
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: PLACE });
+        handleError(error, dispatch);
+    }
+};
+
+export const searchUserPlaces = (searchType: string, value: string, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: PLACE });
+        const { data } = await api.searchUserPlaces(searchType, value, 1, limit);
+        dispatch({ type: SEARCH_PLACES, data });
+        dispatch({ type: END_LOADING, for: PLACE });
+
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: PLACE });
+        handleError(error, dispatch);
+    }
+};
+
+export const searchMoreTrendingPlaces = (searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        const { data } = await api.searchTrendingPlaces(searchType, value, page, limit);
+        dispatch({ type: GET_MORE_SEARCHED_PLACES, data });
+
+    } catch (error) {
+        handleError(error, dispatch);
+    }
+};
+
+export const searchMoreUserPlaces = (searchType: string, value: string, page: number, limit: number) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        const { data } = await api.searchUserPlaces(searchType, value, page, limit);
+        dispatch({ type: GET_MORE_SEARCHED_PLACES, data });
+
+    } catch (error) {
+        handleError(error, dispatch);
+    }
+};

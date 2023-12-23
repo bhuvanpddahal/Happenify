@@ -41,11 +41,9 @@ const PlaceSchema = new mongoose.Schema({
         default: []
     },
     owner: {
-        type: {
-            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Place' },
-            picture: { type: String, default: '' },
-            fullName: { type: String, required: true }
-        }
+        id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        picture: { type: String, default: '' },
+        fullName: { type: String, required: true }
     },
     pricePerHour: {
         type: Number,

@@ -32,32 +32,22 @@ export const createEvent = (formData: FormDataProp, navigate: any) => async (dis
         dispatch({ type: END_LOADING, for: EVENT });
         showAlert(creation_success, success, dispatch);
         navigate('/events');
-        
+
     } catch (error) {
         dispatch({ type: END_LOADING, for: EVENT });
         handleError(error, dispatch);
     }
 };
 
-export const getEvents = (page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+export const getTrendingEvents = (page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
     try {
         dispatch({ type: START_LOADING, for: EVENT });
-        const { data } = await api.getEvents(page, limit);
+        const { data } = await api.getTrendingEvents(page, limit);
         dispatch({ type: GET_EVENTS, data });
         dispatch({ type: END_LOADING, for: EVENT });
 
     } catch (error) {
         dispatch({ type: END_LOADING, for: EVENT });
-        handleError(error, dispatch);
-    }
-};
-
-export const getMoreEvents = (page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
-    try {
-        const { data } = await api.getEvents(page, limit);
-        dispatch({ type: GET_MORE_EVENTS, data });
-
-    } catch (error) {
         handleError(error, dispatch);
     }
 };
@@ -71,6 +61,16 @@ export const getUserEvents = (page: number, limit: number) => async (dispatch: D
 
     } catch (error) {
         dispatch({ type: END_LOADING, for: EVENT });
+        handleError(error, dispatch);
+    }
+};
+
+export const getMoreTrendingEvents = (page: number, limit: number) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        const { data } = await api.getTrendingEvents(page, limit);
+        dispatch({ type: GET_MORE_EVENTS, data });
+
+    } catch (error) {
         handleError(error, dispatch);
     }
 };

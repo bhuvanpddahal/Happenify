@@ -2,21 +2,17 @@ import {
     trending,
     your_events,
     new_to_you,
-    visited,
-    Trending,
-    Your_Events,
-    New_to_you,
-    Visited
+    visited
 } from '../constants/tab';
 import {
-    getEvents,
+    getTrendingEvents,
     getUserEvents,
-    getMoreEvents,
+    getMoreTrendingEvents,
     getMoreUserEvents,
     searchTrendingEvents,
     searchUserEvents,
     searchMoreTrendingEvents,
-    searchMoreUserEvents,
+    searchMoreUserEvents
 } from '../actions/event';
 
 export const getPosts = (
@@ -25,11 +21,11 @@ export const getPosts = (
     limit: number
 ) => {
     if(activeTab === trending) {
-        dispatch(getEvents(1, limit));
+        dispatch(getTrendingEvents(1, limit));
     } else if(activeTab === your_events) {
         dispatch(getUserEvents(1, limit));
     } else if(activeTab === new_to_you) {
-        dispatch(getEvents(1, limit));
+        dispatch(getTrendingEvents(1, limit));
     } else if(activeTab === visited) {
         dispatch(getUserEvents(1, limit));
     }
@@ -42,11 +38,11 @@ export const getMorePosts = (
     limit: number
 ) => {
     if(activeTab === trending) {
-        dispatch(getMoreEvents(page, limit));
+        dispatch(getMoreTrendingEvents(page, limit));
     } else if(activeTab === your_events) {
         dispatch(getMoreUserEvents(page, limit));
     } else if(activeTab === new_to_you) {
-        dispatch(getMoreEvents(page, limit));
+        dispatch(getMoreTrendingEvents(page, limit));
     } else if(activeTab === visited) {
         dispatch(getMoreUserEvents(page, limit));
     }

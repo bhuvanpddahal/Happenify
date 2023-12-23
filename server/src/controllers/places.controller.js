@@ -111,3 +111,55 @@ export const getPlaceById = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+export const searchTrendingPlaces = async (req, res) => {
+    try {
+        let value, totalPlaces, places;
+        const { name, location, page, limit } = req.query;
+        const skip = (Number(page) - 1) * limit;
+        if(name) value = new RegExp(name, 'i');
+        else if(location) value = new RegExp(location, 'i');
+
+        if(name) {
+            totalPlaces = await Place.countDocuments({ name: value }, { hint: "_id_" });
+            places = await Place.find({ name: value }).sort({ _id: -1 }).limit(limit).skip(skip);
+        } else if(location) {
+            totalPlaces = await Place.countDocuments({ location: value }, { hint: "_id_" });
+            places = await Place.find({ location: value }).sort({ _id: -1 }).limit(limit).skip(skip);
+        }
+
+        const totalPages = Math.ceil(totalPlaces / limit);
+        res.status(200).json({ places, totalPages, page: Number(page) + 1 });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+export const searchUserPlaces = async (req, res) => {
+    try {
+        let value, totalPlaces, places;
+        const { userId } = req;
+        const { name, location, page, limit } = req.query;
+        const skip = (Number(page) - 1) * limit;
+        const user = await User.findById(userId);
+        if(name) value = new RegExp(name, 'i');
+        else if(location) value = new RegExp(location, 'i');
+
+        if(name) {
+            totalPlaces = await Place.countDocuments({ 'owner.id': user._id, name: value }, { hint: "_id_" });
+            places = await Place.find({ 'owner.id': user._id, name: value }).sort({ _id: -1 }).limit(limit).skip(skip);
+        } else if(location) {
+            totalPlaces = await Place.countDocuments({ 'owner.id': user._id, location: value }, { hint: "_id_" });
+            places = await Place.find({ 'owner.id': user._id, location: value }).sort({ _id: -1 }).limit(limit).skip(skip);
+        }
+
+        const totalPages = Math.ceil(totalPlaces / limit);
+        res.status(200).json({ places, totalPages, page: Number(page) + 1 });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};

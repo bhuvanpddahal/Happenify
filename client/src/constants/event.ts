@@ -1,3 +1,4 @@
+export const to = "events";
 export const EVENT = "EVENT";
 
 export const CREATE_EVENT = "CREATE_EVENT";
