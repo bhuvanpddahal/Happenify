@@ -1,9 +1,21 @@
 import { ObjectId } from 'mongodb';
 
-interface Event {
+export interface EventOrPlace {
     id: ObjectId;
     image: string;
     name: string;
+}
+
+interface Follow {
+    id: ObjectId;
+    fullName: string;
+    picture: string;
+}
+
+interface ManyData {
+    user?: User;
+    token?: string;
+    users?: User[];
 }
 
 interface User {
@@ -12,7 +24,10 @@ interface User {
     email: string;
     password: string;
     picture: string;
-    events: Event[];
+    following: Follow[];
+    followers: Follow[];
+    events: EventOrPlace[];
+    places: EventOrPlace[];
     joinedAt: string;
 }
 
@@ -26,11 +41,7 @@ export interface FormDataProp {
 export interface Action {
     type: string;
     for?: string;
-    data?: {
-        user?: User;
-        token?: string;
-        users?: User[];
-    }
+    data?: User | ManyData;
 }
 
 export interface State {
@@ -38,4 +49,5 @@ export interface State {
     user: User;
     token: string;
     users: User[];
+    selectedUser: User;
 }

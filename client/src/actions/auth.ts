@@ -11,6 +11,7 @@ import {
     AUTH,
     SIGNUP,
     LOGIN,
+    GET_USER_BY_ID,
     signup_success,
     login_success
 } from '../constants/auth';
@@ -54,6 +55,19 @@ export const loginWithToken = () => async (dispatch: Dispatch<AuthAction | Alert
         dispatch({ type: START_LOADING, for: AUTH });
         const { data } = await api.loginWithToken();
         dispatch({ type: LOGIN, data });
+        dispatch({ type: END_LOADING, for: AUTH });
+
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: AUTH });
+        handleError(error, dispatch);
+    }
+};
+
+export const getUserById = (id: string) => async (dispatch: Dispatch<AuthAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: AUTH });
+        const { data } = await api.getUserById(id);
+        dispatch({ type: GET_USER_BY_ID, data });
         dispatch({ type: END_LOADING, for: AUTH });
 
     } catch (error) {

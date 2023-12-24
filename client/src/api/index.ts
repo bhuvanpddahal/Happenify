@@ -17,6 +17,7 @@ API.interceptors.request.use((req: any) => {
 export const signup = (formData: AuthFormData) => API.post('/users/signup', formData);
 export const login = (formData: AuthFormData) => API.post('/users/login', formData);
 export const loginWithToken = () => API.post('/users/login-with-token');
+export const getUserById = (id: string) => API.get(`/users/${id}`);
 
 export const createEvent = (formData: EventFormData) => API.post('/events', formData);
 export const getTrendingEvents = (page: number, limit: number) => API.get(`/events?page=${page}&limit=${limit}`);

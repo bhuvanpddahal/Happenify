@@ -45,7 +45,7 @@ export interface FormDataProp {
     contact: string;
 }
 
-interface ManyData {
+export interface ManyData {
     events: Event[];
     page: number;
     totalPages: number;

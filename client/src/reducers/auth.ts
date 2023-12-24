@@ -1,4 +1,4 @@
-import { Action } from '../interfaces/auth';
+import { Action, ManyData } from '../interfaces/auth';
 import {
     START_LOADING,
     END_LOADING
@@ -7,14 +7,17 @@ import {
     AUTH,
     SIGNUP,
     LOGIN,
-    LOGOUT
+    LOGOUT,
+    GET_USER_BY_ID,
+    REMOVE_SELECTED_USER
 } from '../constants/auth';
 
 const initialState = {
     isLoading: false,
     user: null,
     token: '',
-    users: []
+    users: [],
+    selectedUser: null
 };
 
 const authReducer = (state = initialState, action: Action) => {
@@ -27,11 +30,19 @@ const authReducer = (state = initialState, action: Action) => {
             return { ...state, isLoading: false };
         case SIGNUP:
         case LOGIN:
-            localStorage.setItem('HappenifyToken', action?.data?.token || '');
-            return { ...state, user: action?.data?.user, token: action?.data?.token };
+            localStorage.setItem('HappenifyToken',  (action?.data as ManyData)?.token || '');
+            return {
+                ...state,
+                user: (action?.data as ManyData)?.user,
+                token: (action?.data as ManyData)?.token
+            };
         case LOGOUT:
             localStorage.removeItem('HappenifyToken');
             return initialState;
+        case GET_USER_BY_ID:
+            return { ...state, selectedUser: action?.data };
+        case REMOVE_SELECTED_USER:
+            return { ...state, selectedUser: null };
         default:
             return state;
     }
