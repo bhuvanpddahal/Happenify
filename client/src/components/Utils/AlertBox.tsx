@@ -10,7 +10,7 @@ const AlertBox: React.FC = () => {
     return (
         <div className={`max-w-lg flex items-center gap-2 fixed z-20 top-3 right-100p pointer-events-none opacity-0 transition-all duration-300 bg-white shadow-normal rounded-md px-3 py-1 text-textcolor ${show && "pointer-events-auto opacity-100 right-3"}`}>
             <i className={`text-20px md:text-22px ${type === failure ? "ri-error-warning-line text-secondarydark" : "ri-checkbox-circle-line text-primary"}`}></i>
-            <span className='md:text-17px'>{message}</span>
+            <span>{message}</span>
         </div>
     )
 };

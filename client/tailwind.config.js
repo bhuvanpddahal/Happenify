@@ -74,6 +74,8 @@ module.exports = {
       },
       transitionProperty: {
         "transform": "transform",
+        "bg": "background-color",
+        "opacity": "opacity",
       },
       screens: {
         "xs": "300px",

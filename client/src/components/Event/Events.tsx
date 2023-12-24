@@ -71,6 +71,7 @@ const Events: React.FC = () => {
         };
     }, [location]);
 
+    const { user } = useSelector((state: State) => state.auth);
     const { events, isLoading, totalPages, page, limit } = useSelector((state: State) => state.event);
     
     return (
@@ -90,7 +91,7 @@ const Events: React.FC = () => {
                 setSearchValue={setSearchValue}
             />
 
-            <div className='p-4 mt-4 bg-white shadow-image rounded-lg'>
+            <div className='p-4 mt-4 bg-white shadow-image overflow-visible rounded-lg'>
                 <Tabs
                     activeTab={activeTab}
                     changeActiveTab={changeActiveTab}
@@ -119,6 +120,7 @@ const Events: React.FC = () => {
                                 <Event
                                     key={event._id}
                                     isLast={index === events.length - 1}
+                                    userId={user._id}
                                     _id={event._id}
                                     name={event.name}
                                     dateAndTime={event.dateAndTime}

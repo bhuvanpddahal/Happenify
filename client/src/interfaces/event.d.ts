@@ -6,7 +6,6 @@ interface Type {
 }
 
 export interface Event {
-    isLast: boolean;
     _id: ObjectId;
     name: string;
     dateAndTime: string;
@@ -26,6 +25,11 @@ export interface Event {
     };
     contact: string;
     createdAt: string;
+}
+
+export interface EventProp extends Event {
+    isLast: boolean;
+    userId: ObjectId;
 }
 
 export interface FormDataProp {

@@ -5,6 +5,7 @@ import {
     Navigate
 } from 'react-router-dom';
 
+import Profile from './Profile/Profile';
 import Events from './Event/Events';
 import EventDetails from './Event/EventDetails';
 import EventForm from './Event/EventForm';
@@ -23,6 +24,7 @@ const Content: React.FC = () => {
         <div className='flex-1 h-full overflow-hidden pb-10 md:pb-55px lg:pb-0'>
             <Routes>
                 <Route path='/' element={<Navigate to='/events' replace />} />
+                <Route path='/profile/:id' element={<Profile />} />
                 <Route path='/events/*'>
                     <Route index element={<Events />} />
                     <Route path='search' element={<Events />} />

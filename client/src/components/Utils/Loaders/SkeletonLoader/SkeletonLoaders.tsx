@@ -7,7 +7,10 @@ const SkeletonLoaders: React.FC = () => {
     return (
         <div className='mt-5'>
             {[...Array(numOfLoaders)].map((_, index: number) => (
-                <SkeletonLoader count={index + 1} />
+                <SkeletonLoader
+                    key={index}
+                    count={index + 1}
+                />
             ))}
         </div>
     )

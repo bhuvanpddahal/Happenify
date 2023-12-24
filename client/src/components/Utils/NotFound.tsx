@@ -10,7 +10,7 @@ const NotFound: React.FC<Prop> = ({ message }: Prop) => {
     return (
         <div className='h-full w-full flex flex-col items-center justify-center'>
             <img className='h-160px sm:h-200px md:h-250px' src={NotFoundImg} alt="not-found" />
-            <div className='text-dark md:text-17px'>{message}</div>
+            <div className='text-dark'>{message}</div>
         </div>
     )
 };
