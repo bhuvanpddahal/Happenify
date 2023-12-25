@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 import User from '../models/User.js';
+import Event from '../models/Event.js';
+import Place from '../models/Place.js';
 
 dotenv.config();
 cloudinary.config({
@@ -148,6 +150,8 @@ export const unfollowUser = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     let networkError = true;
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
     try {
         const { userId } = req;
@@ -155,10 +159,23 @@ export const updateProfile = async (req, res) => {
         let pictureUrl = '';
         if(picture) pictureUrl = (await cloudinary.uploader.upload(picture)).secure_url;
         networkError = false;
+
         const updatedUser = await User.findByIdAndUpdate(userId, { fullName, picture: pictureUrl }, { new: true });
+        const newHolder = { id: updatedUser._id, fullName, picture: pictureUrl };
+        updatedUser.events.forEach(async (userEvent) => {
+            await Event.findOneAndUpdate({ _id: userEvent.id }, { organizer: newHolder }, { new: true });
+        });
+        updatedUser.places.forEach(async (userPlace) => {
+            await Place.findOneAndUpdate({ _id: userPlace.id }, { owner: newHolder }, { new: true });
+        });
+
+        session.commitTransaction();
+        session.endSession();
         res.status(200).json(updatedUser);
         
     } catch (error) {
+        session.abortTransaction();
+        session.endSession();
         if(networkError) return res.status(400).json({ message: "Network error" });
         res.status(500).json({ message: "Something went wrong" });
     }
