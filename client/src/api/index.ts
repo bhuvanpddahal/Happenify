@@ -28,6 +28,7 @@ export const getUserEvents = (page: number, limit: number) => API.get(`/events/u
 export const getEventById = (id: string) => API.get(`/events/${id}`);
 export const searchTrendingEvents = (searchType: string, value: string, page: number, limit: number) => API.get(`/events/search/trending?${searchType}=${value}&page=${page}&limit=${limit}`);
 export const searchUserEvents = (searchType: string, value: string, page: number, limit: number) => API.get(`/events/search/user?${searchType}=${value}&page=${page}&limit=${limit}`);
+export const updateEvent = (id: string, formData: EventFormData) => API.patch(`/events/update/${id}`, formData);
 
 export const createPlace = (formData: PlaceFormData) => API.post('/places', formData);
 export const getTrendingPlaces = (page: number, limit: number) => API.get(`/places?page=${page}&limit=${limit}`);

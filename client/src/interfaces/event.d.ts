@@ -11,7 +11,7 @@ export interface Event {
     dateAndTime: string;
     location: string;
     description: string;
-    ticketPrice: number;
+    ticketPrice: string;
     organizer: {
         id: ObjectId;
         picture: string;

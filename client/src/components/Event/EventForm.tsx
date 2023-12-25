@@ -1,18 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import LoadingImg from '../../images/loading.gif';
 import { eventOptions } from '../../data/event';
 import { Option } from '../../interfaces/util';
 import { handleImgChange } from '../../functions/util';
-import { createEvent } from '../../actions/event';
+import { createEvent, updateEvent } from '../../actions/event';
 import { State } from '../../interfaces/store';
 import { text } from '../../constants/event';
 import Suggestion from '../Utils/Suggestion';
+import { getEventById } from '../../actions/event';
 
 const EventForm: React.FC = () => {
-    document.title = 'Create Event - Happenify';
+    const { id } = useParams();
     const dispatch: any = useDispatch();
     const navigate: any = useNavigate();
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -45,14 +46,38 @@ const EventForm: React.FC = () => {
             twitter,
             contact
         };
-        dispatch(createEvent(formData, navigate));
+
+        if(id) {
+            dispatch(updateEvent(id, formData, navigate));
+        } else {
+            dispatch(createEvent(formData, navigate));
+        }
     };
 
-    const { isLoading } = useSelector((state: State) => state.event);
+    useEffect(() => {
+        if(id) {
+            document.title = 'Update Event - Happenify';
+            dispatch(getEventById(id || ''));
+            setName(selectedEvent?.name);
+            setDateAndTime(selectedEvent?.dateAndTime);
+            setLocation(selectedEvent?.location);
+            setDescription(selectedEvent?.description);
+            setTicketPrice(selectedEvent?.ticketPrice);
+            setType(selectedEvent?.type?.value);
+            setImage(selectedEvent?.image);
+            setFacebook(selectedEvent?.socialMedia?.facebook);
+            setTwitter(selectedEvent?.socialMedia?.twitter);
+            setContact(selectedEvent?.contact);
+        } else {
+            document.title = 'Create Event - Happenify';
+        }
+    }, []);
+
+    const { isLoading, selectedEvent } = useSelector((state: State) => state.event);
 
     return (
         <div className='p-3 bg-dim'>
-            {showSuggestion && (
+            {!id && showSuggestion && (
                 <Suggestion
                     setShowSuggestion={setShowSuggestion}
                     text={text}
@@ -60,7 +85,7 @@ const EventForm: React.FC = () => {
                 />
             )}
             <form onSubmit={handleSubmit} className='px-4 py-3 bg-white shadow-image rounded-lg'>
-                <h1 className='font-semibold text-20px text-dark mb-2'>Enter The Necessary Event Details</h1>
+                <h1 className='font-semibold text-20px text-dark mb-2'>{id ? 'Update Event' : 'Enter The Necessary Event Details'}</h1>
                 <div className='flex gap-3 mb-3 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setName(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={name} type="text" placeholder='Name *' required />
                     <input onChange={(e) => setDateAndTime(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={dateAndTime} type="datetime-local" placeholder='Date *' required />
@@ -77,8 +102,8 @@ const EventForm: React.FC = () => {
                         ))}
                     </select>
                 </div>
-                <div onClick={() => fileInputRef?.current?.click()} className={`relative mb-3 h-200px w-full border border-grey ${image.length ? 'border-solid overflow-hidden' : 'border-dashed flex flex-col items-center justify-center p-3'} rounded-sm cursor-pointer`}>
-                    {image.length ? (
+                <div onClick={() => fileInputRef?.current?.click()} className={`relative mb-3 h-200px w-full border border-grey ${image?.length ? 'border-solid overflow-hidden' : 'border-dashed flex flex-col items-center justify-center p-3'} rounded-sm cursor-pointer`}>
+                    {image?.length ? (
                         <img className='h-full w-full object-cover' src={image} alt="img" />
                     ) : (
                         <>
@@ -86,7 +111,7 @@ const EventForm: React.FC = () => {
                             <p className='text-darkgrey text-center'>Click to upload an event related image (This is mandatory)</p>
                         </>
                     )}
-                    <input ref={fileInputRef} onChange={(e) => handleImgChange(e, setImage)} className='absolute opacity-0 pointer-events-none' type="file" required />
+                    <input ref={fileInputRef} onChange={(e) => handleImgChange(e, setImage)} className='absolute opacity-0 pointer-events-none' type="file" required={id ? false : true} />
                 </div>
                 <div className='flex gap-3 mb-3 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setFacebook(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={facebook} type="text" placeholder='Facebook account *' required />
@@ -95,12 +120,15 @@ const EventForm: React.FC = () => {
                 </div>
                 <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
                     <button className={`relative w-200px py-2 rounded-sm ${isLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isLoading}>
-                        {isLoading ? 'Creating...' : (
-                            <><i className="ri-add-circle-line"></i> Create my event</>
-                        )}
+                        {isLoading 
+                            ? id ? 'Updating...' : 'Creating...'
+                            : id ? <><i className="ri-edit-box-line"></i> Update event</> : <><i className="ri-add-circle-line"></i> Create my event</>
+                        }
                         <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isLoading} />
                     </button>
-                    <p className='text-15px'>By clicking on the 'Create my event' button, you agree to our <Link to='/privacy-policy' className='text-secondarydark cursor-pointer hover:underline'>Privacy policy</Link>.</p>
+                    {!id && (
+                        <p className='text-15px'>By clicking on the 'Create my event' button, you agree to our <Link to='/privacy-policy' className='text-secondarydark cursor-pointer hover:underline'>Privacy policy</Link>.</p>
+                    )}
                 </div>
             </form>
         </div>

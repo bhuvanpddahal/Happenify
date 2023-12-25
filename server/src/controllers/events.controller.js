@@ -151,7 +151,56 @@ export const searchUserEvents = async (req, res) => {
         res.status(200).json({ events, totalPages, page: Number(page) + 1 });
 
     } catch (error) {
-        console.log(error.message);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+export const updateEvent = async (req, res) => {
+    let networkError = true;
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const { userId } = req;
+        const { id: eventId } = req.params;
+        if(!ObjectId.isValid(eventId)) return res.status(404).json({ message: "Event not found" });
+        const { name, dateAndTime, location, description, ticketPrice, type, image, facebook, twitter, contact } = req.body;
+        const user = await User.findById(userId);
+        const event = await Event.findById(eventId);
+        if(userId !== event.organizer.id.toString()) return res.status(403).json({ message: "Not allowed" });
+        const imageUrl = (await cloudinary.uploader.upload(image)).secure_url;
+        networkError = false;
+
+        const updateEvent = {
+            name,
+            dateAndTime,
+            location,
+            description,
+            ticketPrice,
+            type,
+            image: imageUrl,
+            socialMedia: {
+                facebook,
+                twitter
+            },
+            contact
+        };
+        const updatedEvent = await Event.findByIdAndUpdate(eventId, updateEvent, { new: true });
+        user.events = user.events.map((event) => event.id.toString() === eventId ? {
+            id: event.id,
+            name,
+            image: imageUrl
+        } : event);
+
+        await user.save();
+        session.commitTransaction();
+        session.endSession();
+        res.status(200).json(updatedEvent);
+        
+    } catch (error) {
+        session.abortTransaction();
+        session.endSession();
+        if(networkError) return res.status(400).json({ message: "Network error" });
         res.status(500).json({ message: "Something went wrong" });
     }
 };

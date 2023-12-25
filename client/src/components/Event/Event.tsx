@@ -28,19 +28,19 @@ const Event: React.FC<EventProp> = ({
     };
 
     const handleEdit = () => {
-        console.log('edit clicked');
-        
+        navigate(`/events/${_id}/edit`);
     };
 
     const handleDelete = () => {
         console.log('delete clicked');
     };
+
     const handleBlockPost = () => {
         console.log('block clicked');
     };
+
     const handleViewOrganizer = () => {
         navigate(`/profile/${organizer?.id.toString()}`);
-        console.log('view clicked');
     };
 
     useEffect(() => {
@@ -71,10 +71,10 @@ const Event: React.FC<EventProp> = ({
                             {userId === organizer?.id ? (
                                 <>
                                     <li onClick={handleEdit} className='py-1 px-3 flex items-center gap-1 hover:bg-grey'>
-                                        <i className="ri-delete-bin-6-fill text-16px text-normal"></i> Edit
+                                        <i className="ri-pencil-fill text-16px text-normal"></i> Edit
                                     </li>
                                     <li onClick={handleDelete} className='py-1 px-3 flex items-center gap-1 hover:bg-grey'>
-                                        <i className="ri-pencil-fill text-16px text-normal"></i> Delete
+                                        <i className="ri-delete-bin-6-fill text-16px text-normal"></i> Delete
                                     </li>
                                 </>
                             ) : (

@@ -17,6 +17,7 @@ import {
     GET_MORE_USER_EVENTS,
     SEARCH_EVENTS,
     GET_MORE_SEARCHED_EVENTS,
+    UPDATE_EVENT,
     creation_success,
 } from '../constants/event';
 import { success } from '../constants/alert';
@@ -140,6 +141,20 @@ export const searchMoreUserEvents = (searchType: string, value: string, page: nu
         dispatch({ type: GET_MORE_SEARCHED_EVENTS, data });
 
     } catch (error) {
+        handleError(error, dispatch);
+    }
+};
+
+export const updateEvent = (id: string, formData: FormDataProp, navigate: any) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: EVENT });
+        const { data } = await api.updateEvent(id, formData);
+        dispatch({ type: UPDATE_EVENT, data });
+        dispatch({ type: END_LOADING, for: EVENT });
+        navigate(`/events/${id}`);
+
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: EVENT });
         handleError(error, dispatch);
     }
 };

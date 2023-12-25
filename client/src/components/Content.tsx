@@ -35,6 +35,7 @@ const Content: React.FC = () => {
                     <Route path=':id' element={<EventDetails />} />
                     <Route path=':id/book-entry' element={<EntryForm />} />
                     <Route path='create' element={<EventForm />} />
+                    <Route path=':id/edit' element={<EventForm />} />
                 </Route>
                 <Route path='/places/*'>
                     <Route index element={<Places />} />

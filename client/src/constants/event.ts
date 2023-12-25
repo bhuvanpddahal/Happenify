@@ -13,6 +13,8 @@ export const GET_MORE_USER_EVENTS = "GET_MORE_USER_EVENTS";
 export const SEARCH_EVENTS = "SEARCH_EVENTS";
 export const GET_MORE_SEARCHED_EVENTS = "GET_MORE_SEARCHED_EVENTS";
 
+export const UPDATE_EVENT = "UPDATE_EVENT";
+
 export const creation_success = "Event created successfully";
 
 export const title = "Events";
