@@ -15,8 +15,7 @@ import {
     UNFOLLOW_USER,
     REMOVE_SELECTED_USER
 } from '../constants/auth';
-import { State, User } from '../interfaces/auth';
-
+import { State, User, FollowData } from '../interfaces/auth';
 
 const initialState = {
     isLoading: false,
@@ -57,15 +56,16 @@ const authReducer = (state: State = initialState, action: Action) => {
         case FOLLOW_USER:
             return {
                 ...state,
-                user: { ...state.user, following: [...(state.user as User).following, action?.data] }
+                user: { ...state.user, following: [...(state.user as User).following, (action?.data as FollowData).newFollowing] },
+                selectedUser: { ...state.selectedUser, followers: [...(state.selectedUser as User).followers, (action?.data as FollowData).newFollower] }
             };
         case UNFOLLOW_USER:
+            const newFollowing = state.user?.following.filter((followedUser) => followedUser.id.toString() !== action?.data);
+            const newFollowers = state.selectedUser?.followers.filter((follower) => follower.id !== state.user?._id);
             return {
                 ...state,
-                user: {
-                    ...state.user,
-                    following: state.user?.following.filter((followedUser) => followedUser.id.toString() !== action?.data)
-                }
+                user: { ...state.user, following: newFollowing },
+                selectedUser: { ...state.selectedUser, followers: newFollowers }
             };
         case REMOVE_SELECTED_USER:
             return { ...state, selectedUser: null };

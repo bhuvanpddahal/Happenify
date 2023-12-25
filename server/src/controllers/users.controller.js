@@ -89,25 +89,26 @@ export const followUser = async (req, res) => {
         const isFollowing = user.following.find((followedUser) => followedUser.id === toBeFollowed._id);
         if(isFollowing) return res.status(400).json({ message: "Already followed user" });
 
-        const newFollow = {
+        const newFollowing = {
             id: toBeFollowed._id,
             fullName: toBeFollowed.fullName,
             email: toBeFollowed.email,
             picture: toBeFollowed.picture
-        }
-        user.following.push(newFollow);
-        toBeFollowed.followers.push({
+        };
+        const newFollower = {
             id: user._id,
             fullName: user.fullName,
             email: user.email,
             picture: user.picture
-        });
+        };
+        user.following.push(newFollowing);
+        toBeFollowed.followers.push(newFollower);
 
         await user.save();
         await toBeFollowed.save();
         session.commitTransaction();
         session.endSession();
-        res.status(200).json(newFollow);
+        res.status(200).json({ newFollowing, newFollower });
 
     } catch (error) {
         session.abortTransaction();
@@ -126,7 +127,6 @@ export const unfollowUser = async (req, res) => {
         const user = await User.findById(userId);
         const toBeUnfollowed = await User.findById(id);
         if(!toBeUnfollowed) return res.status(404).json({ message: "User not found" });
-        console.log(user.following[0].id, toBeUnfollowed._id);
         const isFollowing = user.following.find((followedUser) => followedUser.id.toString() === toBeUnfollowed._id.toString());
         if(!isFollowing) return res.status(400).json({ message: "User is not followed" });
 

@@ -39,10 +39,15 @@ export interface FormDataProp {
     picture: string;
 }
 
+interface FollowData {
+    newFollowing: Follow;
+    newFollower: Follow;
+}
+
 export interface Action {
     type: string;
     for?: string;
-    data?: User | ManyData | Follow | string;
+    data?: User | ManyData | FollowData | string;
 }
 
 export interface State {
