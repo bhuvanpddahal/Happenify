@@ -13,6 +13,7 @@ import {
     GET_USER_BY_ID,
     FOLLOW_USER,
     UNFOLLOW_USER,
+    UPDATE_PROFILE,
     REMOVE_SELECTED_USER
 } from '../constants/auth';
 import { State, User, FollowData } from '../interfaces/auth';
@@ -67,6 +68,8 @@ const authReducer = (state: State = initialState, action: Action) => {
                 user: { ...state.user, following: newFollowing },
                 selectedUser: { ...state.selectedUser, followers: newFollowers }
             };
+        case UPDATE_PROFILE:
+            return { ...state, user: action?.data };
         case REMOVE_SELECTED_USER:
             return { ...state, selectedUser: null };
         default:

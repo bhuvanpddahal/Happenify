@@ -39,6 +39,11 @@ export interface FormDataProp {
     picture: string;
 }
 
+export interface EditData {
+    fullName: string;
+    picture: string;
+}
+
 interface FollowData {
     newFollowing: Follow;
     newFollower: Follow;

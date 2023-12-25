@@ -10,8 +10,12 @@ export const REMOVE_SELECTED_USER = "REMOVE_SELECTED_USER";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
 
+export const UPDATE_PROFILE = "UPDATE_PROFILE";
+
 export const signup_success = "Signed up successfully";
 export const login_success = "Logged in successfully";
 
 export const follow_success = "Followed successfully";
 export const unfollow_success = "Unfollowed successfully";
+
+export const update_profile_success = "Profile updated successfully";

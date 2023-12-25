@@ -7,7 +7,8 @@ import {
     loginWithToken,
     getUserById,
     followUser,
-    unfollowUser
+    unfollowUser,
+    updateProfile
 } from '../controllers/users.controller.js';
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.post('/login-with-token', auth, loginWithToken);
 router.get('/:id', auth, getUserById);
 router.post('/follow/:id', auth, followUser);
 router.post('/unfollow/:id', auth, unfollowUser);
+router.patch('/update', auth, updateProfile);
 
 export default router;

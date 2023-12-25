@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { FormDataProp as AuthFormData } from '../interfaces/auth';
+import { FormDataProp as AuthFormData, EditData as AuthEditData } from '../interfaces/auth';
 import { FormDataProp as EventFormData } from '../interfaces/event';
 import { FormDataProp as PlaceFormData } from '../interfaces/place';
 
@@ -20,6 +20,7 @@ export const loginWithToken = () => API.post('/users/login-with-token');
 export const getUserById = (id: string) => API.get(`/users/${id}`);
 export const followUser = (id: string) => API.post(`/users/follow/${id}`);
 export const unfollowUser = (id: string) => API.post(`/users/unfollow/${id}`);
+export const updateProfile = (formData: AuthEditData) => API.patch('/users/update', formData);
 
 export const createEvent = (formData: EventFormData) => API.post('/events', formData);
 export const getTrendingEvents = (page: number, limit: number) => API.get(`/events?page=${page}&limit=${limit}`);

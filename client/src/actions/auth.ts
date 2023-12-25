@@ -16,13 +16,15 @@ import {
     GET_USER_BY_ID,
     FOLLOW_USER,
     UNFOLLOW_USER,
+    UPDATE_PROFILE,
     signup_success,
     login_success,
     follow_success,
-    unfollow_success
+    unfollow_success,
+    update_profile_success
 } from '../constants/auth';
 import { success } from '../constants/alert';
-import { FormDataProp } from '../interfaces/auth';
+import { FormDataProp, EditData } from '../interfaces/auth';
 import { showAlert } from './alert';
 import handleError from '../functions/error';
 
@@ -106,6 +108,21 @@ export const unfollowUser = (id: string) => async (dispatch: Dispatch<AuthAction
 
     } catch (error) {
         dispatch({ type: END_MINI_LOADING, for: AUTH });
+        handleError(error, dispatch);
+    }
+};
+
+export const updateProfile = (id: string, formData: EditData, navigate: any) => async (dispatch: Dispatch<AuthAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_LOADING, for: AUTH });
+        const { data } = await api.updateProfile(formData);
+        dispatch({ type: UPDATE_PROFILE, data });
+        dispatch({ type: END_LOADING, for: AUTH });
+        showAlert(update_profile_success, success, dispatch);
+        navigate(`/profile/${id}`);
+
+    } catch (error) {
+        dispatch({ type: END_LOADING, for: AUTH });
         handleError(error, dispatch);
     }
 };

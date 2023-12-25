@@ -145,3 +145,21 @@ export const unfollowUser = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+export const updateProfile = async (req, res) => {
+    let networkError = true;
+
+    try {
+        const { userId } = req;
+        const { fullName, picture } = req.body;
+        let pictureUrl = '';
+        if(picture) pictureUrl = (await cloudinary.uploader.upload(picture)).secure_url;
+        networkError = false;
+        const updatedUser = await User.findByIdAndUpdate(userId, { fullName, picture: pictureUrl }, { new: true });
+        res.status(200).json(updatedUser);
+        
+    } catch (error) {
+        if(networkError) return res.status(400).json({ message: "Network error" });
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
