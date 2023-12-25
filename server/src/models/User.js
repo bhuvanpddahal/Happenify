@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
             id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
             fullName: { type: String, required: true },
             email: { type: String, required: true },
-            picture: { type: String, required: true }
+            picture: { type: String, default: '' }
         }],
         default: []
     },
@@ -31,23 +31,23 @@ const UserSchema = new mongoose.Schema({
             id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
             fullName: { type: String, required: true },
             email: { type: String, required: true },
-            picture: { type: String, required: true }
+            picture: { type: String, default: '' }
         }],
         default: []
     },
     events: {
         type: [{
             id: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
-            image: { type: String, required: true },
-            name: { type: String, required: true }
+            name: { type: String, required: true },
+            image: { type: String, required: true }
         }],
         default: []
     },
     places: {
         type: [{
             id: { type: mongoose.Schema.Types.ObjectId, ref: 'Place' },
-            image: { type: String, required: true },
-            name: { type: String, required: true }
+            name: { type: String, required: true },
+            image: { type: String, required: true }
         }],
         default: []
     },

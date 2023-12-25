@@ -120,7 +120,7 @@ const Events: React.FC = () => {
                                 <Event
                                     key={event._id}
                                     isLast={index === events.length - 1}
-                                    userId={user._id}
+                                    userId={user?._id}
                                     _id={event._id}
                                     name={event.name}
                                     dateAndTime={event.dateAndTime}

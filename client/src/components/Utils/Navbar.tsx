@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
                 <img className='h-40px xs:hidden' src={FavLogo} alt="Happenify" />
             </Link>
             <div className='hidden md:inline-block'>Turning Dreams into Events, Seamlessly with Happenify!</div>
-            <Link to='/auth' className='flex items-center rounded-full cursor-pointer shadow-normal hover:bg-lightgrey'>
+            <Link to={user ? `/profile/${user?._id.toString()}` : '/auth'} className='flex items-center rounded-full cursor-pointer shadow-normal hover:bg-lightgrey'>
                 <div className='sm:text-17px py-2 border-r border-solid border-grey px-4 sm:px-5'>
                     {user ? user?.fullName : 'Log in'}
                 </div>

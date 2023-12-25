@@ -1,21 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 
 import Card from './Card';
+import LoadingImg from '../../images/loading.gif';
 import ProfileImg from '../../images/profile.png';
 import Loader from '../Utils/Loaders/Loader';
 import NotFound from '../Utils/NotFound';
 import { State } from '../../interfaces/store';
 import { getUserById } from '../../actions/auth';
 import { REMOVE_SELECTED_USER } from '../../constants/auth';
-import { EventOrPlace } from '../../interfaces/auth';
+import { EventOrPlace, Follow } from '../../interfaces/auth';
+import {
+    followUser,
+    unfollowUser
+} from '../../actions/auth';
 
 const Profile: React.FC = () => {
     const { id } = useParams();
     const location = useLocation();
+    const navigate = useNavigate();
     const dispatch: any = useDispatch();
     const [activeTab, setActiveTab] = useState('events');
+
+    const handleClick = () => {
+        if(isCurrentUser) {
+            navigate(`/profile/${id}/edit`);
+        } else {
+            if(isFollowing) {
+                dispatch(unfollowUser(id || ''));
+            } else {
+                dispatch(followUser(id || ''));
+            }
+        }
+    };
 
     useEffect(() => {
         dispatch(getUserById(id || ''));
@@ -24,8 +43,11 @@ const Profile: React.FC = () => {
         }
     }, [location]);
 
-    const { selectedUser, isLoading } = useSelector((state: State) => state.auth);
-
+    const { selectedUser, user, isLoading, isMiniLoading } = useSelector((state: State) => state.auth);
+    const isCurrentUser = selectedUser?._id === user?._id;
+    let isFollowing: Follow | undefined;
+    if(!isCurrentUser) isFollowing = user?.following.find((followedUser) => followedUser.id === selectedUser?._id);
+    
     if(isLoading) return <Loader />
     if(!selectedUser) return <NotFound message='No such user' />
 
@@ -42,47 +64,69 @@ const Profile: React.FC = () => {
                 </div>
                 <ul className='flex gap-4 flex-wrap mt-5'>
                     {activeTab === 'events' ? (
-                        selectedUser?.events?.map((event: EventOrPlace) => (
-                            <Card
-                                key={event.id}
-                                to='events'
-                                id={event.id}
-                                image={event.image}
-                                name={event.name}
-                            />
-                        ))
+                        selectedUser?.events.length ? (
+                            selectedUser?.events.map((event: EventOrPlace) => (
+                                <Card
+                                    key={event.id}
+                                    to='events'
+                                    id={event.id}
+                                    image={event.image}
+                                    name={event.name}
+                                />
+                            ))
+                        ) : (
+                            <NotFound message='No events' />
+                        )
                     ) : (
-                        selectedUser?.places?.map((place: EventOrPlace) => (
-                            <Card
-                                key={place.id}
-                                to='places'
-                                id={place.id}
-                                image={place.image}
-                                name={place.name}
-                            />
-                        ))
+                        selectedUser?.places.length ? (
+                            selectedUser?.places.map((place: EventOrPlace) => (
+                                <Card
+                                    key={place.id}
+                                    to='places'
+                                    id={place.id}
+                                    image={place.image}
+                                    name={place.name}
+                                />
+                            ))
+                        ) : (
+                            <NotFound message='No places' />
+                        )
                     )}
                 </ul>
             </div>
             <div className='flex-1'>
                 <div className='pt-3 pb-1 flex justify-between mb-3 border-b border-solid border-grey'>
-                    <div>Following: 12</div>
-                    <div>Followers: 5.8K</div>
+                    <div>Following: {selectedUser?.following.length}</div>
+                    <div>Followers: {selectedUser?.followers.length}</div>
                 </div>
                 <div className='h-70px w-70px mx-auto'>
-                    <img className='h-full w-full rounded-full bg-white shadow-image' src={ProfileImg} alt="profile" />
+                    <img className='h-full w-full rounded-full bg-white shadow-image' src={selectedUser?.picture || ProfileImg} alt="profile" />
                 </div>
-                <h1 className='text-center font-medium mt-2'>Bhuvan Pd Dahal</h1>
-                <div className='text-center text-15px'>bhuvandahal6@gmail.com</div>
+                <h1 className='text-center font-medium mt-2'>{selectedUser?.fullName}</h1>
+                <div className='text-center text-15px mt-n5px'>{selectedUser?.email}</div>
                 <div className='text-center mt-3'>
-                    <button className='w-160px py-1 bg-primary text-lightgrey rounded-50px transition-bg duration-300 shadow-image hover:bg-primarydark'>
-                        <i className="ri-user-follow-line text-18px"></i> Follow
+                    <button onClick={handleClick} className={`relative w-160px py-1 rounded-50px transition-bg duration-300 shadow-image ${isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} disabled={isMiniLoading}>
+                        {isCurrentUser ? (
+                            <><i className="ri-pencil-line text-18px"></i> Edit profile</>
+                        ) : (
+                            isFollowing ? (
+                                <><i className="ri-user-unfollow-line text-18px"></i> {isMiniLoading ? 'Unfollowing...' : 'Unfollow'}</>
+                            ) : (
+                                <><i className="ri-user-follow-line text-18px"></i> {isMiniLoading ? 'Following...' : 'Follow'}</>
+                            )
+                        )}
+                        <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isMiniLoading} />
                     </button>
+                    {isCurrentUser && (
+                        <Link to='/auth' className='py-2 px-3 ml-2 rounded-full bg-secondary transition-bg duration-300 shadow-image hover:bg-secondarydark'>
+                            <i className="ri-logout-box-r-line text-18px"></i>
+                        </Link>
+                    )}
                 </div>
                 <ul className='mt-3'>
                     <li className='flex items-center gap-1'>
                         <i className="ri-hourglass-line text-18px text-secondarydark"></i>
-                        <span>25 Dec 2023</span>
+                        <span>{moment(selectedUser?.joinedAt).format('LL')}</span>
                     </li>
                 </ul>
             </div>

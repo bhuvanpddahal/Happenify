@@ -6,9 +6,10 @@ export interface EventOrPlace {
     name: string;
 }
 
-interface Follow {
+export interface Follow {
     id: ObjectId;
     fullName: string;
+    email: string;
     picture: string;
 }
 
@@ -41,13 +42,14 @@ export interface FormDataProp {
 export interface Action {
     type: string;
     for?: string;
-    data?: User | ManyData;
+    data?: User | ManyData | Follow | string;
 }
 
 export interface State {
     isLoading: boolean;
-    user: User;
+    isMiniLoading: boolean;
+    user: User | null;
     token: string;
     users: User[];
-    selectedUser: User;
+    selectedUser: User | null;
 }
