@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import Header from '../Utils/Header';
 
 const CalendarPage: React.FC = () => {
+    document.title = 'Calendar - Happenify';
     const [date, setDate] = useState(new Date());
 
     return (

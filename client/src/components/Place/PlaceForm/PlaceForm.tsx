@@ -14,6 +14,7 @@ import { State } from '../../../interfaces/store';
 import { text } from '../../../constants/place';
 
 const PlaceForm: React.FC = () => {
+    document.title = 'Create Place - Happenify';
     const dispatch: any = useDispatch();
     const navigate: any = useNavigate();
     const bottomRef = useRef<HTMLDivElement>(null);

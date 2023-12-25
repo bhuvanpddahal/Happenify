@@ -18,8 +18,8 @@ const EventDetails: React.FC = () => {
     const dispatch: any = useDispatch();
 
     useEffect(() => {
+        document.title = 'Event Details - Happenify';
         dispatch(getEventById(id || ''));
-
         return () => {
             dispatch({ type: REMOVE_SELECTED_EVENT });
         };

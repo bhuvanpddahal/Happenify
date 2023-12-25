@@ -12,6 +12,7 @@ import { text } from '../../constants/event';
 import Suggestion from '../Utils/Suggestion';
 
 const EventForm: React.FC = () => {
+    document.title = 'Create Event - Happenify';
     const dispatch: any = useDispatch();
     const navigate: any = useNavigate();
     const fileInputRef = useRef<HTMLInputElement>(null);

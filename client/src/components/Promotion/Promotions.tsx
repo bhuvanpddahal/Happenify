@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Promotion from './Promotion';
 
 const Promotions: React.FC = () => {
+    document.title = 'Promotions - Happenify';
+
     return (
         <div className='px-3 py-2 bg-dim'>
             <div className='text-center mb-3'>

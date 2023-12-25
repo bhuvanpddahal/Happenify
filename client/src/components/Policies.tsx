@@ -4,6 +4,8 @@ import Logo from '../images/main-logo.png';
 import Footer from './Utils/Footer';
 
 const Policies: React.FC = () => {
+    document.title = 'Policies - Happenify';
+
     return (
         <div className='bg-dim'>
             <div className='max-w-3xl mx-auto px-3 pt-4 pb-6 bg-white shadow-image'>

@@ -15,8 +15,8 @@ const PlaceDetails: React.FC = () => {
     const dispatch: any = useDispatch();
 
     useEffect(() => {
+        document.title = 'Place Details - Happenify';
         dispatch(getPlaceById(id || ''));
-
         return () => {
             dispatch({ type: REMOVE_SELECTED_PLACE });
         };

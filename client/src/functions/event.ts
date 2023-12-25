@@ -55,6 +55,7 @@ export const searchPosts = (
     searchValue: string,
     limit: number
 ) => {
+    document.title = 'Search Events - Happenify';
     if(activeTab === trending) {
         dispatch(searchTrendingEvents(searchType, searchValue, limit));
     } else if(activeTab === your_events) {

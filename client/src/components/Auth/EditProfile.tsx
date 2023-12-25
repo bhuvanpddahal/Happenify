@@ -23,6 +23,7 @@ const EditProfile: React.FC = () => {
     };
 
     useEffect(() => {
+        document.title = 'Edit Profile - Happenify';
         setFullName(user?.fullName || '');
         setPicture(user?.picture || '');
     }, []);

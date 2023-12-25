@@ -62,6 +62,7 @@ const Events: React.FC = () => {
     };
 
     useEffect(() => {
+        document.title = 'Events - Happenify';
         if(isSearching(location)) searchPosts(dispatch, activeTab, searchType, searchValue, limit);
         else if(!location.search.includes('tab')) navigate('/events?tab=trending');
         else getPosts(dispatch, activeTab, limit);

@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-const Expenses = () => {
-  return (
-    <div>Expenses</div>
-  )
-}
+const Expenses: React.FC = () => {
+    document.title = 'Expenses - Happenify';
+    return (
+        <div>Expenses</div>
+    )
+};
 
 export default Expenses;

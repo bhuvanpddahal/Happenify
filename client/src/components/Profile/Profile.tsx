@@ -37,6 +37,7 @@ const Profile: React.FC = () => {
     };
 
     useEffect(() => {
+        document.title = 'Profile - Happenify';
         dispatch(getUserById(id || ''));
         return () => {
             dispatch({ type: REMOVE_SELECTED_USER });
