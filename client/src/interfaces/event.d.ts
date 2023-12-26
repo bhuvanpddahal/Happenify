@@ -1,5 +1,7 @@
 import { ObjectId } from 'mongodb';
 
+import { Holder } from './util';
+
 interface Type {
     value: string;
     name: string;
@@ -12,11 +14,7 @@ export interface Event {
     location: string;
     description: string;
     ticketPrice: string;
-    organizer: {
-        id: ObjectId;
-        picture: string;
-        fullName: string;
-    };
+    organizer: Holder;
     type: Type;
     image: string;
     socialMedia: {

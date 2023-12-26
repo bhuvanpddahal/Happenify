@@ -1,5 +1,7 @@
 import { ObjectId } from 'mongodb';
 
+import { Holder } from './util';
+
 interface Type {
     value: string;
     name: string;
@@ -22,11 +24,7 @@ export interface Place {
     images: string[];
     facilities: string[];
     ratings: Rating[];
-    owner: {
-        id: ObjectId;
-        picture: string;
-        fullName: string;
-    };
+    owner: Holder;
     pricePerHour: number;
     termsAndConditions: string[];
     socialMedia: {
