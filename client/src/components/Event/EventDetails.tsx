@@ -3,18 +3,15 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
+import NotFound from '../Utils/NotFound';
 import Loader from '../Utils/Loaders/Loader';
 import ProfileImg from '../../images/profile.png';
 import { State } from '../../interfaces/store';
 import { getEventById } from '../../actions/event';
 import { REMOVE_SELECTED_EVENT } from '../../constants/event';
-import NotFound from '../Utils/NotFound';
-// import useHistory from '../../hooks/useHistory';
 
 const EventDetails: React.FC = () => {
     const { id } = useParams();
-    // const history = useHistory();
-    
     const dispatch: any = useDispatch();
 
     useEffect(() => {

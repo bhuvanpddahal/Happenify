@@ -5,7 +5,9 @@ import { Action as EventAction } from '../interfaces/event';
 import { Action as AlertAction } from '../interfaces/alert';
 import {
     START_LOADING,
-    END_LOADING
+    END_LOADING,
+    START_MINI_LOADING,
+    END_MINI_LOADING
 } from '../constants/action';
 import {
     EVENT,
@@ -27,15 +29,15 @@ import handleError from '../functions/error';
 
 export const createEvent = (formData: FormDataProp, navigate: any) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
     try {
-        dispatch({ type: START_LOADING, for: EVENT });
+        dispatch({ type: START_MINI_LOADING, for: EVENT });
         const { data } = await api.createEvent(formData);
         dispatch({ type: CREATE_EVENT, data });
-        dispatch({ type: END_LOADING, for: EVENT });
+        dispatch({ type: END_MINI_LOADING, for: EVENT });
         showAlert(creation_success, success, dispatch);
         navigate('/events');
 
     } catch (error) {
-        dispatch({ type: END_LOADING, for: EVENT });
+        dispatch({ type: END_MINI_LOADING, for: EVENT });
         handleError(error, dispatch);
     }
 };
@@ -147,14 +149,13 @@ export const searchMoreUserEvents = (searchType: string, value: string, page: nu
 
 export const updateEvent = (id: string, formData: FormDataProp, navigate: any) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
     try {
-        dispatch({ type: START_LOADING, for: EVENT });
-        const { data } = await api.updateEvent(id, formData);
-        dispatch({ type: UPDATE_EVENT, data });
-        dispatch({ type: END_LOADING, for: EVENT });
+        dispatch({ type: START_MINI_LOADING, for: EVENT });
+        await api.updateEvent(id, formData);
+        dispatch({ type: END_MINI_LOADING, for: EVENT });
         navigate(`/events/${id}`);
 
     } catch (error) {
-        dispatch({ type: END_LOADING, for: EVENT });
+        dispatch({ type: END_MINI_LOADING, for: EVENT });
         handleError(error, dispatch);
     }
 };

@@ -2,15 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import LoadingImg from '../../images/loading.gif';
-import { eventOptions } from '../../data/event';
-import { Option } from '../../interfaces/util';
-import { handleImgChange } from '../../functions/util';
-import { createEvent, updateEvent } from '../../actions/event';
-import { State } from '../../interfaces/store';
-import { text } from '../../constants/event';
+import Loader from '../Utils/Loaders/Loader';
 import Suggestion from '../Utils/Suggestion';
-import { getEventById } from '../../actions/event';
+import LoadingImg from '../../images/loading.gif';
+import { State } from '../../interfaces/store';
+import { Option } from '../../interfaces/util';
+import { eventOptions } from '../../data/event';
+import { handleImgChange } from '../../functions/util';
+import { createEvent, updateEvent, getEventById } from '../../actions/event';
+import { text, REMOVE_SELECTED_EVENT } from '../../constants/event';
 
 const EventForm: React.FC = () => {
     const { id } = useParams();
@@ -46,7 +46,6 @@ const EventForm: React.FC = () => {
             twitter,
             contact
         };
-
         if(id) {
             dispatch(updateEvent(id, formData, navigate));
         } else {
@@ -54,26 +53,38 @@ const EventForm: React.FC = () => {
         }
     };
 
+    const setStates = () => {
+        setName(selectedEvent?.name || '');
+        setDateAndTime(selectedEvent?.dateAndTime || '');
+        setLocation(selectedEvent?.location || '');
+        setDescription(selectedEvent?.description || '');
+        setTicketPrice(selectedEvent?.ticketPrice || '');
+        setType(selectedEvent?.type?.value || 'concert');
+        setImage(selectedEvent?.image || '');
+        setFacebook(selectedEvent?.socialMedia?.facebook || '');
+        setTwitter(selectedEvent?.socialMedia?.twitter || '');
+        setContact(selectedEvent?.contact || '');
+    };
+    
+    const { isLoading, isMiniLoading, selectedEvent } = useSelector((state: State) => state.event);
+
     useEffect(() => {
         if(id) {
             document.title = 'Update Event - Happenify';
             dispatch(getEventById(id || ''));
-            setName(selectedEvent?.name);
-            setDateAndTime(selectedEvent?.dateAndTime);
-            setLocation(selectedEvent?.location);
-            setDescription(selectedEvent?.description);
-            setTicketPrice(selectedEvent?.ticketPrice);
-            setType(selectedEvent?.type?.value);
-            setImage(selectedEvent?.image);
-            setFacebook(selectedEvent?.socialMedia?.facebook);
-            setTwitter(selectedEvent?.socialMedia?.twitter);
-            setContact(selectedEvent?.contact);
         } else {
             document.title = 'Create Event - Happenify';
         }
+        return () => {
+            dispatch({ type: REMOVE_SELECTED_EVENT });
+        }
     }, []);
 
-    const { isLoading, selectedEvent } = useSelector((state: State) => state.event);
+    useEffect(() => {
+        setStates();
+    }, [selectedEvent]);
+    
+    if(isLoading) return <Loader />
 
     return (
         <div className='p-3 bg-dim'>
@@ -103,7 +114,7 @@ const EventForm: React.FC = () => {
                     </select>
                 </div>
                 <div onClick={() => fileInputRef?.current?.click()} className={`relative mb-3 h-200px w-full border border-grey ${image?.length ? 'border-solid overflow-hidden' : 'border-dashed flex flex-col items-center justify-center p-3'} rounded-sm cursor-pointer`}>
-                    {image?.length ? (
+                    {(image?.length) ? (
                         <img className='h-full w-full object-cover' src={image} alt="img" />
                     ) : (
                         <>
@@ -119,12 +130,12 @@ const EventForm: React.FC = () => {
                     <input onChange={(e) => setContact(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={contact} type="email" placeholder='Conatct email *' required />
                 </div>
                 <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
-                    <button className={`relative w-200px py-2 rounded-sm ${isLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isLoading}>
-                        {isLoading 
+                    <button className={`relative w-200px py-2 rounded-sm ${isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isMiniLoading}>
+                        {isMiniLoading 
                             ? id ? 'Updating...' : 'Creating...'
                             : id ? <><i className="ri-edit-box-line"></i> Update event</> : <><i className="ri-add-circle-line"></i> Create my event</>
                         }
-                        <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isLoading} />
+                        <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isMiniLoading} />
                     </button>
                     {!id && (
                         <p className='text-15px'>By clicking on the 'Create my event' button, you agree to our <Link to='/privacy-policy' className='text-secondarydark cursor-pointer hover:underline'>Privacy policy</Link>.</p>

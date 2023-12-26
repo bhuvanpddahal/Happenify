@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
     }, []);
 
     return (
-        <div className='fixed bottom-0 left-0 lg:relative w-full lg:w-280px lg:h-full border-t lg:border-r border-solid border-grey md:text-15px lg:text-16px bg-white py-2 px-3 z-10 lg:z-0'>
+        <div className='fixed bottom-0 left-0 lg:relative w-full lg:w-280px lg:h-full border-t lg:border-r border-solid border-grey md:text-15px lg:text-16px bg-white py-2 px-3 z-20 lg:z-0'>
             <ul className='flex justify-between lg:block md:pb-4 lg:pb-0'>
                 <li className={`px-1 sm:px-3 sm:py-1 relative cursor-pointer rounded-md ${isActive('/events') ? 'lg:bg-blue-100 text-primary font-medium' : 'hover:bg-lightgrey'}`}>
                     <Link to="/events?tab=trending" className='flex flex-col lg:flex-row items-center lg:gap-2'>

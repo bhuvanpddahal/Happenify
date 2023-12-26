@@ -59,6 +59,7 @@ export interface Action {
 
 export interface State {
     isLoading: boolean;
+    isMiniLoading: boolean;
     totalPages: number;
     page: number;
     limit: number;

@@ -18,8 +18,9 @@ const Promotion: React.FC<PromotionProp> = ({
         <div className='px-4 pt-3 pb-2 bg-white rounded-lg shadow-image mb-4'>
             <h2 className='text-18px text-dark font-semibold'>{title}</h2>
             <ul className='mt-3 flex gap-3 overflow-visible overflow-x-hidden pb-13px hover:overflow-x-auto hover:pb-2'>
-                {promotions.map((promotion: any) => (
+                {promotions.map((promotion: any, index: number) => (
                     <Card
+                        key={index}
                         title='Culinary Delights at FoodFiesta'
                         image=''
                         description='Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt est ipsa excepturi voluptas ab eveniet velit dolores exercitationem illum quos. Officiis, voluptatem deleniti.'

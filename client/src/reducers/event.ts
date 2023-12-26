@@ -2,6 +2,8 @@ import { Action, ManyData } from '../interfaces/event';
 import {
     START_LOADING,
     END_LOADING,
+    START_MINI_LOADING,
+    END_MINI_LOADING,
     RESET_PAGE
 } from '../constants/action';
 import {
@@ -19,6 +21,7 @@ import {
 
 const initialState = {
     isLoading: false,
+    isMiniLoading: false,
     page: 1,
     limit: 5,
     totalPages: 1,
@@ -34,6 +37,12 @@ const eventReducer = (state = initialState, action: Action) => {
         case END_LOADING:
             if(action.for !== EVENT) return state;
             return { ...state, isLoading: false };
+        case START_MINI_LOADING:
+            if(action.for !== EVENT) return state;
+            return { ...state, isMiniLoading: true };
+        case END_MINI_LOADING:
+            if(action.for !== EVENT) return state;
+            return { ...state, isMiniLoading: false };
         case CREATE_EVENT:
             return { ...state, events: [action?.data, ...state.events] };
         case GET_EVENTS:
