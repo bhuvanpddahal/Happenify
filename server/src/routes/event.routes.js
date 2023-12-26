@@ -8,7 +8,8 @@ import {
     getEvents,
     searchTrendingEvents,
     searchUserEvents,
-    updateEvent
+    updateEvent,
+    deleteEvent
 } from '../controllers/events.controller.js';
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.post('/', auth, createEvent);
 router.get('/', auth, getEvents);
 router.get('/user', auth, getUserEvents);
 router.get('/:id', auth, getEventById);
-router.patch('/update/:id', auth, updateEvent);
+router.patch('/:id', auth, updateEvent);
+router.delete('/:id', auth, deleteEvent);
 
 export default router;

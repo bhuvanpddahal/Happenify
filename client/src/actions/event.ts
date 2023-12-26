@@ -20,7 +20,9 @@ import {
     SEARCH_EVENTS,
     GET_MORE_SEARCHED_EVENTS,
     UPDATE_EVENT,
+    DELETE_EVENT,
     creation_success,
+    deletion_success
 } from '../constants/event';
 import { success } from '../constants/alert';
 import { FormDataProp } from '../interfaces/event';
@@ -153,6 +155,20 @@ export const updateEvent = (id: string, formData: FormDataProp, navigate: any) =
         await api.updateEvent(id, formData);
         dispatch({ type: END_MINI_LOADING, for: EVENT });
         navigate(`/events/${id}`);
+
+    } catch (error) {
+        dispatch({ type: END_MINI_LOADING, for: EVENT });
+        handleError(error, dispatch);
+    }
+};
+
+export const deleteEvent = (id: string) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_MINI_LOADING, for: EVENT });
+        await api.deleteEvent(id);
+        dispatch({ type: DELETE_EVENT, data: id });
+        dispatch({ type: END_MINI_LOADING, for: EVENT });
+        showAlert(deletion_success, success, dispatch);
 
     } catch (error) {
         dispatch({ type: END_MINI_LOADING, for: EVENT });

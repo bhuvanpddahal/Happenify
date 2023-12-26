@@ -1,4 +1,4 @@
-import { Action, ManyData } from '../interfaces/event';
+import { Action, ManyData, Event } from '../interfaces/event';
 import {
     START_LOADING,
     END_LOADING,
@@ -16,7 +16,8 @@ import {
     GET_USER_EVENTS,
     GET_MORE_USER_EVENTS,
     SEARCH_EVENTS,
-    GET_MORE_SEARCHED_EVENTS
+    GET_MORE_SEARCHED_EVENTS,
+    DELETE_EVENT
 } from '../constants/event';
 
 const initialState = {
@@ -70,6 +71,11 @@ const eventReducer = (state = initialState, action: Action) => {
         case RESET_PAGE:
             if(action.for !== EVENT) return state;
             return { ...state, events: [], page: 1, totalPages: 1 };
+        case DELETE_EVENT:
+            return {
+                ...state,
+                events: (state.events as Event[]).filter((event) => event?._id.toString() !== action?.data)
+            };
         default:
             return state;
     }

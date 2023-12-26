@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 
+import Loader from '../Utils/Loaders/Loader';
+import ConfirmBox from '../Utils/ConfirmBox';
 import { EventProp } from '../../interfaces/event';
+import { deleteEvent } from '../../actions/event';
+import { State } from '../../interfaces/store';
 
 const Event: React.FC<EventProp> = ({
     isLast,
@@ -18,37 +23,63 @@ const Event: React.FC<EventProp> = ({
     image,
     socialMedia,
     contact,
-    createdAt
+    createdAt,
+    dispatch
 }: EventProp) => {
     const navigate = useNavigate();
+    const [isDeleting, setIsDeleting] = useState(false);
+    const optionsRef = useRef<HTMLIFrameElement>(null);
     const [showOptions, setShowOptions] = useState(false);
+    const [showConfrimBox, setShowConfirmBox] = useState(false);
 
     const toggleShowOptions = () => {
         setShowOptions((prevShowOptions) => !prevShowOptions);
     };
-
-    const handleEdit = () => {
-        navigate(`/events/${_id}/edit`);
+    const handleEditClick = () => {
+        navigate(`/events/${_id?.toString()}/edit`);
     };
-
-    const handleDelete = () => {
-        console.log('delete clicked');
+    const handleDeleteClick = () => {
+        setShowConfirmBox(true);
     };
-
+    const handleDeleteConfirm = () => {
+        setShowConfirmBox(false);
+        setIsDeleting(true);
+        dispatch(deleteEvent(_id?.toString()));
+    };
     const handleBlockPost = () => {
         console.log('block clicked');
     };
-
     const handleViewOrganizer = () => {
         navigate(`/profile/${organizer?.id.toString()}`);
     };
+    const hideOptions = (e: any) => {
+        // console.log('inside', e.target, optionsRef);
+        if(e.target === optionsRef) return;
+        setShowOptions(false);
+    };
 
     useEffect(() => {
-        
+        // TODO - Hide options on document click
     }, [showOptions]);
+
+    const { isMiniLoading } = useSelector((state: State) => state.event);
+
+    if(isDeleting && isMiniLoading) return (
+        <>
+            <Loader />
+            {!isLast && (<div className='border-b border-solid border-grey'></div>)}
+        </>
+    )
 
     return (
         <li className={`md:h-260px flex flex-col md:flex-row md:items-center gap-3 ${!isLast ? 'py-3 border-b border-solid border-grey' : 'pt-3'}`}>
+            {showConfrimBox && (
+                <ConfirmBox
+                    image={image}
+                    setShowConfirmBox={setShowConfirmBox}
+                    handleDeleteConfirm={handleDeleteConfirm}
+                />
+            )}
             <Link to={`/events/${_id?.toString()}`} className='md:w-1/2 h-full rounded-lg overflow-hidden border border-solid border-grey'>
                 <img className='h-200px sm:h-240px md:h-full w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-110' src={image} alt="event" />
             </Link>
@@ -66,14 +97,14 @@ const Event: React.FC<EventProp> = ({
                         <i className="ri-book-2-line text-18px"></i> Book your entry pass
                     </Link>
                     <div onClick={toggleShowOptions} className='h-30px w-30px relative flex items-center justify-center rounded-full cursor-pointer transition-bg duration-300 hover:bg-lightgrey'>
-                        <i className="ri-more-2-line text-18px"></i>
+                        <i ref={optionsRef} className="ri-more-2-line text-18px"></i>
                         <ul className={`absolute bottom-1 right-1 py-1 w-160px bg-white rounded-lg text-15px shadow-image overflow-hidden z-10 transition-transform duration-200 origin-bottom-right ${showOptions ? 'scale-100 pointer-events-auto' : 'scale-0 pointer-events-none'}`}>
                             {userId === organizer?.id ? (
                                 <>
-                                    <li onClick={handleEdit} className='py-1 px-3 flex items-center gap-1 hover:bg-lightgrey'>
+                                    <li onClick={handleEditClick} className='py-1 px-3 flex items-center gap-1 hover:bg-lightgrey'>
                                         <i className="ri-pencil-fill text-16px text-normal"></i> Edit
                                     </li>
-                                    <li onClick={handleDelete} className='py-1 px-3 flex items-center gap-1 hover:bg-lightgrey'>
+                                    <li onClick={handleDeleteClick} className='py-1 px-3 flex items-center gap-1 hover:bg-lightgrey'>
                                         <i className="ri-delete-bin-6-fill text-16px text-normal"></i> Delete
                                     </li>
                                 </>

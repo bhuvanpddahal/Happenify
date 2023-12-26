@@ -30,6 +30,7 @@ export interface Event {
 export interface EventProp extends Event {
     isLast: boolean;
     userId: ObjectId;
+    dispatch: any;
 }
 
 export interface FormDataProp {

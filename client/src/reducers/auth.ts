@@ -1,4 +1,4 @@
-import { Action, ManyData } from '../interfaces/auth';
+import { Action, ManyData, State, User, FollowData } from '../interfaces/auth';
 import {
     START_LOADING,
     END_LOADING,
@@ -16,7 +16,6 @@ import {
     UPDATE_PROFILE,
     REMOVE_SELECTED_USER
 } from '../constants/auth';
-import { State, User, FollowData } from '../interfaces/auth';
 
 const initialState = {
     isLoading: false,

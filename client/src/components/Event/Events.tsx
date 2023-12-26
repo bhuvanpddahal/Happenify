@@ -134,6 +134,7 @@ const Events: React.FC = () => {
                                     socialMedia={event.socialMedia}
                                     contact={event.contact}
                                     createdAt={event.createdAt}
+                                    dispatch={dispatch}
                                 />
                             ))}
                         </InfiniteScroll>

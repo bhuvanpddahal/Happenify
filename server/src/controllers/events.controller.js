@@ -204,3 +204,27 @@ export const updateEvent = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+export const deleteEvent = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const { userId } = req;
+        const { id: eventId } = req.params;
+        const user = await User.findById(userId);
+        const event = await Event.findById(eventId);
+        if(event.organizer.id.toString() !== userId) return res.status(403).json({ message: "Not allowed" });
+        await Event.findByIdAndDelete(eventId);
+        user.events = user.events.filter((event) => event.id.toString() !== eventId);
+        await user.save();
+        session.commitTransaction();
+        session.endSession();
+        res.status(200).json({ message: "Event deleted successfully" });
+
+    } catch (error) {
+        session.abortTransaction();
+        session.endSession()
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};

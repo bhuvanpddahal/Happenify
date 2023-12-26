@@ -47,6 +47,7 @@ module.exports = {
         "primarydark": "#07194a",
         "secondary": "#f98d53",
         "secondarydark": "#d12a04",
+        "darktrans": "rgba(0, 0, 0, 0.4)",
       },
       fontSize: {
         "14px": "14px",

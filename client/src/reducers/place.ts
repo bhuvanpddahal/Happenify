@@ -14,7 +14,6 @@ import {
     GET_MORE_SEARCHED_PLACES,
     SEARCH_PLACES
 } from '../constants/place';
-import { SEARCH_EVENTS } from '../constants/event';
 
 const initialState = {
     isLoading: false,
