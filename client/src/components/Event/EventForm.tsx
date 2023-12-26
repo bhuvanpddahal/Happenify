@@ -81,7 +81,7 @@ const EventForm: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        setStates();
+        if(selectedEvent) setStates();
     }, [selectedEvent]);
     
     if(isLoading) return <Loader />

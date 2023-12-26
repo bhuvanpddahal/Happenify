@@ -2,6 +2,8 @@ import { Action, ManyData } from '../interfaces/place';
 import {
     START_LOADING,
     END_LOADING,
+    START_MINI_LOADING,
+    END_MINI_LOADING,
     RESET_PAGE
 } from '../constants/action';
 import {
@@ -17,6 +19,7 @@ import {
 
 const initialState = {
     isLoading: false,
+    isMiniLoading: false,
     page: 1,
     limit: 5,
     totalPages: 1,
@@ -32,6 +35,12 @@ const placeReducer = (state = initialState, action: Action) => {
         case END_LOADING:
             if(action.for !== PLACE) return state;
             return { ...state, isLoading: false };
+        case START_MINI_LOADING:
+            if(action.for !== PLACE) return state;
+            return { ...state, isMiniLoading: true };
+        case END_MINI_LOADING:
+            if(action.for !== PLACE) return state;
+            return { ...state, isMiniLoading: false };
         case CREATE_PLACE:
             return { ...state, places: [action?.data, ...state.places] };
         case GET_PLACES:

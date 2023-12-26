@@ -17,7 +17,7 @@ export interface Place {
     _id: ObjectId;
     name: string;
     location: string;
-    capacity: number;
+    capacity: string;
     description: string;
     type: Type;
     contact: string;
@@ -25,7 +25,7 @@ export interface Place {
     facilities: string[];
     ratings: Rating[];
     owner: Holder;
-    pricePerHour: number;
+    pricePerHour: string;
     termsAndConditions: string[];
     socialMedia: {
         facebook: string;
@@ -34,11 +34,18 @@ export interface Place {
     createdAt: string;
 }
 
+export interface PlaceProp extends Place {
+    isLast: boolean;
+    userId: ObjectId;
+    dispatch: any;
+}
+
 export interface UploadImageProp {
     number: number;
     inputRef: any;
     image: string;
     setImage: any;
+    required: boolean;
 }
 
 export interface ConditionProp {
@@ -82,6 +89,7 @@ export interface Action {
 
 export interface State {
     isLoading: boolean;
+    isMiniLoading: boolean;
     totalPages: number;
     page: number;
     limit: number;

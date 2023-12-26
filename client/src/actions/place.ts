@@ -5,7 +5,9 @@ import { Action as PlaceAction } from '../interfaces/place';
 import { Action as AlertAction } from '../interfaces/alert';
 import {
     START_LOADING,
-    END_LOADING
+    END_LOADING,
+    START_MINI_LOADING,
+    END_MINI_LOADING
 } from '../constants/action';
 import {
     PLACE,
@@ -24,15 +26,15 @@ import handleError from '../functions/error';
 
 export const createPlace = (formData: FormDataProp, navigate: any) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
     try {
-        dispatch({ type: START_LOADING, for: PLACE });
+        dispatch({ type: START_MINI_LOADING, for: PLACE });
         const { data } = await api.createPlace(formData);
         dispatch({ type: CREATE_PLACE, data });
-        dispatch({ type: END_LOADING, for: PLACE });
+        dispatch({ type: END_MINI_LOADING, for: PLACE });
         showAlert(creation_success, success, dispatch);
         navigate('/places');
         
     } catch (error) {
-        dispatch({ type: END_LOADING, for: PLACE });
+        dispatch({ type: END_MINI_LOADING, for: PLACE });
         handleError(error, dispatch);
     }
 };
@@ -138,6 +140,19 @@ export const searchMoreUserPlaces = (searchType: string, value: string, page: nu
         dispatch({ type: GET_MORE_SEARCHED_PLACES, data });
 
     } catch (error) {
+        handleError(error, dispatch);
+    }
+};
+
+export const updatePlace = (id: string, formData: FormDataProp, navigate: any) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_MINI_LOADING, for: PLACE });
+        await api.updatePlace(id, formData);
+        dispatch({ type: END_MINI_LOADING, for: PLACE });
+        navigate(`/places/${id}`);
+
+    } catch (error) {
+        dispatch({ type: END_MINI_LOADING, for: PLACE });
         handleError(error, dispatch);
     }
 };

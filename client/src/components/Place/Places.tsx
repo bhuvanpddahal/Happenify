@@ -10,8 +10,8 @@ import NotFound from '../Utils/NotFound';
 import Searchbar from '../Utils/Searchbar';
 import useQuery from '../../hooks/useQuery';
 import { State } from '../../interfaces/store';
-import SkeletonLoaders from '../Utils/Loaders/SkeletonLoader/SkeletonLoaders';
 import { title, para, createLink } from '../../constants/place';
+import SkeletonLoaders from '../Utils/Loaders/SkeletonLoader/SkeletonLoaders';
 import {
     trending,
     your_places,
@@ -72,6 +72,7 @@ const Places: React.FC = () => {
         };
     }, [location]);
 
+    const { user } = useSelector((state: State) => state.auth);
     const { places, isLoading, totalPages, page, limit } = useSelector((state: State) => state.place);
 
     return (
@@ -120,6 +121,7 @@ const Places: React.FC = () => {
                                 <Place
                                     key={place._id}
                                     isLast={index === places.length - 1}
+                                    userId={user?._id}
                                     _id={place._id}
                                     name={place.name}
                                     location={place.location}
@@ -135,6 +137,7 @@ const Places: React.FC = () => {
                                     termsAndConditions={place.termsAndConditions}
                                     socialMedia={place.socialMedia}
                                     createdAt={place.createdAt}
+                                    dispatch={dispatch}
                                 />
                             ))}
                         </InfiniteScroll>

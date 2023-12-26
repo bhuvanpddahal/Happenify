@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { UploadImageProp } from '../../../interfaces/place';
 import { handleImgChange } from '../../../functions/util';
+import { UploadImageProp } from '../../../interfaces/place';
 
 const UploadImage: React.FC<UploadImageProp> = ({
     number,
     inputRef,
     image,
-    setImage
+    setImage,
+    required
 }: UploadImageProp) => {
     return (
         <div onClick={() => inputRef?.current?.click()} className={`relative mb-3 h-160px sm:h-200px w-full border border-grey ${image.length ? 'border-solid overflow-hidden' : 'border-dashed flex flex-col items-center justify-center p-3'} rounded-sm cursor-pointer`}>
@@ -19,7 +20,7 @@ const UploadImage: React.FC<UploadImageProp> = ({
                     <p className='text-darkgrey text-center'>Image{number} *</p>
                 </>
             )}
-            <input ref={inputRef} onChange={(e) => handleImgChange(e, setImage)} className='absolute opacity-0 pointer-events-none' type="file" required />
+            <input ref={inputRef} onChange={(e) => handleImgChange(e, setImage)} className='absolute opacity-0 pointer-events-none' type="file" required={required} />
         </div>
     )
 };

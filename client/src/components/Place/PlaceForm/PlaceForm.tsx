@@ -1,20 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 
 import Condition from './Condition';
 import UploadImage from './UploadImage';
+import Loader from '../../Utils/Loaders/Loader';
 import LoadingImg from '../../../images/loading.gif';
 import Suggestion from '../../Utils/Suggestion';
-import { placeOptions, allFacilities } from '../../../data/place';
+import { State } from '../../../interfaces/store';
 import { Option } from '../../../interfaces/util';
 import { Facility } from '../../../interfaces/place';
-import { createPlace } from '../../../actions/place';
-import { State } from '../../../interfaces/store';
-import { text } from '../../../constants/place';
+import { createPlace, updatePlace, getPlaceById } from '../../../actions/place';
+import { placeOptions, allFacilities } from '../../../data/place';
+import { REMOVE_SELECTED_PLACE, text } from '../../../constants/place';
 
 const PlaceForm: React.FC = () => {
-    document.title = 'Create Place - Happenify';
+    const { id } = useParams();
     const dispatch: any = useDispatch();
     const navigate: any = useNavigate();
     const bottomRef = useRef<HTMLDivElement>(null);
@@ -51,6 +52,12 @@ const PlaceForm: React.FC = () => {
         setFacilities(newFacilities);
     };
 
+    const containsFacility = (str: string) => {
+        const isFacility = facilities.find((facility) => facility === str);
+        if(isFacility) return true;
+        return false;
+    };
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const selectedType = placeOptions.find((option) => option.value === type);
@@ -70,7 +77,12 @@ const PlaceForm: React.FC = () => {
             facebook,
             twitter
         };
-        dispatch(createPlace(formData, navigate));
+        if(id) {
+            console.log(formData);
+            dispatch(updatePlace(id, formData, navigate));
+        } else {
+            dispatch(createPlace(formData, navigate));
+        }
     };
 
     const addCondition = () => {
@@ -81,7 +93,44 @@ const PlaceForm: React.FC = () => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const { isLoading } = useSelector((state: State) => state.place);
+    const setStates = () => {
+        setName(selectedPlace?.name || '');
+        setLocation(selectedPlace?.location || '');
+        setCapacity(selectedPlace?.capacity || '');
+        setDescription(selectedPlace?.description || '');
+        setType(selectedPlace?.type?.value || 'hotel');
+        setContact(selectedPlace?.contact || '');
+        setImage1(selectedPlace?.images[0] || '');
+        setImage2(selectedPlace?.images[1] || '');
+        setImage3(selectedPlace?.images[2] || '');
+        setFacilities(selectedPlace?.facilities || []);
+        setPricePerHour(selectedPlace?.pricePerHour || '');
+        setTermsAndConditions(selectedPlace?.termsAndConditions || []);
+        setFacebook(selectedPlace?.socialMedia?.facebook || '');
+        setTwitter(selectedPlace?.socialMedia?.twitter || '');
+    };
+
+    const { isLoading, isMiniLoading, selectedPlace } = useSelector((state: State) => state.place);
+    // const { isLoading, selectedPlace } = useSelector((state: State) => state.place);
+    // const isMiniLoading = true;
+
+    useEffect(() => {
+        if(id) {
+            document.title = 'Update Place - Happenify';
+            dispatch(getPlaceById(id || ''));
+        } else {
+            document.title = 'Create Place - Happenify';
+        }
+        return () => {
+            dispatch({ type: REMOVE_SELECTED_PLACE });
+        }
+    }, []);
+
+    useEffect(() => {
+        if(selectedPlace) setStates();
+    }, [selectedPlace]);
+
+    if(isLoading) return <Loader />
 
     return (
         <div className='p-3 bg-dim'>
@@ -93,7 +142,7 @@ const PlaceForm: React.FC = () => {
                 />
             )}
             <form onSubmit={handleSubmit} className='px-4 py-3 bg-white shadow-image rounded-lg'>
-                <h1 className='font-semibold text-20px text-dark mb-2'>Enter The Necessary Place Details</h1>
+                <h1 className='font-semibold text-20px text-dark mb-2'>{id ? 'Update Place' : 'Enter The Necessary Place Details'}</h1>
                 <div className='flex gap-3 mb-3 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setName(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={name} type="text" placeholder='Name *' required />
                     <input onChange={(e) => setLocation(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={location} type="text" placeholder='Location *' required />
@@ -118,6 +167,7 @@ const PlaceForm: React.FC = () => {
                             inputRef={refs[i]}
                             image={images[i]}
                             setImage={setImages[i]}
+                            required={id ? false : true}
                         />
                     ))}
                 </div>
@@ -131,7 +181,7 @@ const PlaceForm: React.FC = () => {
                     <ul className='ml-5 flex gap-x-4 gap-y-3 flex-wrap'>
                         {allFacilities.map((facility: Facility, index: number) => (
                             <li key={index} className='flex items-center gap-1'>
-                                <input onChange={(e) => toggleFacility(e, index)} id={facility.id} className='accent-primary' type="checkbox" />
+                                <input onChange={(e) => toggleFacility(e, index)} id={facility.id} className='accent-primary' type="checkbox" checked={containsFacility(facility.name)} />
                                 <label htmlFor={facility.id}>{facility.name}</label>
                             </li>
                         ))}
@@ -161,13 +211,16 @@ const PlaceForm: React.FC = () => {
                     </div>
                 </div>
                 <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
-                    <button className={`relative w-200px py-2 rounded-sm ${isLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isLoading}>
-                        {isLoading ? 'Creating...' : (
-                            <><i className="ri-add-circle-line"></i> Create my place</>
-                        )}
-                        <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isLoading} />
+                    <button className={`relative w-200px py-2 rounded-sm ${isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isMiniLoading}>
+                        {isMiniLoading 
+                            ? id ? 'Updating...' : 'Creating...'
+                            : id ? <><i className="ri-edit-box-line"></i> Update place</> : <><i className="ri-add-circle-line"></i> Create my place</>
+                        }
+                        <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isMiniLoading} />
                     </button>
-                    <p className='text-15px'>By clicking on the 'Create my place' button, you agree to our <Link to='/privacy-policy' className='text-secondarydark cursor-pointer hover:underline'>Privacy policy</Link>.</p>
+                    {!id && (
+                        <p className='text-15px'>By clicking on the 'Create my place' button, you agree to our <Link to='/privacy-policy' className='text-secondarydark cursor-pointer hover:underline'>Privacy policy</Link>.</p>
+                    )}
                 </div>
             </form>
         </div>

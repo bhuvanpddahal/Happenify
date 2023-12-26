@@ -1,11 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-import { Place as PlaceProp } from '../../interfaces/place';
+import Options from '../Utils/Options';
+import ConfirmBox from '../Utils/ConfirmBox';
+import { PlaceProp } from '../../interfaces/place';
 
 const Place: React.FC<PlaceProp> = ({
     isLast,
+    userId,
     _id,
     name,
     location,
@@ -20,10 +23,62 @@ const Place: React.FC<PlaceProp> = ({
     pricePerHour,
     termsAndConditions,
     socialMedia,
-    createdAt
+    createdAt,
+    dispatch
 }: PlaceProp) => {
+    const navigate = useNavigate();
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
+    const [showConfrimBox, setShowConfirmBox] = useState(false);
+
+    const toggleShowOptions = () => {
+        setShowOptions((prevShowOptions) => !prevShowOptions);
+    };
+    const handleEditClick = () => {
+        navigate(`/places/${_id?.toString()}/edit`);
+    };
+    const handleDeleteClick = () => {
+        setShowConfirmBox(true);
+    };
+    const handleDeleteConfirm = () => {
+        // setShowConfirmBox(false);
+        // setIsDeleting(true);
+        // dispatch(deleteEvent(_id?.toString()));
+    };
+    const handleBlockPost = () => {
+        // console.log('block clicked');
+    };
+    const handleViewOrganizer = () => {
+        // navigate(`/profile/${organizer?.id.toString()}`);
+    };
+    const hideOptions = (e: any) => {
+        // console.log('inside', e.target, optionsRef);
+        // if(e.target === optionsRef) return;
+        // setShowOptions(false);
+    };
+
+    // useEffect(() => {
+    //     // TODO - Hide options on document click
+    // }, [showOptions]);
+
+    // const { isMiniLoading } = useSelector((state: State) => state.event);
+
+    // if(isDeleting && isMiniLoading) return (
+    //     <>
+    //         <Loader />
+    //         {!isLast && (<div className='border-b border-solid border-grey'></div>)}
+    //     </>
+    // )
+
     return (
-        <li className={`md:h-260px flex flex-col md:flex-row gap-3 ${!isLast ? 'py-3 border-b border-solid border-grey' : 'pt-3'}`}>
+        <li className={`md:h-260px flex flex-col md:flex-row md:items-center gap-3 ${!isLast ? 'py-3 border-b border-solid border-grey' : 'pt-3'}`}>
+            {showConfrimBox && (
+                <ConfirmBox
+                    image={images[0]}
+                    setShowConfirmBox={setShowConfirmBox}
+                    handleDeleteConfirm={handleDeleteConfirm}
+                />
+            )}
             <Link to={`/places/${_id?.toString()}`} className='md:w-1/2 h-full rounded-lg overflow-hidden border border-solid border-grey'>
                 <img className='h-200px sm:h-240px md:h-full w-full object-contain cursor-pointer transition-transform duration-300 hover:scale-110' src={images[0]} alt="place" />
             </Link>
@@ -36,9 +91,21 @@ const Place: React.FC<PlaceProp> = ({
                     <i className="ri-star-smile-line text-22px text-secondarydark"></i> {type?.name}
                 </p>
                 <p className='line-clamp-3'>{description}</p>
-                <Link to={`/events/12345/book-entry`} className='flex items-center justify-center gap-1 py-2 w-full bg-primary text-lightgrey mt-3 rounded-sm hover:bg-primarydark'>
-                    <i className="ri-book-2-line"></i> Book this place
-                </Link>
+                <div className='flex items-center justify-between mt-3'>
+                    <Link to={`/places/12345/book`} className='flex items-center justify-center gap-1 py-1 px-3 bg-primary text-lightgrey rounded-sm hover:bg-primarydark'>
+                        <i className="ri-book-2-line text-18px"></i> Book this place
+                    </Link>
+                    <Options
+                        userId={userId}
+                        holder={owner}
+                        showOptions={showOptions}
+                        toggleShowOptions={toggleShowOptions}
+                        handleEditClick={handleEditClick}
+                        handleDeleteClick={handleDeleteClick}
+                        handleBlockPost={handleBlockPost}
+                        handleViewOrganizer={handleViewOrganizer}
+                    />
+                </div>
             </div>
         </li>
     )

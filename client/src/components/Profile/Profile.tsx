@@ -66,7 +66,7 @@ const Profile: React.FC = () => {
                 <ul className='flex gap-4 flex-wrap mt-5'>
                     {activeTab === 'events' ? (
                         selectedUser?.events.length ? (
-                            selectedUser?.events.map((event: EventOrPlace) => (
+                            [...selectedUser?.events].reverse().map((event: EventOrPlace) => (
                                 <Card
                                     key={event.id}
                                     to='events'
@@ -80,7 +80,7 @@ const Profile: React.FC = () => {
                         )
                     ) : (
                         selectedUser?.places.length ? (
-                            selectedUser?.places.map((place: EventOrPlace) => (
+                            [...selectedUser?.places].reverse().map((place: EventOrPlace) => (
                                 <Card
                                     key={place.id}
                                     to='places'

@@ -27,6 +27,7 @@ export const createPlace = async (req, res) => {
             (await cloudinary.uploader.upload(images[1])).secure_url,
             (await cloudinary.uploader.upload(images[2])).secure_url
         ];
+        console.log(imageUrls);
         networkError = false;
         const newPlace = await Place.create({
             name,
@@ -51,8 +52,8 @@ export const createPlace = async (req, res) => {
         });
         user.places.push({
             id: newPlace._id,
-            images: imageUrls,
-            name
+            name,
+            image: imageUrls[0]
         });
         await user.save();
         session.commitTransaction();
@@ -60,6 +61,7 @@ export const createPlace = async (req, res) => {
         res.status(200).json(newPlace);
 
     } catch (error) {
+        console.log(error);
         session.abortTransaction();
         session.endSession();
         if(networkError) return res.status(400).json({ message: "Network error" });
@@ -160,6 +162,62 @@ export const searchUserPlaces = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+export const updatePlace = async (req, res) => {
+    let networkError = true;
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const { userId } = req;
+        const { id: placeId } = req.params;
+        if(!ObjectId.isValid(placeId)) return res.status(404).json({ message: "Place not found" });
+        const { name, location, capacity, description, type, contact, images, facilities, pricePerHour, termsAndConditions, facebook, twitter } = req.body;
+        const user = await User.findById(userId);
+        const place = await Place.findById(placeId);
+        if(userId !== place.owner.id.toString()) return res.status(403).json({ message: "Not allowed" });
+        const imageUrls = [
+            (await cloudinary.uploader.upload(images[0])).secure_url,
+            (await cloudinary.uploader.upload(images[1])).secure_url,
+            (await cloudinary.uploader.upload(images[2])).secure_url
+        ];
+        networkError = false;
+
+        const updatePlace = {
+            name,
+            location,
+            capacity,
+            description,
+            type,
+            contact,
+            images: imageUrls,
+            facilities,
+            pricePerHour,
+            termsAndConditions,
+            socialMedia: {
+                facebook,
+                twitter
+            }
+        };
+        const updatedPlace = await Place.findByIdAndUpdate(placeId, updatePlace, { new: true });
+        user.places = user.places.map((place) => place.id.toString() === placeId ? {
+            id: place.id,
+            name,
+            image: imageUrls[0]
+        } : place);
+
+        await user.save();
+        session.commitTransaction();
+        session.endSession();
+        res.status(200).json(updatedPlace);
+        
+    } catch (error) {
+        session.abortTransaction();
+        session.endSession();
+        if(networkError) return res.status(400).json({ message: "Network error" });
         res.status(500).json({ message: "Something went wrong" });
     }
 };
