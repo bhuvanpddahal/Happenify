@@ -10,7 +10,7 @@ import NotFound from '../Utils/NotFound';
 import Searchbar from '../Utils/Searchbar';
 import useQuery from '../../hooks/useQuery';
 import { State } from '../../interfaces/store';
-import SkeletonLoaders from '../Utils/Loaders/SkeletonLoader/SkeletonLoaders';
+import SkeletonLoader from '../Utils/Loaders/SkeletonLoader/SkeletonLoader';
 import { title, para, createLink } from '../../constants/event';
 import { Event as EventType } from '../../interfaces/event';
 import {
@@ -106,7 +106,7 @@ const Events: React.FC = () => {
                     option4={Visited}
                 />
 
-                {isLoading && <SkeletonLoaders />}
+                {isLoading && <SkeletonLoader />}
 
                 {events?.length ? (
                     <ul className='mt-5'>
@@ -114,7 +114,7 @@ const Events: React.FC = () => {
                             dataLength={events.length}
                             next={morePosts}
                             hasMore={page <= totalPages}
-                            loader={<SkeletonLoaders />}
+                            loader={<SkeletonLoader />}
                             scrollThreshold={'100px'}
                         >
                             {events.map((event: EventType, index: number) => (

@@ -31,6 +31,7 @@ const Place: React.FC<PlaceProp> = ({
     dispatch
 }: PlaceProp) => {
     const navigate = useNavigate();
+    const optionsRef = useRef<HTMLDivElement>(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
     const [showConfrimBox, setShowConfirmBox] = useState(false);
@@ -55,19 +56,22 @@ const Place: React.FC<PlaceProp> = ({
     const handleViewOrganizer = () => {
         navigate(`/profile/${owner?.id.toString()}`);
     };
-    const hideOptions = (e: any) => {
-        // console.log('inside', e.target, optionsRef);
-        // if(e.target === optionsRef) return;
-        // setShowOptions(false);
+    const handleOutsideClick = (e: any) => {
+        if (optionsRef.current && !optionsRef.current.contains(e.target)) {
+            setShowOptions(false);
+        }
     };
 
     useEffect(() => {
-        // TODO - Hide options on document click
-    }, [showOptions]);
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
 
     const { isMiniLoading } = useSelector((state: State) => state.place);
 
-    if(isDeleting && isMiniLoading) return (
+    if (isDeleting && isMiniLoading) return (
         <>
             <Loader />
             {!isLast && (<div className='border-b border-solid border-grey'></div>)}
@@ -102,6 +106,7 @@ const Place: React.FC<PlaceProp> = ({
                     <Options
                         userId={userId}
                         holder={owner}
+                        optionsRef={optionsRef}
                         showOptions={showOptions}
                         toggleShowOptions={toggleShowOptions}
                         handleEditClick={handleEditClick}

@@ -14,6 +14,7 @@ export interface Holder {
 export interface OptionsProp {
     userId: ObjectId;
     holder: Holder;
+    optionsRef: React.RefObject<HTMLDivElement>;
     showOptions: boolean;
     toggleShowOptions: () => void;
     handleEditClick: () => void;

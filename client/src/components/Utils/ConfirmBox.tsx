@@ -23,11 +23,11 @@ const ConfirmBox: React.FC<ConfirmBoxProp> = ({
                 <h3 className='my-1'>Are you sure you want to delete this post?</h3>
                 <img className='w-full h-200px object-cover rounded-md' src={image} alt="post" />
                 <div className='flex justify-between mt-4'>
-                    <button onClick={handleDeleteConfirm} className='w-100px py-1 bg-secondary rounded-sm transition-bg duration-300 hover:bg-secondarydark'>
-                        <i className="ri-thumb-up-line"></i> Yes
+                    <button onClick={handleDeleteConfirm} className='w-100px py-1 bg-secondary rounded-sm transition-bg duration-300 hover:bg-grey'>
+                        👍 Yes
                     </button>
                     <button onClick={() => setShowConfirmBox(false)} className='w-100px py-1 bg-primary text-lightgrey rounded-sm transition-bg duration-300 hover:bg-primarydark'>
-                        <i className="ri-thumb-down-line"></i> No
+                        👎 No
                     </button>
                 </div>
             </div>

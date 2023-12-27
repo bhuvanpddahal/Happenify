@@ -54,7 +54,7 @@ const Profile: React.FC = () => {
 
     return (
         <div className='bg-dim min-h-full flex flex-col-reverse sm:flex-row gap-3 p-3'>
-            <div className='sm:w-60p bg-white p-4 rounded-lg shadow-image'>
+            <div className='sm:w-60p bg-white p-4 rounded-lg shadow-modal'>
                 <div className='flex gap-5 md:gap-10'>
                     <div onClick={() => setActiveTab('events')} className={`w-110px py-1 border-b-3 border-solid flex items-center justify-center gap-1 cursor-pointer ${activeTab === 'events' ? 'border-secondary text-primarydark font-medium' : ''}`}>
                         <i className={`${activeTab === 'events' ? 'ri-calendar-check-fill' : 'ri-calendar-check-line'} text-22px`}></i> Events
@@ -101,12 +101,12 @@ const Profile: React.FC = () => {
                     <div>Followers: {selectedUser?.followers.length}</div>
                 </div>
                 <div className='h-70px w-70px mx-auto'>
-                    <img className='h-full w-full rounded-full bg-white shadow-image' src={selectedUser?.picture || ProfileImg} alt="profile" />
+                    <img className='h-full w-full rounded-full bg-white shadow-box' src={selectedUser?.picture || ProfileImg} alt="profile" />
                 </div>
                 <h1 className='text-center font-medium mt-2'>{selectedUser?.fullName}</h1>
                 <div className='text-center text-15px mt-n5px'>{selectedUser?.email}</div>
                 <div className='text-center mt-3'>
-                    <button onClick={handleClick} className={`relative w-160px py-1 rounded-50px transition-bg duration-300 shadow-image ${isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} disabled={isMiniLoading}>
+                    <button onClick={handleClick} className={`relative w-160px py-1 rounded-50px transition-bg duration-300 ${isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} disabled={isMiniLoading}>
                         {isCurrentUser ? (
                             <><i className="ri-pencil-line text-18px"></i> Edit profile</>
                         ) : (
@@ -119,7 +119,7 @@ const Profile: React.FC = () => {
                         <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isMiniLoading} />
                     </button>
                     {isCurrentUser && (
-                        <Link to='/auth' className='py-2 px-3 ml-2 rounded-full bg-secondary transition-bg duration-300 shadow-image hover:bg-secondarydark'>
+                        <Link to='/auth' className='py-2 px-3 ml-2 rounded-full bg-secondary transition-bg duration-300 hover:bg-grey'>
                             <i className="ri-logout-box-r-line text-18px"></i>
                         </Link>
                     )}
