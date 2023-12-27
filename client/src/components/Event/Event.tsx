@@ -97,8 +97,8 @@ const Event: React.FC<EventProp> = ({
                 </p>
                 <p className='line-clamp-3'>{description}</p>
                 <div className='flex items-center justify-between mt-3'>
-                    <Link to={`/events/12345/book-entry`} className='flex items-center justify-center gap-1 py-1 px-3 bg-primary text-lightgrey rounded-sm hover:bg-primarydark'>
-                        <i className="ri-book-2-line text-18px"></i> Book your entry pass
+                    <Link to={`/events/12345/book-entry`} className='inline-block py-2 px-5 bg-primary text-15px text-white rounded-sm hover:bg-primarydark'>
+                        <i className="ri-book-2-line"></i> Book your entry pass
                     </Link>
                     <Options
                         userId={userId}

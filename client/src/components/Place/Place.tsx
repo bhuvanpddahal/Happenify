@@ -100,8 +100,8 @@ const Place: React.FC<PlaceProp> = ({
                 </p>
                 <p className='line-clamp-3'>{description}</p>
                 <div className='flex items-center justify-between mt-3'>
-                    <Link to={`/places/12345/book`} className='flex items-center justify-center gap-1 py-1 px-3 bg-primary text-lightgrey rounded-sm hover:bg-primarydark'>
-                        <i className="ri-book-2-line text-18px"></i> Book this place
+                    <Link to={`/places/12345/book`} className='inline-block py-2 px-5 bg-primary text-15px text-white rounded-sm hover:bg-primarydark'>
+                        <i className="ri-book-2-line"></i> Book this place
                     </Link>
                     <Options
                         userId={userId}

@@ -54,7 +54,7 @@ const Profile: React.FC = () => {
 
     return (
         <div className='bg-dim min-h-full flex flex-col-reverse sm:flex-row gap-3 p-3'>
-            <div className='sm:w-60p bg-white p-4 rounded-lg shadow-modal'>
+            <div className='sm:w-60p bg-white p-4 rounded-lg shadow-box'>
                 <div className='flex gap-5 md:gap-10'>
                     <div onClick={() => setActiveTab('events')} className={`w-110px py-1 border-b-3 border-solid flex items-center justify-center gap-1 cursor-pointer ${activeTab === 'events' ? 'border-secondary text-primarydark font-medium' : ''}`}>
                         <i className={`${activeTab === 'events' ? 'ri-calendar-check-fill' : 'ri-calendar-check-line'} text-22px`}></i> Events

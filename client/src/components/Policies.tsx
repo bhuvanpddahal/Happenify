@@ -8,7 +8,7 @@ const Policies: React.FC = () => {
 
     return (
         <div className='bg-dim'>
-            <div className='max-w-3xl mx-auto px-3 pt-4 pb-6 bg-white shadow-image'>
+            <div className='max-w-3xl mx-auto px-3 pt-4 pb-6 bg-white shadow-box'>
                 <div className='text-center border-b border-solid border-grey pb-1'>
                     <img className='h-40px lg:h-50px inline-block' src={Logo} alt="Happenify" />
                     <h1 className='text-20px text-primarydark'>Our Privacy Policies</h1>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link, useParams } from 'react-router-dom';
 
 import Condition from './Condition';
 import UploadImage from './UploadImage';
+import NotFound from '../../Utils/NotFound';
 import Loader from '../../Utils/Loaders/Loader';
-import LoadingImg from '../../../images/loading.gif';
 import Suggestion from '../../Utils/Suggestion';
+import LoadingImg from '../../../images/loading.gif';
 import { State } from '../../../interfaces/store';
 import { Option } from '../../../interfaces/util';
 import { Facility } from '../../../interfaces/place';
@@ -44,7 +45,7 @@ const PlaceForm: React.FC = () => {
 
     const toggleFacility = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         let newFacilities;
-        if(e.target.checked) {
+        if (e.target.checked) {
             newFacilities = [...facilities, allFacilities[index].name];
         } else {
             newFacilities = facilities.filter((facility: string) => facility !== allFacilities[index].name);
@@ -54,7 +55,7 @@ const PlaceForm: React.FC = () => {
 
     const containsFacility = (str: string) => {
         const isFacility = facilities.find((facility) => facility === str);
-        if(isFacility) return true;
+        if (isFacility) return true;
         return false;
     };
 
@@ -77,7 +78,7 @@ const PlaceForm: React.FC = () => {
             facebook,
             twitter
         };
-        if(id) {
+        if (id) {
             console.log(formData);
             dispatch(updatePlace(id, formData, navigate));
         } else {
@@ -86,7 +87,7 @@ const PlaceForm: React.FC = () => {
     };
 
     const addCondition = () => {
-        if(!conditionInput.current?.value) return;
+        if (!conditionInput.current?.value) return;
         const newTermsAndConditions = [...termsAndConditions, conditionInput.current?.value.trim() || ''];
         setTermsAndConditions(newTermsAndConditions);
         conditionInput.current.value = '';
@@ -115,7 +116,7 @@ const PlaceForm: React.FC = () => {
     // const isMiniLoading = true;
 
     useEffect(() => {
-        if(id) {
+        if (id) {
             document.title = 'Update Place - Happenify';
             dispatch(getPlaceById(id || ''));
         } else {
@@ -127,10 +128,11 @@ const PlaceForm: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        if(selectedPlace) setStates();
+        if (selectedPlace) setStates();
     }, [selectedPlace]);
 
-    if(isLoading) return <Loader />
+    if (isLoading) return <Loader />
+    if (id && !selectedPlace) return <NotFound message='Place not found' />
 
     return (
         <div className='p-3 bg-dim'>
@@ -212,7 +214,7 @@ const PlaceForm: React.FC = () => {
                 </div>
                 <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
                     <button className={`relative w-200px py-2 rounded-sm ${isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isMiniLoading}>
-                        {isMiniLoading 
+                        {isMiniLoading
                             ? id ? 'Updating...' : 'Creating...'
                             : id ? <><i className="ri-edit-box-line"></i> Update place</> : <><i className="ri-add-circle-line"></i> Create my place</>
                         }

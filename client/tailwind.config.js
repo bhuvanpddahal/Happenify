@@ -83,6 +83,9 @@ module.exports = {
         "bg": "background-color",
         "opacity": "opacity",
       },
+      inset: {
+        '110p': 'calc(100% + 10px)',
+      },
       screens: {
         "xs": "300px",
       }

@@ -36,74 +36,48 @@ const EventDetails: React.FC = () => {
                     </Link>
                     <div className='mt-2 flex items-center justify-between'>
                         <div className='text-dark font-medium'>{moment(selectedEvent?.dateAndTime).format('lll')}</div>
-                        <div>Share</div>
+                        <div className='text-dark text-15px'>{moment(selectedEvent?.createdAt).fromNow()}</div>
                     </div>
                     <h1 className='text-20px md:text-22px font-bold text-normal line-clamp-1'>{selectedEvent?.name}</h1>
-                    <button className='underline text-secondarydark hover:text-darkgrey'>See more</button>
+                    <p className='text-dark text-15px mt-n5px pl-1'>{selectedEvent?.type?.name}</p>
                     <div className='my-1 flex items-center gap-2'>
                         <div>
-                            <i className="ri-user-star-line text-26px text-secondary"></i>
+                            <i className="ri-user-star-line text-26px text-secondarydark"></i>
                         </div>
-                        <div className='my-3 flex gap-2'>
-                            <Link to={`/profile/123`}>
-                                <img className='h-30px' src={ProfileImg} alt="profile" />
-                            </Link>
-                            <Link to={`/profile/123`}>
-                                <img className='h-30px' src={ProfileImg} alt="profile" />
-                            </Link>
-                            <Link to={`/profile/123`}>
-                                <img className='h-30px' src={ProfileImg} alt="profile" />
-                            </Link>
-                            <Link to={`/profile/123`}>
-                                <img className='h-30px' src={ProfileImg} alt="profile" />
-                            </Link>
-                        </div>
+                        <Link to={`/profile/${selectedEvent?.organizer?.id.toString()}`} className='organizer'>
+                            <img className='h-40px w-40px rounded-full object-cover shadow-box' src={selectedEvent?.organizer?.picture || ProfileImg} alt="profile" />
+                            <div className='organizer-name'>{selectedEvent?.organizer?.fullName}</div>
+                        </Link>
                     </div>
                     <p className='line-clamp-5'>{selectedEvent?.description}</p>
-                    <button className='underline text-secondarydark hover:text-darkgrey'>Read more</button>
-                    <div className='my-4'>
-                        <h2 className='text-17px font-medium text-dark'>Event Schedules</h2>
-                        <ul>
-                            <li className='flex items-center gap-3 mt-3'>
-                                <div className='h-70px w-70px flex flex-col items-center justify-center border border-solid border-grey rounded-full'>
-                                    <div>9:00</div>
-                                    <div>AM</div>
-                                </div>
-                                <div>
-                                    <h3 className='font-medium'>Opening Ceremony</h3>
-                                    <p className='text-darkgrey'>By Abc Def - 9:00 AM . 10:30 AM</p>
-                                </div>
-                            </li>
-                            <li className='flex items-center gap-3 mt-3'>
-                                <div className='h-70px w-70px flex flex-col items-center justify-center border border-solid border-grey rounded-full'>
-                                    <div>9:00</div>
-                                    <div>AM</div>
-                                </div>
-                                <div>
-                                    <h3 className='font-medium'>Lunch Break</h3>
-                                    <p className='text-darkgrey'>By Abc Def - 9:00 AM . 10:30 AM</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
                 <div className='w-full'>
                     <div className='pb-3 border-b border-solid border-grey'>
-                        <Link to={`/events/12345/book-entry`} className='inline-block py-2 px-5 bg-primary text-white rounded-sm hover:bg-primarydark'>
+                        <Link to={`/events/12345/book-entry`} className='inline-block py-2 px-5 bg-primary text-15px text-white rounded-sm hover:bg-primarydark'>
                             <i className="ri-book-2-line"></i> Book your entry pass
                         </Link>
                     </div>
-                    <div className='py-3 border-b border-solid border-grey'>
-                        <h2>RSVP</h2>
-                        <div>Chart</div>
+                    <div className='py-3 flex justify-between border-b border-solid border-grey'>
+                        <h2><i className="ri-ticket-2-line text-18px text-secondarydark"></i> Ticket price</h2>
+                        <div>${selectedEvent?.ticketPrice}</div>
                     </div>
                     <div className='py-3 border-b border-solid border-grey'>
-                        <h2>Ticket sales</h2>
-                        <div>Chart</div>
+                        <div className='flex justify-between'>
+                            <h2><i className="ri-facebook-box-line text-18px text-secondarydark"></i> Facebook</h2>
+                            <div>{selectedEvent?.socialMedia?.facebook}</div>
+                        </div>
+                        <div className='flex justify-between'>
+                            <h2><i className="ri-twitter-line text-18px text-secondarydark"></i> Twitter</h2>
+                            <div>{selectedEvent?.socialMedia?.twitter}</div>
+                        </div>
+                        <div className='flex justify-between'>
+                            <h2><i className="ri-mail-line text-18px text-secondarydark"></i> Contact email</h2>
+                            <div>{selectedEvent?.contact}</div>
+                        </div>
                     </div>
-                    <div className='py-3 border-b border-solid border-grey'>
-                        <h2>Location</h2>
-                        <div>Map</div>
+                    <div className='py-3 flex justify-between border-b border-solid border-grey'>
+                        <h2><i className="ri-map-pin-2-line text-18px text-secondarydark"></i> Location</h2>
+                        <div>{selectedEvent?.location}</div>
                     </div>
                 </div>
             </div>

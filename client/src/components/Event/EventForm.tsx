@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
+import NotFound from '../Utils/NotFound';
 import Loader from '../Utils/Loaders/Loader';
 import Suggestion from '../Utils/Suggestion';
 import LoadingImg from '../../images/loading.gif';
@@ -46,7 +47,7 @@ const EventForm: React.FC = () => {
             twitter,
             contact
         };
-        if(id) {
+        if (id) {
             dispatch(updateEvent(id, formData, navigate));
         } else {
             dispatch(createEvent(formData, navigate));
@@ -65,11 +66,11 @@ const EventForm: React.FC = () => {
         setTwitter(selectedEvent?.socialMedia?.twitter || '');
         setContact(selectedEvent?.contact || '');
     };
-    
+
     const { isLoading, isMiniLoading, selectedEvent } = useSelector((state: State) => state.event);
 
     useEffect(() => {
-        if(id) {
+        if (id) {
             document.title = 'Update Event - Happenify';
             dispatch(getEventById(id || ''));
         } else {
@@ -81,10 +82,11 @@ const EventForm: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        if(selectedEvent) setStates();
+        if (selectedEvent) setStates();
     }, [selectedEvent]);
-    
-    if(isLoading) return <Loader />
+
+    if (isLoading) return <Loader />
+    if (id && !selectedEvent) return <NotFound message='Event not found' />
 
     return (
         <div className='p-3 bg-dim'>
@@ -106,7 +108,7 @@ const EventForm: React.FC = () => {
                     <textarea onChange={(e) => setDescription(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm resize-none' rows={5} value={description} placeholder='Description *' required></textarea>
                 </div>
                 <div className='flex gap-3 mb-4 flex-wrap sm:flex-nowrap'>
-                    <input onChange={(e) => setTicketPrice(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={ticketPrice} type="number" placeholder='Ticket price *' required />
+                    <input onChange={(e) => setTicketPrice(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={ticketPrice} type="number" placeholder='Ticket price (in $) *' required />
                     <select onChange={(e) => setType(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={type}>
                         {eventOptions.map((option: Option) => (
                             <option key={option.value} value={option.value}>{option.type}</option>
@@ -131,7 +133,7 @@ const EventForm: React.FC = () => {
                 </div>
                 <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
                     <button className={`relative w-200px py-2 rounded-sm ${isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isMiniLoading}>
-                        {isMiniLoading 
+                        {isMiniLoading
                             ? id ? 'Updating...' : 'Creating...'
                             : id ? <><i className="ri-edit-box-line"></i> Update event</> : <><i className="ri-add-circle-line"></i> Create my event</>
                         }
