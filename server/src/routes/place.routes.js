@@ -8,7 +8,8 @@ import {
     getPlaceById,
     searchTrendingPlaces,
     searchUserPlaces,
-    updatePlace
+    updatePlace,
+    deletePlace
 } from '../controllers/places.controller.js';
 
 const router = express.Router();
@@ -20,5 +21,6 @@ router.get('/', auth, getPlaces);
 router.get('/user', auth, getUserPlaces);
 router.get('/:id', auth, getPlaceById);
 router.patch('/:id', auth, updatePlace);
+router.delete('/:id', auth, deletePlace);
 
 export default router;

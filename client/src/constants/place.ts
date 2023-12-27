@@ -10,7 +10,10 @@ export const REMOVE_SELECTED_PLACE = "REMOVE_SELECTED_PLACE";
 export const SEARCH_PLACES = "SEARCH_PLACES";
 export const GET_MORE_SEARCHED_PLACES = "GET_MORE_SEARCHED_PLACES";
 
+export const DELETE_PLACE = "DELETE_PLACE";
+
 export const creation_success = "Place created successfully";
+export const deletion_success = "Place deleted successfully";
 
 export const title = "Places";
 export const para = "Find and create places to share with others.";

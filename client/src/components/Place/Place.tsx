@@ -1,10 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 import Options from '../Utils/Options';
+import Loader from '../Utils/Loaders/Loader';
 import ConfirmBox from '../Utils/ConfirmBox';
+import { State } from '../../interfaces/store';
 import { PlaceProp } from '../../interfaces/place';
+import { deletePlace } from '../../actions/place';
 
 const Place: React.FC<PlaceProp> = ({
     isLast,
@@ -41,15 +45,15 @@ const Place: React.FC<PlaceProp> = ({
         setShowConfirmBox(true);
     };
     const handleDeleteConfirm = () => {
-        // setShowConfirmBox(false);
-        // setIsDeleting(true);
-        // dispatch(deleteEvent(_id?.toString()));
+        setShowConfirmBox(false);
+        setIsDeleting(true);
+        dispatch(deletePlace(_id?.toString()));
     };
     const handleBlockPost = () => {
-        // console.log('block clicked');
+        console.log('block clicked');
     };
     const handleViewOrganizer = () => {
-        // navigate(`/profile/${organizer?.id.toString()}`);
+        navigate(`/profile/${owner?.id.toString()}`);
     };
     const hideOptions = (e: any) => {
         // console.log('inside', e.target, optionsRef);
@@ -57,18 +61,18 @@ const Place: React.FC<PlaceProp> = ({
         // setShowOptions(false);
     };
 
-    // useEffect(() => {
-    //     // TODO - Hide options on document click
-    // }, [showOptions]);
+    useEffect(() => {
+        // TODO - Hide options on document click
+    }, [showOptions]);
 
-    // const { isMiniLoading } = useSelector((state: State) => state.event);
+    const { isMiniLoading } = useSelector((state: State) => state.place);
 
-    // if(isDeleting && isMiniLoading) return (
-    //     <>
-    //         <Loader />
-    //         {!isLast && (<div className='border-b border-solid border-grey'></div>)}
-    //     </>
-    // )
+    if(isDeleting && isMiniLoading) return (
+        <>
+            <Loader />
+            {!isLast && (<div className='border-b border-solid border-grey'></div>)}
+        </>
+    )
 
     return (
         <li className={`md:h-260px flex flex-col md:flex-row md:items-center gap-3 ${!isLast ? 'py-3 border-b border-solid border-grey' : 'pt-3'}`}>

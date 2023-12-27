@@ -12,7 +12,7 @@ const ConfirmBox: React.FC<ConfirmBoxProp> = ({
     handleDeleteConfirm
 }: ConfirmBoxProp) => {
     return (
-        <div className='fixed inset-0 flex items-center justify-center bg-darktrans z-30'>
+        <div className='fixed p-2 inset-0 flex items-center justify-center bg-darktrans z-30'>
             <div className='w-400px p-4 bg-white shadow-normal rounded-xl'>
                 <header className='flex items-center justify-between'>
                     <h1 className='font-medium text-dark text-17px'>Delete post</h1>

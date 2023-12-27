@@ -1,4 +1,4 @@
-import { Action, ManyData } from '../interfaces/place';
+import { Action, ManyData, Place } from '../interfaces/place';
 import {
     START_LOADING,
     END_LOADING,
@@ -14,7 +14,8 @@ import {
     GET_PLACE_BY_ID,
     REMOVE_SELECTED_PLACE,
     GET_MORE_SEARCHED_PLACES,
-    SEARCH_PLACES
+    SEARCH_PLACES,
+    DELETE_PLACE
 } from '../constants/place';
 
 const initialState = {
@@ -66,6 +67,11 @@ const placeReducer = (state = initialState, action: Action) => {
         case RESET_PAGE:
             if(action.for !== PLACE) return state;
             return { ...state, places: [], page: 1, totalPages: 1 };
+        case DELETE_PLACE:
+            return {
+                ...state,
+                places: (state.places as Place[]).filter((place) => place?._id.toString() !== action?.data)
+            };
         default:
             return state;
     }

@@ -134,7 +134,7 @@ const PlaceForm: React.FC = () => {
 
     return (
         <div className='p-3 bg-dim'>
-            {showSuggestion && (
+            {!id && showSuggestion && (
                 <Suggestion
                     setShowSuggestion={setShowSuggestion}
                     text={text}
@@ -207,7 +207,7 @@ const PlaceForm: React.FC = () => {
                     </ul>
                     <div className='relative ml-5'>
                         <input ref={conditionInput} className='py-2 pl-3 pr-50px border border-solid border-grey outline-none w-full rounded-sm' type="text" placeholder='Enter a condition' />
-                        <i onClick={addCondition} className="ri-add-line absolute text-22px top-0 right-0 h-full w-40px bg-primary text-lightgrey rounded-r-sm cursor-pointer flex items-center justify-center"></i>
+                        <i onClick={addCondition} className="ri-add-line absolute text-22px top-0 right-0 h-full w-40px bg-primary text-lightgrey rounded-r-sm cursor-pointer flex items-center justify-center hover:bg-primarydark"></i>
                     </div>
                 </div>
                 <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>

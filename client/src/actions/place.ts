@@ -17,7 +17,9 @@ import {
     GET_PLACE_BY_ID,
     SEARCH_PLACES,
     GET_MORE_SEARCHED_PLACES,
-    creation_success
+    DELETE_PLACE,
+    creation_success,
+    deletion_success
 } from '../constants/place';
 import { success } from '../constants/alert';
 import { FormDataProp } from '../interfaces/place';
@@ -150,6 +152,20 @@ export const updatePlace = (id: string, formData: FormDataProp, navigate: any) =
         await api.updatePlace(id, formData);
         dispatch({ type: END_MINI_LOADING, for: PLACE });
         navigate(`/places/${id}`);
+
+    } catch (error) {
+        dispatch({ type: END_MINI_LOADING, for: PLACE });
+        handleError(error, dispatch);
+    }
+};
+
+export const deletePlace = (id: string) => async (dispatch: Dispatch<PlaceAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_MINI_LOADING, for: PLACE });
+        await api.deletePlace(id);
+        dispatch({ type: DELETE_PLACE, data: id });
+        dispatch({ type: END_MINI_LOADING, for: PLACE });
+        showAlert(deletion_success, success, dispatch);
 
     } catch (error) {
         dispatch({ type: END_MINI_LOADING, for: PLACE });

@@ -221,3 +221,28 @@ export const updatePlace = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+export const deletePlace = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const { userId } = req;
+        const { id: placeId } = req.params;
+        const user = await User.findById(userId);
+        const place = await Place.findById(placeId);
+        if(place.owner.id.toString() !== userId) return res.status(403).json({ message: "Not allowed" });
+        await Place.findByIdAndDelete(placeId);
+        user.places = user.places.filter((place) => place.id.toString() !== placeId);
+        await user.save();
+        session.commitTransaction();
+        session.endSession();
+        res.status(200).json({ message: "Place deleted successfully" });
+
+    } catch (error) {
+        console.log(error);
+        session.abortTransaction();
+        session.endSession()
+        res.status(500).json({ message: "Something went wrong (*-*)" });
+    }
+};

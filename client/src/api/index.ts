@@ -38,3 +38,4 @@ export const getPlaceById = (id: string) => API.get(`/places/${id}`);
 export const searchTrendingPlaces = (searchType: string, value: string, page: number, limit: number) => API.get(`/places/search/trending?${searchType}=${value}&page=${page}&limit=${limit}`);
 export const searchUserPlaces = (searchType: string, value: string, page: number, limit: number) => API.get(`/places/search/user?${searchType}=${value}&page=${page}&limit=${limit}`);
 export const updatePlace = (id: string, formData: PlaceFormData) => API.patch(`/places/${id}`, formData);
+export const deletePlace = (id: string) => API.delete(`/places/${id}`);
