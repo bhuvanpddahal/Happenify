@@ -141,7 +141,7 @@ const PlaceForm: React.FC = () => {
                     guidelines={[]}
                 />
             )}
-            <form onSubmit={handleSubmit} className='px-4 py-3 bg-white shadow-image rounded-lg'>
+            <form onSubmit={handleSubmit} className='px-4 py-3 bg-white shadow-box rounded-lg'>
                 <h1 className='font-semibold text-20px text-dark mb-2'>{id ? 'Update Place' : 'Enter The Necessary Place Details'}</h1>
                 <div className='flex gap-3 mb-3 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setName(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={name} type="text" placeholder='Name *' required />

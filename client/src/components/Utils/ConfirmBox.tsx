@@ -13,7 +13,7 @@ const ConfirmBox: React.FC<ConfirmBoxProp> = ({
 }: ConfirmBoxProp) => {
     return (
         <div className='fixed p-2 inset-0 flex items-center justify-center bg-darktrans z-30'>
-            <div className='w-400px p-4 bg-white shadow-normal rounded-xl'>
+            <div className='w-400px p-4 bg-white shadow-modal rounded-xl'>
                 <header className='flex items-center justify-between'>
                     <h1 className='font-medium text-dark text-17px'>Delete post</h1>
                     <div onClick={() => setShowConfirmBox(false)} className='h-30px w-30px flex items-center justify-center rounded-full cursor-pointer transition-bg duration-300 hover:bg-lightgrey'>

@@ -32,7 +32,7 @@
   line-height: 1.125em;
   margin-inline: auto;
   overflow: hidden;
-  @apply rounded-lg shadow-image;
+  @apply rounded-lg shadow-box;
 }
 
 .react-calendar--doubleView {

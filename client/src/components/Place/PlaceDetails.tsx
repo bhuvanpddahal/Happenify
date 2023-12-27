@@ -29,7 +29,7 @@ const PlaceDetails: React.FC = () => {
 
     return (
         <div className='p-3 pb-6 lg:pb-3 bg-dim'>
-            <div className='flex flex-col gap-5 bg-white p-4 rounded-lg shadow-image'>
+            <div className='flex flex-col gap-5 bg-white p-4 rounded-lg shadow-box'>
                 <div className='w-full'>
                     <div className='flex gap-3 flex-col xs:flex-row'>
                         <Link to={selectedPlace?.images[0]} className='w-full h-130px sm:h-160px lg:h-200px' target='_blank'>

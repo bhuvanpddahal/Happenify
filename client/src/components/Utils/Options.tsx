@@ -15,7 +15,7 @@ const Options: React.FC<OptionsProp> = ({
     return (
         <div onClick={toggleShowOptions} className='h-30px w-30px relative flex items-center justify-center rounded-full cursor-pointer transition-bg duration-300 hover:bg-lightgrey'>
             <i className="ri-more-2-line text-18px"></i>
-            <ul className={`absolute bottom-1 right-1 py-1 w-160px bg-white rounded-lg text-15px shadow-image overflow-hidden z-10 transition-transform duration-200 origin-bottom-right ${showOptions ? 'scale-100 pointer-events-auto' : 'scale-0 pointer-events-none'}`}>
+            <ul className={`absolute bottom-1 right-1 py-1 w-160px bg-white rounded-lg text-15px shadow-option overflow-hidden z-10 transition-transform duration-200 origin-bottom-right ${showOptions ? 'scale-100 pointer-events-auto' : 'scale-0 pointer-events-none'}`}>
                 {userId === holder?.id ? (
                     <>
                         <li onClick={handleEditClick} className='py-1 px-3 flex items-center gap-1 hover:bg-lightgrey'>

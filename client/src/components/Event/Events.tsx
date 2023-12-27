@@ -92,7 +92,7 @@ const Events: React.FC = () => {
                 setSearchValue={setSearchValue}
             />
 
-            <div className='p-4 mt-4 bg-white shadow-image overflow-visible rounded-lg'>
+            <div className='p-4 mt-4 bg-white shadow-box overflow-visible rounded-lg'>
                 <Tabs
                     activeTab={activeTab}
                     changeActiveTab={changeActiveTab}

@@ -92,7 +92,7 @@ const Places: React.FC = () => {
                 setSearchValue={setSearchValue}
             />
 
-            <div className='p-4 mt-4 bg-white shadow-image rounded-lg'>
+            <div className='p-4 mt-4 bg-white shadow-box rounded-lg'>
                 <Tabs
                     activeTab={activeTab}
                     changeActiveTab={changeActiveTab}

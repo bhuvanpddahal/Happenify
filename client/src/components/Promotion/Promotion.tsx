@@ -15,7 +15,7 @@ const Promotion: React.FC<PromotionProp> = ({
     const promotions = [1, 2, 3, 2, 3, 2, 3, 2, 3];
 
     return (
-        <div className='px-4 pt-3 pb-2 bg-white rounded-lg shadow-image mb-4'>
+        <div className='px-4 pt-3 pb-2 bg-white rounded-lg shadow-box mb-4'>
             <h2 className='text-18px text-dark font-semibold'>{title}</h2>
             <ul className='mt-3 flex gap-3 overflow-visible overflow-x-hidden pb-13px hover:overflow-x-auto hover:pb-2'>
                 {promotions.map((promotion: any, index: number) => (

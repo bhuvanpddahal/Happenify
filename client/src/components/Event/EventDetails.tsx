@@ -29,7 +29,7 @@ const EventDetails: React.FC = () => {
 
     return (
         <div className='p-3 pb-6 lg:pb-3 bg-dim'>
-            <div className='flex flex-col md:flex-row gap-5 p-4 bg-white rounded-lg shadow-image'>
+            <div className='flex flex-col md:flex-row gap-5 p-4 bg-white rounded-lg shadow-box'>
                 <div className='w-full'>
                     <Link to={selectedEvent?.image} className='w-full' target='_blank'>
                         <img className='w-full h-300px object-contain rounded-md border border-solid border-grey' src={selectedEvent?.image} alt="event" />
