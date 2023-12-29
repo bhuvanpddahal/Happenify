@@ -14,7 +14,8 @@ import EntryForm from './Event/EntryForm';
 import Places from './Place/Places';
 import PlaceForm from './Place/PlaceForm/PlaceForm';
 import PlaceDetails from './Place/PlaceDetails';
-import RatingForm from './Place/RatingForm';
+import RatingForm from './Place/Rating/RatingForm';
+import Ratings from './Place/Rating/Ratings';
 import Promotions from './Promotion/Promotions';
 import PromotionForm from './Promotion/PromotionForm';
 import CalendarPage from './Calendar/CalendarPage';
@@ -43,6 +44,7 @@ const Content: React.FC = () => {
                     <Route path=':id' element={<PlaceDetails />} />
                     <Route path=':id/book' element={<EntryForm />} />
                     <Route path=':id/rate' element={<RatingForm />} />
+                    <Route path=':id/ratings' element={<Ratings />} />
                     <Route path='create' element={<PlaceForm />} />
                     <Route path=':id/edit' element={<PlaceForm />} />
                 </Route>

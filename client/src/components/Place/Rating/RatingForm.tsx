@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import LoadingImg from '../../images/loading.gif';
-import { State } from '../../interfaces/store';
-import { ratePlace } from '../../actions/place';
+import LoadingImg from '../../../images/loading.gif';
+import { State } from '../../../interfaces/store';
+import { ratePlace } from '../../../actions/place';
 
 const RatingForm: React.FC = () => {
     const { id } = useParams();

@@ -9,6 +9,7 @@ import ProfileImg from '../../images/profile.png';
 import { State } from '../../interfaces/store';
 import { getPlaceById } from '../../actions/place';
 import { REMOVE_SELECTED_PLACE } from '../../constants/place';
+import RatePlaceBtn from '../Utils/RatePlaceBtn';
 
 const PlaceDetails: React.FC = () => {
     const { id } = useParams();
@@ -29,9 +30,7 @@ const PlaceDetails: React.FC = () => {
 
     return (
         <div className='p-3 pb-6 lg:pb-3 bg-dim'>
-            <Link to={`/places/${id}/rate`} className='fixed bottom-16 md:bottom-20 lg:bottom-6 right-6 py-1 px-3 rounded-50px text-15px bg-secondary shadow-box transition-bg duration-300 hover:bg-grey'>
-                <i className="ri-emotion-line text-18px"></i> Rate this place
-            </Link>
+            <RatePlaceBtn id={id || ''} />
             <div className='flex flex-col gap-5 bg-white p-4 rounded-lg shadow-box'>
                 <div className='w-full'>
                     <div className='flex gap-3 flex-col xs:flex-row'>
@@ -46,12 +45,12 @@ const PlaceDetails: React.FC = () => {
                         </Link>
                     </div>
                     <div className='mt-2 flex items-center justify-between'>
-                        <div className='text-normal ratings'>
+                        <Link to={`/places/${id}/ratings`} className='text-normal ratings'>
                             {[...Array(5)].map((_, index) => (
                                 <i key={index} className={`ri-star-fill text-18px ${selectedPlace?.ratings?.stars > index  ? 'text-secondary' : 'text-grey'}`}></i>
                             ))}
                             <div className='ratings-value'>{selectedPlace?.ratings?.stars}</div>
-                        </div>
+                        </Link>
                         <div className='text-dark text-15px'>{moment(selectedPlace?.createdAt).fromNow()}</div>
                     </div>
                     <h1 className='text-20px md:text-22px font-bold text-normal line-clamp-1'>{selectedPlace?.name}</h1>

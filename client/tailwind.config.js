@@ -37,6 +37,9 @@ module.exports = {
         "250px": "250px",
         "400px": "400px",
       },
+      maxWidth: {
+        "500px": "500px",
+      },
       colors: {
         "dim": "#f5f7fa",
         "dark": "#151515",
