@@ -18,6 +18,7 @@ export const DELETE_EVENT = "DELETE_EVENT";
 
 export const creation_success = "Event created successfully";
 export const deletion_success = "Event deleted successfully";
+export const booking_success = "Entry booked successfully";
 
 export const title = "Events";
 export const para = "Find and create events to share with others.";

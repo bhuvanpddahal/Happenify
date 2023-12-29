@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-import { Holder } from './util';
+import { Holder, SocialMedia } from './util';
 
 interface Type {
     value: string;
@@ -26,10 +26,7 @@ export interface Place {
     owner: Holder;
     pricePerHour: string;
     termsAndConditions: string[];
-    socialMedia: {
-        facebook: string;
-        twitter: string;
-    };
+    socialMedia: SocialMedia;
     createdAt: string;
 }
 

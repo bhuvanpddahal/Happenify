@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { trusted } from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
     fullName: {
@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
     },
     following: {
         type: [{
-            id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
             fullName: { type: String, required: true },
             email: { type: String, required: true },
             picture: { type: String, default: '' }
@@ -28,24 +28,40 @@ const UserSchema = new mongoose.Schema({
     },
     followers: {
         type: [{
-            id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
             fullName: { type: String, required: true },
             email: { type: String, required: true },
             picture: { type: String, default: '' }
         }],
         default: []
     },
-    events: {
+    userEvents: {
         type: [{
-            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true },
             name: { type: String, required: true },
             image: { type: String, required: true }
         }],
         default: []
     },
-    places: {
+    bookedEvents: {
         type: [{
-            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Place' },
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true },
+            name: { type: String, required: true },
+            image: { type: String, required: true }
+        }],
+        default: []
+    },
+    userPlaces: {
+        type: [{
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Place', required: true },
+            name: { type: String, required: true },
+            image: { type: String, required: true }
+        }],
+        default: []
+    },
+    bookedPlaces: {
+        type: [{
+            id: { type: mongoose.Schema.Types.ObjectId, ref: 'Place', required: true },
             name: { type: String, required: true },
             image: { type: String, required: true }
         }],

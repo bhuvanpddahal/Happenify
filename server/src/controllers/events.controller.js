@@ -20,7 +20,7 @@ export const createEvent = async (req, res) => {
     
     try {
         const { userId } = req;
-        const { name, dateAndTime, location, description, ticketPrice, type, image, facebook, twitter, contact } = req.body;
+        const { name, dateAndTime, location, description, ticketPrice, capacity, type, image, facebook, twitter, contact } = req.body;
         const user = await User.findById(userId);
         const imageUrl = (await cloudinary.uploader.upload(image)).secure_url;
         networkError = false;
@@ -30,6 +30,7 @@ export const createEvent = async (req, res) => {
             location,
             description,
             ticketPrice,
+            capacity,
             organizer: {
                 id: user._id,
                 picture: user.picture,
@@ -43,7 +44,7 @@ export const createEvent = async (req, res) => {
             },
             contact
         });
-        user.events.push({
+        user.userEvents.push({
             id: newEvent._id,
             image: imageUrl,
             name
@@ -54,6 +55,7 @@ export const createEvent = async (req, res) => {
         res.status(200).json(newEvent);
 
     } catch (error) {
+        console.log(error.message);
         session.abortTransaction();
         session.endSession();
         if(networkError) return res.status(400).json({ message: "Network error" });
@@ -167,6 +169,7 @@ export const updateEvent = async (req, res) => {
         const { name, dateAndTime, location, description, ticketPrice, type, image, facebook, twitter, contact } = req.body;
         const user = await User.findById(userId);
         const event = await Event.findById(eventId);
+        if(!event) return res.status(404).json({ message: "Event not found" });
         if(userId !== event.organizer.id.toString()) return res.status(403).json({ message: "Not allowed" });
         const imageUrl = (await cloudinary.uploader.upload(image)).secure_url;
         networkError = false;
@@ -186,7 +189,7 @@ export const updateEvent = async (req, res) => {
             contact
         };
         const updatedEvent = await Event.findByIdAndUpdate(eventId, updateEvent, { new: true });
-        user.events = user.events.map((event) => event.id.toString() === eventId ? {
+        user.userEvents = user.userEvents.map((event) => event.id.toString() === eventId ? {
             id: event.id,
             name,
             image: imageUrl
@@ -212,11 +215,13 @@ export const deleteEvent = async (req, res) => {
     try {
         const { userId } = req;
         const { id: eventId } = req.params;
+        if(!ObjectId.isValid(eventId)) return res.status(404).json({ message: "Event not found" });
         const user = await User.findById(userId);
         const event = await Event.findById(eventId);
+        if(!event) return res.status(404).json({ message: "Event not found" });
         if(event.organizer.id.toString() !== userId) return res.status(403).json({ message: "Not allowed" });
         await Event.findByIdAndDelete(eventId);
-        user.events = user.events.filter((event) => event.id.toString() !== eventId);
+        user.userEvents = user.userEvents.filter((event) => event.id.toString() !== eventId);
         await user.save();
         session.commitTransaction();
         session.endSession();
@@ -224,7 +229,50 @@ export const deleteEvent = async (req, res) => {
 
     } catch (error) {
         session.abortTransaction();
-        session.endSession()
+        session.endSession();
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+export const bookEntry = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const { userId } = req;
+        const { id: eventId } = req.params;
+        const { phoneNum, numOfTickets } = req.body;
+        if(!ObjectId.isValid(eventId)) return res.status(404).json({ message: "Event not found" });
+        const user = await User.findById(userId);
+        const event = await Event.findById(eventId);
+        if(!event) return res.status(404).json({ message: "Event not found" });
+        const remainingTickets = event.capacity - event.bookings.total;
+        if(Number(numOfTickets) > remainingTickets) return res.status(400).json({ message: `Only ${remainingTickets} tickets available` });
+        
+        const newBooker = {
+            id: user._id,
+            fullName: user.fullName,
+            picture: user.picture,
+            phoneNum,
+            numOfTickets
+        };
+        event.bookings.bookers.push(newBooker);
+        event.bookings.total += Number(numOfTickets);
+        user.bookedEvents.push({
+            id: event._id,
+            name: event.name,
+            image: event.image
+        });
+
+        await event.save();
+        await user.save();
+        session.commitTransaction();
+        session.endSession();
+        res.status(200).json({ message: "Entry booked successfully" });
+        
+    } catch (error) {
+        session.abortTransaction();
+        session.endSession();
         res.status(500).json({ message: "Something went wrong" });
     }
 };

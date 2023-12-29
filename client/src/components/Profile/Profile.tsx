@@ -65,7 +65,7 @@ const Profile: React.FC = () => {
                 </div>
                 <ul className='flex gap-4 flex-wrap mt-5'>
                     {activeTab === 'events' ? (
-                        selectedUser?.events.length ? (
+                        selectedUser?.events?.length ? (
                             [...selectedUser?.events].reverse().map((event: EventOrPlace) => (
                                 <Card
                                     key={event.id}
@@ -79,7 +79,7 @@ const Profile: React.FC = () => {
                             <NotFound message='No events' />
                         )
                     ) : (
-                        selectedUser?.places.length ? (
+                        selectedUser?.places?.length ? (
                             [...selectedUser?.places].reverse().map((place: EventOrPlace) => (
                                 <Card
                                     key={place.id}

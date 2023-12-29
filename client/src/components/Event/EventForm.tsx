@@ -24,6 +24,7 @@ const EventForm: React.FC = () => {
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [ticketPrice, setTicketPrice] = useState('');
+    const [capacity, setCapacity] = useState('');
     const [type, setType] = useState('concert');
     const [image, setImage] = useState('');
     const [facebook, setFacebook] = useState('');
@@ -41,6 +42,7 @@ const EventForm: React.FC = () => {
             location,
             description,
             ticketPrice,
+            capacity,
             type: { value, name: typeName },
             image,
             facebook,
@@ -60,6 +62,7 @@ const EventForm: React.FC = () => {
         setLocation(selectedEvent?.location || '');
         setDescription(selectedEvent?.description || '');
         setTicketPrice(selectedEvent?.ticketPrice || '');
+        setCapacity(selectedEvent?.capacity || '');
         setType(selectedEvent?.type?.value || 'concert');
         setImage(selectedEvent?.image || '');
         setFacebook(selectedEvent?.socialMedia?.facebook || '');
@@ -109,6 +112,7 @@ const EventForm: React.FC = () => {
                 </div>
                 <div className='flex gap-3 mb-4 flex-wrap sm:flex-nowrap'>
                     <input onChange={(e) => setTicketPrice(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={ticketPrice} type="number" placeholder='Ticket price (in $) *' required />
+                    <input onChange={(e) => setCapacity(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={capacity} type="number" placeholder='Capacity *' required />
                     <select onChange={(e) => setType(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={type}>
                         {eventOptions.map((option: Option) => (
                             <option key={option.value} value={option.value}>{option.type}</option>

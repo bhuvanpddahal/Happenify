@@ -25,7 +25,7 @@ const EventDetails: React.FC = () => {
     const { isLoading, selectedEvent } = useSelector((state: State) => state.event);
 
     if (isLoading) return <Loader />
-    if (!selectedEvent) return <NotFound message={'Event not found!'} />
+    if (!selectedEvent) return <NotFound message='Event not found' />
 
     return (
         <div className='p-3 pb-6 lg:pb-3 bg-dim'>
@@ -53,13 +53,27 @@ const EventDetails: React.FC = () => {
                 </div>
                 <div className='w-full'>
                     <div className='pb-3 border-b border-solid border-grey'>
-                        <Link to={`/events/12345/book-entry`} className='inline-block py-2 px-5 bg-primary text-15px text-white rounded-sm hover:bg-primarydark'>
+                        <Link to={`/events/${selectedEvent?._id.toString()}/book-entry`} className='inline-block py-2 px-5 bg-primary text-15px text-white rounded-sm hover:bg-primarydark'>
                             <i className="ri-book-2-line"></i> Book your entry pass
                         </Link>
                     </div>
-                    <div className='py-3 flex justify-between border-b border-solid border-grey'>
-                        <h2><i className="ri-ticket-2-line text-18px text-secondarydark"></i> Ticket price</h2>
-                        <div>${selectedEvent?.ticketPrice}</div>
+                    <div className='py-3 border-b border-solid border-grey'>
+                        <div className='flex justify-between'>
+                            <h2><i className="ri-ticket-2-line text-18px text-secondarydark"></i> Ticket price</h2>
+                            <div>${selectedEvent?.ticketPrice}</div>
+                        </div>
+                        <div className='flex justify-between'>
+                            <h2><i className="ri-team-line text-18px text-secondarydark"></i> Capacity</h2>
+                            <div>{selectedEvent?.capacity}</div>
+                        </div>
+                        <div className='flex justify-between'>
+                            <h2><i className="ri-book-3-line text-18px text-secondarydark"></i> Booked</h2>
+                            <div>{selectedEvent?.bookings?.total}</div>
+                        </div>
+                        <div className='flex justify-between'>
+                            <h2><i className="ri-book-open-line text-18px text-secondarydark"></i> Remaining</h2>
+                            <div>{Number(selectedEvent?.capacity) - selectedEvent?.bookings?.total}</div>
+                        </div>
                     </div>
                     <div className='py-3 border-b border-solid border-grey'>
                         <div className='flex justify-between'>

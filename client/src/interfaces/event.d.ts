@@ -1,10 +1,23 @@
 import { ObjectId } from 'mongodb';
 
-import { Holder } from './util';
+import { Holder, SocialMedia } from './util';
 
 interface Type {
     value: string;
     name: string;
+}
+
+interface Booker {
+    id: ObjectId;
+    fullName: string;
+    picture: string;
+    phoneNum: string;
+    numOfTickets: string;
+}
+
+interface Bookings {
+    bookers: Booker[];
+    total: number;
 }
 
 export interface Event {
@@ -14,13 +27,12 @@ export interface Event {
     location: string;
     description: string;
     ticketPrice: string;
+    capacity: string;
     organizer: Holder;
     type: Type;
     image: string;
-    socialMedia: {
-        facebook: string;
-        twitter: string;
-    };
+    bookings: Bookings;
+    socialMedia: SocialMedia;
     contact: string;
     createdAt: string;
 }
@@ -42,6 +54,11 @@ export interface FormDataProp {
     facebook: string;
     twitter: string;
     contact: string;
+}
+
+export interface BookData {
+    phoneNum: string;
+    numOfTickets: string;
 }
 
 export interface ManyData {

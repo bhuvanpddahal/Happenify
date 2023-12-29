@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { FormDataProp as AuthFormData, EditData as AuthEditData } from '../interfaces/auth';
-import { FormDataProp as EventFormData } from '../interfaces/event';
+import { FormDataProp as EventFormData, BookData as EventBookData } from '../interfaces/event';
 import { FormDataProp as PlaceFormData } from '../interfaces/place';
 
 const API = axios.create({ baseURL: 'http://localhost:5000/api' });
@@ -30,6 +30,7 @@ export const searchTrendingEvents = (searchType: string, value: string, page: nu
 export const searchUserEvents = (searchType: string, value: string, page: number, limit: number) => API.get(`/events/search/user?${searchType}=${value}&page=${page}&limit=${limit}`);
 export const updateEvent = (id: string, formData: EventFormData) => API.patch(`/events/${id}`, formData);
 export const deleteEvent = (id: string) => API.delete(`/events/${id}`);
+export const bookEntry = (id: string, formData: EventBookData) => API.post(`/events/book-entry/${id}`, formData);
 
 export const createPlace = (formData: PlaceFormData) => API.post('/places', formData);
 export const getTrendingPlaces = (page: number, limit: number) => API.get(`/places?page=${page}&limit=${limit}`);

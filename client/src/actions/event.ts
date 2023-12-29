@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import * as api from '../api';
-import { Action as EventAction } from '../interfaces/event';
+import { Action as EventAction, BookData } from '../interfaces/event';
 import { Action as AlertAction } from '../interfaces/alert';
 import {
     START_LOADING,
@@ -22,7 +22,8 @@ import {
     UPDATE_EVENT,
     DELETE_EVENT,
     creation_success,
-    deletion_success
+    deletion_success,
+    booking_success
 } from '../constants/event';
 import { success } from '../constants/alert';
 import { FormDataProp } from '../interfaces/event';
@@ -169,6 +170,20 @@ export const deleteEvent = (id: string) => async (dispatch: Dispatch<EventAction
         dispatch({ type: DELETE_EVENT, data: id });
         dispatch({ type: END_MINI_LOADING, for: EVENT });
         showAlert(deletion_success, success, dispatch);
+
+    } catch (error) {
+        dispatch({ type: END_MINI_LOADING, for: EVENT });
+        handleError(error, dispatch);
+    }
+};
+
+export const bookEntry = (id: string, formData: BookData, navigate: any) => async (dispatch: Dispatch<EventAction | AlertAction>) => {
+    try {
+        dispatch({ type: START_MINI_LOADING, for: EVENT });
+        await api.bookEntry(id, formData);
+        dispatch({ type: END_MINI_LOADING, for: EVENT });
+        showAlert(booking_success, success, dispatch);
+        navigate(`/events/${id}`);
 
     } catch (error) {
         dispatch({ type: END_MINI_LOADING, for: EVENT });

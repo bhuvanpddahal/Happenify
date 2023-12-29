@@ -21,8 +21,13 @@ const EventSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    capacity: {
+        type: Number,
+        required: true,
+        min: 1
+    },
     organizer: {
-        id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
         picture: { type: String, default: '' },
         fullName: { type: String, required: true }
     },
@@ -33,6 +38,19 @@ const EventSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
+    },
+    bookings: {
+        bookers: {
+            type: [{
+                id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+                fullName: { type: String, required: true },
+                picture: { type: String, default: '' },
+                phoneNum: { type: Number, required: true },
+                numOfTickets: { type: Number, required: true, min: 1 }
+            }],
+            default: []
+        },
+        total: { type: Number, default: 0 }
     },
     socialMedia: {
         facebook: { type: String, default: '' },

@@ -128,9 +128,11 @@ const Events: React.FC = () => {
                                     location={event.location}
                                     description={event.description}
                                     ticketPrice={event.ticketPrice}
+                                    capacity={event.capacity}
                                     organizer={event.organizer}
                                     type={event.type}
                                     image={event.image}
+                                    bookings={event.bookings}
                                     socialMedia={event.socialMedia}
                                     contact={event.contact}
                                     createdAt={event.createdAt}

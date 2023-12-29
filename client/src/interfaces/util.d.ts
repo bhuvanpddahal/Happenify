@@ -11,6 +11,12 @@ export interface Holder {
     fullName: string;
 }
 
+export interface SocialMedia {
+    facebook: string;
+    twitter: string;
+    contact: string;
+}
+
 export interface OptionsProp {
     userId: ObjectId;
     holder: Holder;

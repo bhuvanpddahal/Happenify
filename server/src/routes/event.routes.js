@@ -9,7 +9,8 @@ import {
     searchTrendingEvents,
     searchUserEvents,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    bookEntry
 } from '../controllers/events.controller.js';
 
 const router = express.Router();
@@ -22,5 +23,6 @@ router.get('/user', auth, getUserEvents);
 router.get('/:id', auth, getEventById);
 router.patch('/:id', auth, updateEvent);
 router.delete('/:id', auth, deleteEvent);
+router.post('/book-entry/:id', auth, bookEntry);
 
 export default router;

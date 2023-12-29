@@ -19,9 +19,11 @@ const Event: React.FC<EventProp> = ({
     location,
     description,
     ticketPrice,
+    capacity,
     organizer,
     type,
     image,
+    bookings,
     socialMedia,
     contact,
     createdAt,
@@ -97,7 +99,7 @@ const Event: React.FC<EventProp> = ({
                 </p>
                 <p className='line-clamp-3'>{description}</p>
                 <div className='flex items-center justify-between mt-3'>
-                    <Link to={`/events/12345/book-entry`} className='inline-block py-2 px-5 bg-primary text-15px text-white rounded-sm hover:bg-primarydark'>
+                    <Link to={`/events/${_id.toString()}/book-entry`} className='inline-block py-2 px-5 bg-primary text-15px text-white rounded-sm hover:bg-primarydark'>
                         <i className="ri-book-2-line"></i> Book your entry pass
                     </Link>
                     <Options
