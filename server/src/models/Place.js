@@ -34,11 +34,14 @@ const PlaceSchema = new mongoose.Schema({
         required: true
     },
     ratings: {
-        type: [{
-            star: { type: Number, required: true, min: 1, max: 5 },
-            review: { type: String, required: true, minlength: 20 }
-        }],
-        default: []
+        raters: {
+            type: [{
+                star: { type: Number, required: true, min: 1, max: 5 },
+                review: { type: String, required: true, minlength: 20 }
+            }],
+            default: []
+        },
+        star: { type: Number, default: 0 }
     },
     owner: {
         id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

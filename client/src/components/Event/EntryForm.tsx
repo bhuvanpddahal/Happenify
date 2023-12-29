@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
@@ -25,6 +25,10 @@ const EntryForm: React.FC = () => {
         dispatch(bookEntry(id || '', formData, navigate));
     };
 
+    useEffect(() => {
+        document.title = 'Book Event - Happenify';
+    }, []);
+
     const { isMiniLoading } = useSelector((state: State) => state.event);
 
     return (
@@ -32,7 +36,7 @@ const EntryForm: React.FC = () => {
             {showSuggestion && (
                 <Suggestion
                     setShowSuggestion={setShowSuggestion}
-                    text="Please verify that your provided name, email, and phone number are accurate. This helps us keep you informed about any event updates. Also, for any questions or assistance, our friendly team is ready to help. Reach out to us at happenify@gmail.com or 987654321. Thank you for joining us! We look forward to creating lasting memories with you. 🎉"
+                    text="Please verify that your provided phone number is accurate. This helps us keep you informed about any event updates. Also, for any questions or assistance, our friendly team is ready to help. Reach out to us at happenify@gmail.com or 987654321. Thank you for joining us! We look forward to creating lasting memories with you. 🎉"
                     guidelines={[]}
                 />
             )}
@@ -44,7 +48,7 @@ const EntryForm: React.FC = () => {
                 </div>
                 <div className='flex items-center flex-wrap-reverse justify-between gap-3 mb-1'>
                     <button className={`relative w-200px py-2 rounded-sm ${isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey hover:bg-primarydark'}`} type="submit" disabled={isMiniLoading}>
-                        {isMiniLoading ? 'Booking entry...' : (
+                        {isMiniLoading ? 'Booking...' : (
                             <><i className="ri-book-2-line"></i> Book my entry pass</>
                         )}
                         <img className='absolute h-40px top-1/2 left-1/2 translate-x-n50p translate-y-n50p' src={LoadingImg} alt="..." hidden={!isMiniLoading} />

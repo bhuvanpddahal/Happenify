@@ -35,6 +35,7 @@ module.exports = {
       minWidth: {
         "200px": "200px",
         "250px": "250px",
+        "400px": "400px",
       },
       colors: {
         "dim": "#f5f7fa",

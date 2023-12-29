@@ -35,7 +35,7 @@ const EditProfile: React.FC = () => {
 
     return (
         <div className='p-3 min-h-full flex items-center justify-center bg-dim'>
-            <form onSubmit={handleSubmit} className='mb-4 md:text-17px rounded-lg px-4 py-3 bg-white shadow-box'>
+            <form onSubmit={handleSubmit} className='min-w-400px mb-4 md:text-17px rounded-lg px-4 py-3 bg-white shadow-box'>
                 <div className='text-center mb-3'>
                     <h1 className='font-semibold text-20px text-dark'>Update Profile</h1>
                 </div>

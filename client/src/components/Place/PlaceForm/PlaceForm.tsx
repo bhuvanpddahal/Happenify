@@ -154,7 +154,7 @@ const PlaceForm: React.FC = () => {
                     <textarea onChange={(e) => setDescription(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm resize-none' rows={5} value={description} placeholder='Description *' required></textarea>
                 </div>
                 <div className='flex gap-3 mb-4 flex-wrap sm:flex-nowrap'>
-                    <input onChange={(e) => setPricePerHour(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={pricePerHour} type="number" placeholder='Price per hour *' required />
+                    <input onChange={(e) => setPricePerHour(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={pricePerHour} type="number" placeholder='Price per hour (in $) *' required />
                     <select onChange={(e) => setType(e.target.value)} className='py-2 px-3 border border-solid border-grey outline-none w-full rounded-sm' value={type}>
                         {placeOptions.map((option: Option) => (
                             <option key={option.value} value={option.value}>{option.type}</option>

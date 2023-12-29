@@ -27,7 +27,6 @@ export const createPlace = async (req, res) => {
             (await cloudinary.uploader.upload(images[1])).secure_url,
             (await cloudinary.uploader.upload(images[2])).secure_url
         ];
-        console.log(imageUrls);
         networkError = false;
         const newPlace = await Place.create({
             name,
@@ -50,7 +49,7 @@ export const createPlace = async (req, res) => {
                 twitter
             }
         });
-        user.places.push({
+        user.userPlaces.push({
             id: newPlace._id,
             name,
             image: imageUrls[0]
@@ -61,7 +60,6 @@ export const createPlace = async (req, res) => {
         res.status(200).json(newPlace);
 
     } catch (error) {
-        console.log(error);
         session.abortTransaction();
         session.endSession();
         if(networkError) return res.status(400).json({ message: "Network error" });
@@ -233,7 +231,7 @@ export const deletePlace = async (req, res) => {
         const place = await Place.findById(placeId);
         if(place.owner.id.toString() !== userId) return res.status(403).json({ message: "Not allowed" });
         await Place.findByIdAndDelete(placeId);
-        user.places = user.places.filter((place) => place.id.toString() !== placeId);
+        user.userPlaces = user.userPlaces.filter((place) => place.id.toString() !== placeId);
         await user.save();
         session.commitTransaction();
         session.endSession();
@@ -243,6 +241,6 @@ export const deletePlace = async (req, res) => {
         console.log(error);
         session.abortTransaction();
         session.endSession()
-        res.status(500).json({ message: "Something went wrong (*-*)" });
+        res.status(500).json({ message: "Something went wrong" });
     }
 };
