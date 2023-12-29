@@ -7,9 +7,17 @@ interface Type {
     name: string;
 }
 
-interface Rating {
+interface Rater {
+    id: ObjectId;
+    fullName: string;
+    picture: string;
     star: number;
     review: string;
+}
+
+interface Ratings {
+    raters: Rater[];
+    stars: number;
 }
 
 export interface Place {
@@ -22,7 +30,7 @@ export interface Place {
     contact: string;
     images: string[];
     facilities: string[];
-    ratings: Rating[];
+    ratings: Ratings;
     owner: Holder;
     pricePerHour: string;
     termsAndConditions: string[];
@@ -69,6 +77,11 @@ export interface FormDataProp {
     termsAndConditions: string[];
     facebook: string;
     twitter: string;
+}
+
+export interface RateData {
+    star: string;
+    review: string;
 }
 
 interface ManyData {

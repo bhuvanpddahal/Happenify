@@ -176,6 +176,7 @@ export const updatePlace = async (req, res) => {
         const { name, location, capacity, description, type, contact, images, facilities, pricePerHour, termsAndConditions, facebook, twitter } = req.body;
         const user = await User.findById(userId);
         const place = await Place.findById(placeId);
+        if(!place) return res.status(404).json({ message: "Place not found" });
         if(userId !== place.owner.id.toString()) return res.status(403).json({ message: "Not allowed" });
         const imageUrls = [
             (await cloudinary.uploader.upload(images[0])).secure_url,
@@ -227,8 +228,10 @@ export const deletePlace = async (req, res) => {
     try {
         const { userId } = req;
         const { id: placeId } = req.params;
+        if(!ObjectId.isValid(placeId)) return res.status(404).json({ message: "Place not found" });
         const user = await User.findById(userId);
         const place = await Place.findById(placeId);
+        if(!place) return res.status(404).json({ message: "Place not found" });
         if(place.owner.id.toString() !== userId) return res.status(403).json({ message: "Not allowed" });
         await Place.findByIdAndDelete(placeId);
         user.userPlaces = user.userPlaces.filter((place) => place.id.toString() !== placeId);
@@ -241,6 +244,40 @@ export const deletePlace = async (req, res) => {
         console.log(error);
         session.abortTransaction();
         session.endSession()
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+export const ratePlace = async (req, res) => {
+    try {
+        const { userId } = req;
+        const { id: placeId } = req.params;
+        const { star, review } = req.body;
+        if(!ObjectId.isValid(placeId)) return res.status(404).json({ message: "Place not found" });
+        const user = await User.findById(userId);
+        const place = await Place.findById(placeId);
+        if(!place) return res.status(404).json({ message: "Place not found" });
+        if(place.owner.id.toString() === userId) return res.status(400).json({ message: "Cannot rate your own place" });
+        const alredyRated = place.ratings.raters.find((rater) => rater.id.toString() === userId);
+        if(alredyRated) return res.status(400).json({ message: "Place already rated" });
+
+        const totalRaters = place.ratings.raters.length;
+        const stars = place.ratings.stars;
+        const newStars = (totalRaters * stars + star) / (totalRaters + 1);
+        const newRater = {
+            id: user._id,
+            fullName: user.fullName,
+            picture: user.picture,
+            star,
+            review
+        };
+        place.ratings.raters.push(newRater);
+        place.ratings.stars = newStars;
+
+        await place.save();
+        res.status(200).json({ message: "Place rated successfully" });
+
+    } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
     }
 };

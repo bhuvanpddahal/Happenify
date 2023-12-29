@@ -36,12 +36,15 @@ const PlaceSchema = new mongoose.Schema({
     ratings: {
         raters: {
             type: [{
+                id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+                fullName: { type: String, required: true },
+                picture: { type: String, default: '' },
                 star: { type: Number, required: true, min: 1, max: 5 },
                 review: { type: String, required: true, minlength: 20 }
             }],
             default: []
         },
-        star: { type: Number, default: 0 }
+        stars: { type: Number, default: 0 }
     },
     owner: {
         id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

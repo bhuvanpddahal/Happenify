@@ -14,6 +14,7 @@ export const DELETE_PLACE = "DELETE_PLACE";
 
 export const creation_success = "Place created successfully";
 export const deletion_success = "Place deleted successfully";
+export const rating_success = "Place rated successfully";
 
 export const title = "Places";
 export const para = "Find and create places to share with others.";

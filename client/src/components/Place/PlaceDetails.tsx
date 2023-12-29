@@ -48,7 +48,7 @@ const PlaceDetails: React.FC = () => {
                     <div className='mt-2 flex items-center justify-between'>
                         <div className='text-normal font-medium'>
                             {[...Array(5)].map((_, index) => (
-                                <i key={index} className={`ri-star-fill text-18px ${selectedPlace?.ratings.length >= index ? 'text-secondary' : 'text-grey'}`}></i>
+                                <i key={index} className={`ri-star-fill text-18px ${selectedPlace?.ratings?.stars > index  ? 'text-secondary' : 'text-grey'}`}></i>
                             ))}
                         </div>
                         <div className='text-dark text-15px'>{moment(selectedPlace?.createdAt).fromNow()}</div>
@@ -97,8 +97,8 @@ const PlaceDetails: React.FC = () => {
                     <div className='py-3 border-b border-solid border-grey'>
                         <h2><i className="ri-cup-line text-18px text-secondarydark"></i> Facilities</h2>
                         <ul className='pl-2'>
-                            {selectedPlace?.facilities.map((facility) => (
-                                <li>• {facility}</li>
+                            {selectedPlace?.facilities.map((facility, index) => (
+                                <li key={index}>• {facility}</li>
                             ))}
                         </ul>
                     </div>

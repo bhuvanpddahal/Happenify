@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { FormDataProp as AuthFormData, EditData as AuthEditData } from '../interfaces/auth';
 import { FormDataProp as EventFormData, BookData as EventBookData } from '../interfaces/event';
-import { FormDataProp as PlaceFormData } from '../interfaces/place';
+import { FormDataProp as PlaceFormData, RateData as PlaceRateData } from '../interfaces/place';
 
 const API = axios.create({ baseURL: 'http://localhost:5000/api' });
 
@@ -40,3 +40,4 @@ export const searchTrendingPlaces = (searchType: string, value: string, page: nu
 export const searchUserPlaces = (searchType: string, value: string, page: number, limit: number) => API.get(`/places/search/user?${searchType}=${value}&page=${page}&limit=${limit}`);
 export const updatePlace = (id: string, formData: PlaceFormData) => API.patch(`/places/${id}`, formData);
 export const deletePlace = (id: string) => API.delete(`/places/${id}`);
+export const ratePlace = (id: string, formData: PlaceRateData) => API.post(`/places/${id}`, formData);
