@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -21,6 +21,10 @@ const RatingForm: React.FC = () => {
         };
         dispatch(ratePlace(id || '', formData, navigate));
     };
+
+    useEffect(() => {
+        document.title = 'Rate Place - Happenify';
+    }, []);
 
     const { isMiniLoading } = useSelector((state: State) => state.place);
     

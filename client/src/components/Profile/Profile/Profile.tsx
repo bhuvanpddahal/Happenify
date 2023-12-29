@@ -4,18 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import Card from './Card';
-import LoadingImg from '../../images/loading.gif';
-import ProfileImg from '../../images/profile.png';
-import Loader from '../Utils/Loaders/Loader';
-import NotFound from '../Utils/NotFound';
-import { State } from '../../interfaces/store';
-import { getUserById } from '../../actions/auth';
-import { REMOVE_SELECTED_USER } from '../../constants/auth';
-import { EventOrPlace, Follow } from '../../interfaces/auth';
+import LoadingImg from '../../../images/loading.gif';
+import ProfileImg from '../../../images/profile.png';
+import Loader from '../../Utils/Loaders/Loader';
+import NotFound from '../../Utils/NotFound';
+import { State } from '../../../interfaces/store';
+import { getUserById } from '../../../actions/auth';
+import { REMOVE_SELECTED_USER } from '../../../constants/auth';
+import { EventOrPlace, Follow } from '../../../interfaces/auth';
 import {
     followUser,
     unfollowUser
-} from '../../actions/auth';
+} from '../../../actions/auth';
 
 const Profile: React.FC = () => {
     const { id } = useParams();
@@ -97,8 +97,8 @@ const Profile: React.FC = () => {
             </div>
             <div className='flex-1'>
                 <div className='pt-3 pb-1 flex justify-between mb-3 border-b border-solid border-grey'>
-                    <div>Following: {selectedUser?.following.length}</div>
-                    <div>Followers: {selectedUser?.followers.length}</div>
+                    <Link to={`/profile/${id}/following`} className='hover:text-primary'>Following: {selectedUser?.following.length}</Link>
+                    <Link to={`/profile/${id}/followers`} className='hover:text-primary'>Followers: {selectedUser?.followers.length}</Link>
                 </div>
                 <div className='h-70px w-70px mx-auto'>
                     <img className='h-full w-full rounded-full bg-white shadow-box' src={selectedUser?.picture || ProfileImg} alt="profile" />

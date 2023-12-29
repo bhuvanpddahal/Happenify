@@ -14,6 +14,7 @@ const Ratings: React.FC = () => {
     const dispatch: any = useDispatch();
 
     useEffect(() => {
+        document.title = 'View Ratings - Happenify';
         dispatch(getPlaceById(id || ''));
         return () => {
             dispatch({ type: REMOVE_SELECTED_PLACE });

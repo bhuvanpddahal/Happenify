@@ -5,8 +5,9 @@ import {
     Navigate
 } from 'react-router-dom';
 
-import Profile from './Profile/Profile';
+import Profile from './Profile/Profile/Profile';
 import EditProfile from './Auth/EditProfile';
+import Follow from './Profile/Follow/Follow';
 import Events from './Event/Events';
 import EventDetails from './Event/EventDetails';
 import EventForm from './Event/EventForm';
@@ -30,6 +31,8 @@ const Content: React.FC = () => {
                 <Route path='/profile/:id/*'>
                     <Route index element={<Profile />} />
                     <Route path='edit' element={<EditProfile />} />
+                    <Route path='following' element={<Follow />} />
+                    <Route path='followers' element={<Follow />} />
                 </Route>
                 <Route path='/events/*'>
                     <Route index element={<Events />} />
