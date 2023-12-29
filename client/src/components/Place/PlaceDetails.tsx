@@ -46,10 +46,11 @@ const PlaceDetails: React.FC = () => {
                         </Link>
                     </div>
                     <div className='mt-2 flex items-center justify-between'>
-                        <div className='text-normal font-medium'>
+                        <div className='text-normal ratings'>
                             {[...Array(5)].map((_, index) => (
                                 <i key={index} className={`ri-star-fill text-18px ${selectedPlace?.ratings?.stars > index  ? 'text-secondary' : 'text-grey'}`}></i>
                             ))}
+                            <div className='ratings-value'>{selectedPlace?.ratings?.stars}</div>
                         </div>
                         <div className='text-dark text-15px'>{moment(selectedPlace?.createdAt).fromNow()}</div>
                     </div>

@@ -263,7 +263,7 @@ export const ratePlace = async (req, res) => {
 
         const totalRaters = place.ratings.raters.length;
         const stars = place.ratings.stars;
-        const newStars = (totalRaters * stars + star) / (totalRaters + 1);
+        const newStars = (totalRaters * stars + Number(star)) / (totalRaters + 1);
         const newRater = {
             id: user._id,
             fullName: user.fullName,
@@ -278,6 +278,7 @@ export const ratePlace = async (req, res) => {
         res.status(200).json({ message: "Place rated successfully" });
 
     } catch (error) {
+        console.log(error.message);
         res.status(500).json({ message: "Something went wrong" });
     }
 };

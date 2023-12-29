@@ -24,11 +24,13 @@
   border-radius: 10px;
 }
 
-.organizer {
+.organizer, .ratings {
   position: relative;
+  cursor: pointer;
 }
 
-.organizer .organizer-name {
+.organizer .organizer-name,
+.ratings .ratings-value {
   position: absolute;
   top: 50%;
   left: calc(100% + 10px);
@@ -42,7 +44,8 @@
   transition: opacity 0.3s ease;
 }
 
-.organizer .organizer-name::before {
+.organizer .organizer-name::before,
+.ratings .ratings-value::before {
   content: '';
   position: absolute;
   top: calc(50% - 4px);
@@ -54,7 +57,8 @@
   transform: rotate(45deg);
 }
 
-.organizer:hover .organizer-name {
+.organizer:hover .organizer-name,
+.ratings:hover .ratings-value {
   opacity: 1;
   pointer-events: auto;
 }
