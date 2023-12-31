@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import ProfileImg from '../../../images/profile.png';
 import LoadingImg from '../../../images/loading.gif';
+import { State } from '../../../interfaces/store';
 import { unfollowUser } from '../../../actions/auth';
 
 interface CardProp {
@@ -32,9 +34,11 @@ const Card: React.FC<CardProp> = ({
 
     const handleClick = () => {
         setIsActive(true);
+        dispatch(unfollowUser(followId));
     };
 
-    const isMiniLoading = true;
+    let isFollowing = false;
+    const { isMiniLoading } = useSelector((state: State) => state.auth);
 
     return (
         <li className={`w-full flex items-center justify-between border border-solid border-grey px-3 py-2 rounded-md ${!isLast ? 'mb-3' : ''}`}>
@@ -45,12 +49,13 @@ const Card: React.FC<CardProp> = ({
                     <div className='text-dark mt-n5px'>{email}</div>
                 </div>
             </Link>
-            {tab === 'following' && (
-                userId === id && (
-                    <button className={`relative w-130px py-1 rounded-50px transition-bg duration-300 text-15px ${isActive && isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey cursor-pointer hover:bg-primarydark'}`} disabled={isActive && isMiniLoading}>
-                        <img className={`absolute h-35px top-1/2 left-1/2 translate-x-n50p translate-y-n50p ${!isActive || !isMiniLoading ? 'hidden' : ''}`} src={LoadingImg} alt="..." />
-                    </button>
-                )
+            {tab === 'following' && userId === id && (
+                <button onClick={handleClick} className={`relative w-130px py-1 rounded-50px transition-bg duration-300 text-15px ${isActive && isMiniLoading ? 'bg-secondary text-dark cursor-not-allowed' : 'bg-primary text-lightgrey cursor-pointer hover:bg-primarydark'}`} disabled={isActive && isMiniLoading}>
+                    {isActive && isMiniLoading ? 'Unfollowing...' : (
+                        <><i className="ri-user-unfollow-line"></i> Unfollow</>
+                    )}
+                    <img className={`absolute h-35px top-1/2 left-1/2 translate-x-n50p translate-y-n50p ${!isActive || !isMiniLoading ? 'hidden' : ''}`} src={LoadingImg} alt="..." />
+                </button>
             )}
         </li>
     )

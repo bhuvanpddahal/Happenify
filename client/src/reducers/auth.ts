@@ -65,7 +65,7 @@ const authReducer = (state: State = initialState, action: Action) => {
             return {
                 ...state,
                 user: { ...state.user, following: newFollowing },
-                selectedUser: { ...state.selectedUser, followers: newFollowers }
+                selectedUser: state.user?._id.toString() === state.selectedUser?._id.toString() ? { ...state.user, following: newFollowing } : { ...state.selectedUser, followers: newFollowers }
             };
         case UPDATE_PROFILE:
             return { ...state, user: action?.data };
