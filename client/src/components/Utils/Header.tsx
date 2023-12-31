@@ -18,9 +18,11 @@ const Header: React.FC<HeaderProp> = ({
                 <h1 className='text-20px text-dark font-semibold'>{title}</h1>
                 <p className='text-14px sm:text-15px'>{para}</p>
             </div>
-            <Link to={createLink} className='bg-primary px-3 py-1 rounded-md flex items-center gap-1 text-lightgrey cursor-pointer hover:bg-primarydark'>
-                <i className="ri-add-circle-line text-20px"></i> Create
-            </Link>
+            {createLink !== '/calendar' && (
+                <Link to={createLink} className='bg-primary px-3 py-1 rounded-md flex items-center gap-1 text-lightgrey cursor-pointer hover:bg-primarydark'>
+                    <i className="ri-add-circle-line text-20px"></i> Create
+                </Link>
+            )}
         </div>
     )
 };
