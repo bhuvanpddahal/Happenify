@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { numOfLoaders } from '../../../../constants/promotion';
+import { numOfLoaders } from '../../../constants/promotion';
 
 interface LoaderProp {
     count: number;

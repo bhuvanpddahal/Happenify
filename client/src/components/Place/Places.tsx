@@ -11,7 +11,7 @@ import Searchbar from '../Utils/Searchbar';
 import useQuery from '../../hooks/useQuery';
 import { State } from '../../interfaces/store';
 import { title, para, createLink } from '../../constants/place';
-import SkeletonLoader from '../Utils/Loaders/SkeletonLoader/SkeletonLoader';
+import SkeletonLoader from '../Loader/SkeletonLoader/SkeletonLoader';
 import {
     trending,
     your_places,

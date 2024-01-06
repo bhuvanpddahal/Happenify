@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Loader from './Loader';
-import { numOfLoaders } from '../../../../constants/promotion';
+import { numOfLoaders } from '../../../constants/promotion';
 
 const SkeletonLoader: React.FC = () => {
     return (

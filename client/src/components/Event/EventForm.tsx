@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import NotFound from '../Utils/NotFound';
-import Loader from '../Utils/Loaders/Loader';
+import Loader from '../Loader/Loader';
 import Suggestion from '../Utils/Suggestion';
 import LoadingImg from '../../images/loading.gif';
 import { State } from '../../interfaces/store';

@@ -6,7 +6,7 @@ import moment from 'moment';
 import Card from './Card';
 import LoadingImg from '../../../images/loading.gif';
 import ProfileImg from '../../../images/profile.png';
-import Loader from '../../Utils/Loaders/Loader';
+import Loader from '../../Loader/Loader';
 import NotFound from '../../Utils/NotFound';
 import { State } from '../../../interfaces/store';
 import { getUserById } from '../../../actions/auth';

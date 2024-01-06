@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import NotFound from '../Utils/NotFound';
-import Loader from '../Utils/Loaders/Loader';
+import Loader from '../Loader/Loader';
 import ProfileImg from '../../images/profile.png';
 import { State } from '../../interfaces/store';
 import { getEventById } from '../../actions/event';

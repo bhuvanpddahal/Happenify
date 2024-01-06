@@ -5,7 +5,7 @@ import { useNavigate, Link, useParams } from 'react-router-dom';
 import Condition from './Condition';
 import UploadImage from './UploadImage';
 import NotFound from '../../Utils/NotFound';
-import Loader from '../../Utils/Loaders/Loader';
+import Loader from '../../Loader/Loader';
 import Suggestion from '../../Utils/Suggestion';
 import LoadingImg from '../../../images/loading.gif';
 import { State } from '../../../interfaces/store';

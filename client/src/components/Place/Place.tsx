@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 import Options from '../Utils/Options';
-import Loader from '../Utils/Loaders/Loader';
-import ConfirmBox from '../Utils/ConfirmBox';
+import Loader from '../Loader/Loader';
+import ConfirmBox from '../Confirm/ConfirmBox';
 import { State } from '../../interfaces/store';
 import { PlaceProp } from '../../interfaces/place';
 import { deletePlace } from '../../actions/place';

@@ -10,7 +10,7 @@ import NotFound from '../Utils/NotFound';
 import Searchbar from '../Utils/Searchbar';
 import useQuery from '../../hooks/useQuery';
 import { State } from '../../interfaces/store';
-import SkeletonLoader from '../Utils/Loaders/SkeletonLoader/SkeletonLoader';
+import SkeletonLoader from '../Loader/SkeletonLoader/SkeletonLoader';
 import { title, para, createLink } from '../../constants/event';
 import { Event as EventType } from '../../interfaces/event';
 import {

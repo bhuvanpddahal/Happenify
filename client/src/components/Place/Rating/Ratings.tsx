@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import Rating from './Rating';
 import NotFound from '../../Utils/NotFound';
-import Loader from '../../Utils/Loaders/Loader';
+import Loader from '../../Loader/Loader';
 import { State } from '../../../interfaces/store';
 import { getPlaceById } from '../../../actions/place';
 import { useDispatch, useSelector } from 'react-redux';

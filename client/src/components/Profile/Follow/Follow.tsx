@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Card from './Card';
 import NotFound from '../../Utils/NotFound';
-import Loader from '../../Utils/Loaders/Loader';
+import Loader from '../../Loader/Loader';
 import { getUserById } from '../../../actions/auth';
 import { State } from '../../../interfaces/store';
 import { REMOVE_SELECTED_USER } from '../../../constants/auth';
