@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Logo from '../images/main-logo.png';
-import Footer from './Utils/Footer';
+import Footer from './Footer/Footer';
 
 const Policies: React.FC = () => {
     document.title = 'Policies - Happenify';

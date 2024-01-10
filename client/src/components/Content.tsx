@@ -27,7 +27,7 @@ const Content: React.FC = () => {
     return (
         <div className='flex-1 h-full overflow-hidden pb-10 md:pb-55px lg:pb-0'>
             <Routes>
-                <Route path='/' element={<Navigate to='/events' replace />} />
+                <Route index element={<Navigate to='/events' replace />} />
                 <Route path='/profile/:id/*'>
                     <Route index element={<Profile />} />
                     <Route path='edit' element={<EditProfile />} />

@@ -8,7 +8,7 @@ import {
 import Policies from './components/Policies';
 import Page from './components/Page';
 import Auth from './components/Auth/Auth';
-import AlertBox from './components/Utils/AlertBox';
+import AlertBox from './components/Alert/AlertBox';
 
 const App: React.FC = () => {
     return (
