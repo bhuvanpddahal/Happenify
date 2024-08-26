@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  client:
+    build: ./client # It will go inside the /client folder and search for Dockerfile to build the image.
+    # The following can be used if you have a different name or suffix for Dockerfile.
+    # The context is the folder where the Dockerfile is located and dockerfile is the name of the Dockerfile.
+    # build:
+    #   context: ./client
+    #   dockerfile: Dockerfile.client
+    container_name: client_conatiner
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app/client # It will ensure that the /client folder in the host machine is in sync with the client folder in the container so that if we make any changes to it, it is automatically reflected on the container.
+      - /app/client/node_modules
+    depends_on:
+      - server # What this means is, it will only start to build the container for this service if the build of the container for server service is completed.
+
+  server:
+    build: ./server
+    container_name: server_conatiner
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: test
+      CLOUDINARY_CLOUD_NAME: dnsm34fys
+      CLOUDINARY_API_KEY: 715286661468252
+      CLOUDINARY_API_SECRET: OiifenB3b753GUOSKu7wq4yc6FU
+    volumes:
+      - ./server:/app/server
+      - /app/server/node_modules # Anonymous volume meaning that this folder inside the container will not be synced if the data is altered inside the same folder in the host machine.
+    depends_on:
+      - db
+
+  db:
+    image: mongo
+    container_name: database_container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      - ./db:/data/db
